@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 30
+/svn/!svn/ver/356/trunk/pymunk
+END
+libchipmunk64.so
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/356/trunk/pymunk/libchipmunk64.so
+END
+util.py
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/svn/!svn/ver/324/trunk/pymunk/util.py
+END
+_chipmunk.py
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/!svn/ver/356/trunk/pymunk/_chipmunk.py
+END
+libchipmunk.so
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/!svn/ver/342/trunk/pymunk/libchipmunk.so
+END
+__init__.py
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/!svn/ver/354/trunk/pymunk/__init__.py
+END
+_chipmunk_ffi.py
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/334/trunk/pymunk/_chipmunk_ffi.py
+END
+chipmunk.dll
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/!svn/ver/345/trunk/pymunk/chipmunk.dll
+END
+vec2d.py
+K 25
+svn:wc:ra_dav:version-url
+V 39
+/svn/!svn/ver/342/trunk/pymunk/vec2d.py
+END
+constraint.py
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/!svn/ver/335/trunk/pymunk/constraint.py
+END
+libload.py
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/!svn/ver/239/trunk/pymunk/libload.py
+END

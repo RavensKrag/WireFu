@@ -12,4 +12,3 @@ class Player(NonstaticObject):
 	
 	def update(self):
 		pass
-	

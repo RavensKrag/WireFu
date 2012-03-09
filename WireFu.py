@@ -6,17 +6,22 @@ from pymunk import Vec2d
 import math, sys, random
 
 from EventProcessor import EventProcessor
-from GameObject import GameObject
+from gameobjects import *
 
 pygame.init()
 
 screen = pygame.display.set_mode((600,600))
 clock = pygame.time.Clock()
 
-events = EventProcessor()
+input_processor = EventProcessor()
+
+player = Player()
+platforms = [Platform(),
+			Platform(),
+			Platform()]
 
 def update():
-	events.update()
+	input_processor.update()
 	
 def draw():
 	pass

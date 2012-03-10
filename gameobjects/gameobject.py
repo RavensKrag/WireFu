@@ -16,7 +16,7 @@ class GameObject(pygame.sprite.Sprite, Physics):
 	def update(self):
 		pass
 	
-	def draw(self):
+	def blit(self):
 		pass
 
 class NonstaticObject(GameObject):
@@ -29,7 +29,7 @@ class NonstaticObject(GameObject):
 	def update(self):
 		pass
 	
-	def draw(self):
+	def blit(self):
 		pass
 
 class StaticObject(GameObject):
@@ -43,6 +43,6 @@ class StaticObject(GameObject):
 	def update(self):
 		pass
 	
-	def draw(self):
+	def blit(self):
 		pass
 	

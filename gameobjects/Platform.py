@@ -9,5 +9,5 @@ class Platform(StaticObject):
 	def update(self):
 		pass
 	
-	def draw(self):
+	def blit(self):
 		pass

@@ -1,3 +1,6 @@
+#!/usr/bin/python
+
+# Import core libraries
 import pygame
 #~ from pygame.locals import *
 #~ from pygame.color import *
@@ -5,16 +8,22 @@ import pymunk as pm
 from pymunk import Vec2d
 import math, sys, random
 
+# Import files
 from EventProcessor import EventProcessor
 from gameobjects import *
 
+# Main gamestate initialization
 pygame.init()
 
-screen = pygame.display.set_mode((600,600))
+width, height = dimentions = (600,600)
+
+screen = pygame.display.set_mode(dimentions)
 clock = pygame.time.Clock()
 
+# Initialize systems
 input_processor = EventProcessor()
 
+# Initialize game objects
 player = Player()
 platforms = [Platform(),
 			Platform(),

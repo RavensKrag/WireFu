@@ -1,5 +1,6 @@
-All non-code copyrightable assets licensed under 
-Creative Commons Attribution-NonCommercial-ShareAlike 3.0
+All non-code copyrightable assets are property of RavensKrag
+(https://github.com/RavensKrag/) and are licensed under Creative Commons 
+Attribution-NonCommercial-ShareAlike 3.0 unless otherwise stated.
 http://creativecommons.org/licenses/by-nc-sa/3.0/
 
 Code is copyright of the respective owners, as portrayed through the names listed

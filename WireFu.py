@@ -26,6 +26,7 @@ Physics.screen_height = height
 input_processor = EventProcessor()
 
 # Initialize game objects
+gameobjects = pygame.sprite.Group()
 player = Player()
 platforms = [Platform(),
 			Platform(),

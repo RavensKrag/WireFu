@@ -1,10 +1,11 @@
+import pygame
 import pymunk as pm
 from pymunk import Vec2d
 import math, sys, random
 
 from Physics import *
 
-class GameObject(Physics):
+class GameObject(pygame.sprite.Sprite, Physics):
 	def __init__(self, body, verts):
 		self.body = body
 		self.shape = 1

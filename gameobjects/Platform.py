@@ -1,4 +1,4 @@
-from GameObject import StaticObject
+from gameobject import StaticObject
 
 class Platform(StaticObject):
 	def __init__(self):
@@ -9,5 +9,5 @@ class Platform(StaticObject):
 	def update(self):
 		pass
 	
-	def update(self):
+	def draw(self):
 		pass

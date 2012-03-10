@@ -8,6 +8,3 @@ class Platform(StaticObject):
 	
 	def update(self):
 		pass
-	
-	def blit(self):
-		pass

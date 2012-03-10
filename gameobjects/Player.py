@@ -13,10 +13,11 @@ class Player(NonstaticObject):
 		super(Player, self).__init__(mass, moment, verts=[])
 		
 		self.image = pygame.Surface([15,15])
+		color = pygame.Color("red")
+		self.image.fill(color)
+		
 		self.rect = self.image.get_rect()
+		self.rect.topleft = [0,0]
 	
 	def update(self):
-		pass
-	
-	def blit(self):
 		pass

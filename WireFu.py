@@ -12,6 +12,7 @@ import math, sys, random
 from EventProcessor import EventProcessor
 from gameobjects import *
 import Physics
+from Animation import *
 
 # Main gamestate initialization
 pygame.init()
@@ -36,7 +37,7 @@ def update():
 	input_processor.update()
 	
 def draw():
-	pass
+	player.draw(screen)
 
 while 1:
 	update()

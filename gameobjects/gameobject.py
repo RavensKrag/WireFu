@@ -2,7 +2,9 @@ import pymunk as pm
 from pymunk import Vec2d
 import math, sys, random
 
-class GameObject(object):
+from Physics import *
+
+class GameObject(Physics):
 	def __init__(self, body, verts):
 		self.body = body
 		self.shape = 1

@@ -11,6 +11,7 @@ import math, sys, random
 # Import files
 from EventProcessor import EventProcessor
 from gameobjects import *
+import Physics
 
 # Main gamestate initialization
 pygame.init()
@@ -21,6 +22,7 @@ screen = pygame.display.set_mode(dimentions)
 clock = pygame.time.Clock()
 
 # Initialize systems
+Physics.screen_height = height
 input_processor = EventProcessor()
 
 # Initialize game objects

@@ -38,9 +38,6 @@ class NonstaticObject(GameObject):
 				(-self._animation.get_width()/2, self._animation.get_height())]
 		
 		super(NonstaticObject, self).__init__(body, verts)
-		
-		
-		
 	
 	def update(self):
 		self.image, self.rect = self._animation.update()
@@ -51,7 +48,25 @@ class StaticObject(GameObject):
 	def __init__(self, verts):
 		super(StaticObject, self).__init__(self.static_body, verts)
 		
-		self.image = pygame.Surface([1,1])
+		# Compute the dimensions of a rectangle which will encompass the shape, so that
+		# a Surface of the appropriate size can be generated. 
+		left = right = top = bottom = None
+		for v in verts:
+			if left == None or v[0] < left:
+				left = v[0]
+			if right == None or v[0] > right:
+				right = v[0]
+			if top == None or v[1] > top:
+				top = v[1]
+			if bottom == None or v[1] < bottom:
+				bottom = v[1]
+		
+		self.image = pygame.Surface([right-left, top-bottom])
+		
+		# Draw polygon on image
+		color = pygame.Color("red")
+		pygame.draw.polygon(self.image, color, verts)
+		
 		self.rect = self.image.get_rect()
 		
 	def update(self):

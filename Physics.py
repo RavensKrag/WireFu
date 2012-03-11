@@ -14,3 +14,7 @@ class Physics(object):
 	def to_pymunk(x, y):
 		# Only implement if necessary
 		pass
+	
+	def add_to(space):
+		space.add(self.body, self.shape)
+	

@@ -5,15 +5,19 @@ import math, sys, random
 
 class Animation(object):
 	def __init__(self):
-		self.image = pygame.Surface([1,1])
-		self.rect = self.image.get_rect()
+		self._image = pygame.Surface([30,50])
+		self._rect = self._image.get_rect()
 	
 	def update(self):
-		pass
+		# Set the image to the next frame, and update the rect as well
+		return self._image, self._rect
 	
 	def draw(self, surface):
 		pass
 	
-	def get_frame():
-		# Return the next frame of the animation.
-		return self.image
+	def get_width(self):
+		return self._rect.width
+	
+	def get_height(self):
+		return self._rect.height
+	

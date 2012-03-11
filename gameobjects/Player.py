@@ -12,7 +12,7 @@ class Player(NonstaticObject):
 		
 		super(Player, self).__init__(mass, moment, verts=[])
 		
-		self.image = pygame.Surface([15,15])
+		#~ self.image = pygame.Surface([30,50])
 		color = pygame.Color("red")
 		self.image.fill(color)
 		
@@ -20,4 +20,4 @@ class Player(NonstaticObject):
 		self.rect.topleft = [0,0]
 	
 	def update(self):
-		pass
+		super(Player, self).update()

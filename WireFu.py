@@ -29,9 +29,9 @@ input_processor = EventProcessor()
 # Initialize game objects
 gameobjects = pygame.sprite.Group()
 player = Player()
-platforms = [Platform(),
-			Platform(),
-			Platform()]
+platforms = [Platform([0,0], [100, 10]),
+			Platform([0,0], [100, 10]),
+			Platform([0,0], [100, 10])]
 
 def update():
 	input_processor.update()

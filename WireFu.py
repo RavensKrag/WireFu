@@ -42,7 +42,7 @@ class Window(object):
 		# Initialize game objects
 		self.gameobjects = pygame.sprite.Group()
 		self.player = Player()
-		self.platforms = [Platform([0,1], [1, 0.1]),
+		self.platforms = [Platform([0,1], [1, 0.3]),
 					Platform([3,2], [1, 0.1]),
 					Platform([4,1], [1, 0.1])]
 		

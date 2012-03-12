@@ -20,9 +20,10 @@ class PlayerEnvCollision(object):
 	def pre_solve(space, arbiter):
 		player_shape, env_shape = arbiter.shapes
 		
-		if(player_shape.body.velocity.y < 0):
-			# If moving downwards
+		if(player_shape.body.velocity.y < 0 and env_shape.point_query(player_shape.body.position)):
+			# If moving downwards from above
 			player_shape.gameobject.ground_collision()
+			
 		
 		return True
 	
@@ -30,7 +31,7 @@ class PlayerEnvCollision(object):
 	def post_solve(space, arbiter):
 		player_shape, env_shape = arbiter.shapes
 		
-		return False
+		return True
 	
 	@staticmethod
 	def separate(space, arbiter):

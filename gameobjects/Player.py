@@ -23,6 +23,10 @@ class Player(NonstaticObject):
 		
 		self.body.position.x = 0
 		self.body.position.y = 0
+		
+		
+		self.jump_count = 0
+		self.jump_limit = 2
 	
 	def draw(self, screen):
 		pos = self.to_pygame(self.body.position)
@@ -51,10 +55,14 @@ class Player(NonstaticObject):
 		self.body.apply_force((100, 0.0))
 	
 	def jump(self):
-		self.body.velocity.y += 5
+		if self.jump_count < self.jump_limit:
+			self.body.velocity.y += 5
+			self.jump_count += 1
 	
 	def _ground_collision(self):
 		#~ print "ground"
+		self.jump_count = 0
+		
 		self.body.position.y = 0
 		self.body.velocity.y = 0
 		self.body.reset_forces

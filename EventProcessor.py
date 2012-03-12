@@ -8,9 +8,9 @@ class EventProcessor(object):
 		
 		self.inputs = {} # Initialize new dictionary
 		
-		self.right_key = pygame.K_e
-		self.left_key = pygame.K_a
-		self.jump_key = pygame.K_COMMA
+		self.right_key = pygame.K_RIGHT
+		self.left_key = pygame.K_LEFT
+		self.jump_key = pygame.K_SPACE
 	
 	def update(self):
 		for event in pygame.event.get():
@@ -31,7 +31,7 @@ class EventProcessor(object):
 			#~ elif event.type == pygame.MOUSEBUTTONDOWN:
 				#~ if event.button == 1: # Left Click
 					#~ pos = (event.pos[0]-self.window.offset_x, event.pos[1])
-					#~ self.player.shoot(pos)
+
 		
 		# Process held buttons
 		if self.inputs.get(self.right_key, False):

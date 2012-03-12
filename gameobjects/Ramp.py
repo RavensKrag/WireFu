@@ -1,14 +1,16 @@
 import pygame
 from Physics import Physics
+import Collisions
 from gameobject import StaticObject
 
 import pymunk as pm
 from pymunk import Vec2d
 
 class Ramp(StaticObject):
-	def __init__(self, p1, p2, width=2, skew=50):
+	# Should probably get rid of skew.  It would make more sense not to have it.
+	
+	def __init__(self, p1, p2, width=2):
 		self.line_width = Physics.to_meters(width)
-		self.skew = Physics.to_meters(skew)
 		
 		# Sort by y
 		if(p1[1] > p2[1]):
@@ -35,22 +37,22 @@ class Ramp(StaticObject):
 		
 		verts = [(0,0),
 				(self.line_width, 0),
-				(self.skew+self.line_width, self.height),
-				(self.skew, self.height)]
+				(self.width+self.line_width, self.height),
+				(self.width, self.height)]
 			
 		
-		self.width += self.line_width + self.skew
+		self.width += self.line_width
 		super(Ramp, self).__init__(verts)
 		
 		self.body.position.x = p1[0]
 		self.body.position.y = p1[1]
 		
 		line_width = Physics.to_px(self.line_width)
-		skew = Physics.to_px(self.skew)
+		width = Physics.to_px(self.width)
 		points = [(0, self.image.get_height()),
 				(0 + line_width, self.image.get_height()),
-				(0 + skew + line_width, 0),
-				(0 + skew, 0)]
+				(0 + width + line_width, 0),
+				(0 + width, 0)]
 		
 		#~ color = pygame.Color("white")
 		#~ self.image.fill(color)
@@ -59,8 +61,7 @@ class Ramp(StaticObject):
 		
 		# TODO: Trim image size
 		
-		self.p1 = p1
-		self.p2 = p2
+		self.shape.collision_type = Collisions.PLATFORM
 		
 	def update(self):
 		pass

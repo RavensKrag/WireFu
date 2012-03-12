@@ -20,9 +20,9 @@ class PlayerEnvCollision(object):
 	def pre_solve(space, arbiter):
 		player_shape, env_shape = arbiter.shapes
 		
-		if(player.body.velocity.y < 0):
+		if(player_shape.body.velocity.y < 0):
 			# If moving downwards
-			player.ground_collision()
+			player_shape.gameobject.ground_collision()
 		
 		return True
 	

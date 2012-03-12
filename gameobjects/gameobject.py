@@ -15,6 +15,8 @@ class GameObject(pygame.sprite.Sprite, Physics):
 		shape = pm.Poly(body, verts)
 		Physics.__init__(self, shape)
 		
+		self.shape.gameobject = self
+		
 		pygame.sprite.Sprite.__init__(self)
 	
 	def update(self):

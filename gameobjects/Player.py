@@ -41,6 +41,7 @@ class Player(NonstaticObject):
 		super(Player, self).update()
 		if(self.body.position.y < 0):
 			self.ground_collision()
+			self.body.position.y = 0
 			
 		#~ print self.body.position
 		#~ print self.to_pygame(self.body.position)
@@ -84,7 +85,6 @@ class Player(NonstaticObject):
 		
 		self.jump_count = 0
 		
-		self.body.position.y = 0
 		self.body.velocity.y = 0
 		self.body.reset_forces
 	

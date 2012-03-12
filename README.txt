@@ -1,1 +1,4 @@
-Game created in the Spring semester of 2012 for a game design class.
+Controls:
+	Move Left:		Left Arrow
+	Move Right:		Right Arrow
+	Jump:			Spacebar

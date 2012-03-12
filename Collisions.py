@@ -10,9 +10,7 @@ class PlayerEnvCollision(object):
 	
 	@staticmethod
 	def begin(space, arbiter):
-		player_shape, env_shape = arbiter.shapes
-		
-		print "test"
+		#~ player_shape, env_shape = arbiter.shapes
 		
 		return True
 	
@@ -29,13 +27,13 @@ class PlayerEnvCollision(object):
 	
 	@staticmethod
 	def post_solve(space, arbiter):
-		player_shape, env_shape = arbiter.shapes
+		#~ player_shape, env_shape = arbiter.shapes
 		
 		return True
 	
 	@staticmethod
 	def separate(space, arbiter):
-		player_shape, env_shape = arbiter.shapes
+		#~ player_shape, env_shape = arbiter.shapes
 		
 		return False
 		

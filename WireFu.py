@@ -42,9 +42,10 @@ class Window(object):
 		# Initialize game objects
 		self.gameobjects = pygame.sprite.Group()
 		self.player = Player()
-		self.platforms = [Platform([0,1], [1, 0.3]),
-					Platform([3,2], [1, 0.1]),
-					Platform([4,1], [1, 0.1])]
+		self.platforms = pygame.sprite.Group(Platform([0,1], [1, 0.1]),
+											Platform([3,2], [1, 0.1]),
+											Platform([4,1], [1, 0.1]),
+											Ramp([5,1], [5.2,2], width=1, skew=100))
 		
 		# Add objects to space
 		self.player.add_to(self.space)

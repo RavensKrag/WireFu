@@ -1,4 +1,5 @@
-__all__ = ["Platform", "Player"]
+__all__ = ["Player", "Platform", "Ramp"]
 
-from Platform import *
 from Player import *
+from Platform import *
+from Ramp import *

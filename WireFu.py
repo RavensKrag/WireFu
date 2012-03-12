@@ -13,6 +13,7 @@ from EventProcessor import EventProcessor
 from gameobjects import *
 from Physics import Physics
 from Animation import *
+import Collisions
 
 
 class Window(object):
@@ -78,5 +79,22 @@ class Window(object):
 			self.draw()
 			pygame.display.flip()
 			self.clock.tick(self.framerate)
+	
+	def _init_collision_handlers(self):
+		self.player.collision_type = Collisions.PLAYER
+		for p in self.platforms:
+			p.collision_type = Collisions.PLATFORM
+		
+		#~ self._add_collision_handler(Collisions.PLAYER, Collisions.PLATFORM, 
+									#~ Collisions.PlayerEnvCollision)
+		false_func = lambda space, arbiter : False
+		self.space.add_collision_handler(Collisions.PLAYER, Collisions.PLATFORM, 
+										false_func, false_func, false_func, false_func)
+		
+		
+	def _add_collision_handler(self, a, b, collision_class):
+		self.space.add_collision_handler(a, b, 
+			collision_class.begin, collision_class.pre_solve, 
+			collision_class.post_solve, collision_class.separate)
 	
 Window(1020, 600).main()

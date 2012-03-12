@@ -14,13 +14,17 @@ class PlayerEnvCollision(object):
 		
 		print "test"
 		
-		return False
+		return True
 	
 	@staticmethod
 	def pre_solve(space, arbiter):
 		player_shape, env_shape = arbiter.shapes
 		
-		return False
+		if(player.body.velocity.y < 0):
+			# If moving downwards
+			player.ground_collision()
+		
+		return True
 	
 	@staticmethod
 	def post_solve(space, arbiter):

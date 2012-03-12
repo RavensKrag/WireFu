@@ -11,10 +11,15 @@ class Platform(StaticObject):
 		half_width = self.width/2.0
 		half_height = self.height/2.0
 		
-		verts = [(-half_width, -half_height),
-				(half_width, -half_height),
-				(half_width, half_height),
-				(-half_width, half_height)]
+		#~ verts = [(-half_width, -half_height),
+				#~ (half_width, -half_height),
+				#~ (half_width, half_height),
+				#~ (-half_width, half_height)]
+		
+		verts = [(0,0),
+				(self.width, 0),
+				(self.width, self.height),
+				(0, self.height)]
 		
 		super(Platform, self).__init__(verts)
 		

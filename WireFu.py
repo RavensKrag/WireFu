@@ -29,15 +29,13 @@ class Window(object):
 		self.clock = pygame.time.Clock()
 		self.framerate = 50
 		
+		# Initialize physics
 		self.space = pm.Space()
-		#~ self.space._set_damping(0.12)
 		self.space.damping = 0.12
-		#~ print self.space._get_damping()
-		#~ self.space.damping = 0.8
-		#~ self.space._set_gravity = (0, -9.8)
 		self.space.gravity = (0, -9.8)
-		#~ self.space._set_gravity((0.0, -15.0))
-		#~ print self.space._get_gravity()
+		
+		# Initialize other systems
+		Physics.screen_height = self.height
 		
 		# Initialize game objects
 		self.gameobjects = pygame.sprite.Group()
@@ -45,19 +43,17 @@ class Window(object):
 		self.platforms = pygame.sprite.Group(Platform([0,1], [1, 0.1]),
 											Platform([3,2], [1, 0.1]),
 											Platform([4,1], [1, 0.1]),
-											Ramp([5,1], [5.2,2], width=1, skew=100))
+											Ramp([5,1], [5.2,2], width=5, skew=100))
 		
 		# Add objects to space
 		self.player.add_to(self.space)
-		#~ self.space.add_static(self.platforms.shape)
 		for p in self.platforms:
 			self.space.add_static(p.shape)
-			#~ p.add_to(self.space)
 		
-		# Initialize systems
-		Physics.screen_height = self.height
-		self.input_processor = EventProcessor(self, self.player)
+		# Assign collision handlers
 		self._init_collision_handlers()
+		
+		self.input_processor = EventProcessor(self, self.player)
 		
 		# Set running to True so main game loop will execute
 		self.running = True
@@ -72,10 +68,10 @@ class Window(object):
 	def draw(self):
 		self.screen.fill([0,0,0])
 		
-		self.player.draw(self.screen)
-		
 		for p in self.platforms:
 			p.draw(self.screen)
+			
+		self.player.draw(self.screen)
 	
 	def main(self):
 		while self.running:

@@ -28,6 +28,9 @@ class Platform(StaticObject):
 		self.body.position.x = pos[0]
 		self.body.position.y = pos[1]
 		
+		color = pygame.Color("red")
+		self.image.fill(color)
+		
 	def update(self):
 		pass
 	

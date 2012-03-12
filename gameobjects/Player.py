@@ -42,8 +42,8 @@ class Player(NonstaticObject):
 		if(self.body.position.y < 0):
 			self._ground_collision()
 			
-		print self.body.position
-		print self.to_pygame(self.body.position)
+		#~ print self.body.position
+		#~ print self.to_pygame(self.body.position)
 		#~ print self.rect
 		
 		# Constrain movement of player to screen

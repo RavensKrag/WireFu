@@ -88,12 +88,8 @@ class Window(object):
 		for p in self.platforms:
 			p.collision_type = Collisions.PLATFORM
 		
-		#~ self._add_collision_handler(Collisions.PLAYER, Collisions.PLATFORM, 
-									#~ Collisions.PlayerEnvCollision)
-		false_func = lambda space, arbiter : False
-		self.space.add_collision_handler(Collisions.PLAYER, Collisions.PLATFORM, 
-										false_func, false_func, false_func, false_func)
-		
+		self._add_collision_handler(Collisions.PLAYER, Collisions.PLATFORM, 
+									Collisions.PlayerEnvCollision)
 		
 	def _add_collision_handler(self, a, b, collision_class):
 		self.space.add_collision_handler(a, b, 

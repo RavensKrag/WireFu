@@ -37,10 +37,14 @@ class Physics(object):
 		self.body.position.x = val
 	x = property(_get_x, _set_x)
 	
-	
 	def _get_y(self):
 		return self.body.position.y
 	def _set_y(self, val):
 		self.body.position.y = val
 	y = property(_get_y, _set_y)
 	
+	def _get_collision_type(self):
+		self.shape.collision_type
+	def _set_collision_type(self, col_type):
+		self.shape.collision_type = col_type
+	collision_type = property(_get_collision_type, _set_collision_type)

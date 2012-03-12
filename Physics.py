@@ -31,9 +31,16 @@ class Physics(object):
 	def add_to(self, space):
 		space.add(self.body, self.shape)
 	
-	def get_x(self):
+	def _get_x(self):
 		return self.body.position.x
+	def _set_x(self, val):
+		self.body.position.x = val
+	x = property(_get_x, _set_x)
 	
-	def get_y(self):
+	
+	def _get_y(self):
 		return self.body.position.y
+	def _set_y(self, val):
+		self.body.position.y = val
+	y = property(_get_y, _set_y)
 	

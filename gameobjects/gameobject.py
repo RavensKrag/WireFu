@@ -56,10 +56,8 @@ class NonstaticObject(GameObject):
 		
 
 class StaticObject(GameObject):
-	static_body = pm.Body()
-	
 	def __init__(self, verts):
-		super(StaticObject, self).__init__(self.static_body, verts)
+		super(StaticObject, self).__init__(pm.Body(), verts)
 		
 		# Compute the dimensions of a rectangle which will encompass the shape, so that
 		# a Surface of the appropriate size can be generated. 

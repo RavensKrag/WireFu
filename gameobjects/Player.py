@@ -23,14 +23,15 @@ class Player(NonstaticObject):
 		self.body.velocity_limit = 6
 		
 		self.body.position.x = 0
-		self.body.position.y = 0
+		self.body.position.y = 1
 		
 		
 		self.jump_count = 0
 		self.jump_limit = 2
+		self.in_air = False
 		
 		self.movement_force = Vec2d(15, 0.0)
-		self.air_movement_force = self.movement_force/2
+		self.air_movement_force = Vec2d(11, 0.0)
 	
 	def draw(self, screen):
 		pos = self.to_pygame(self.body.position)
@@ -41,8 +42,8 @@ class Player(NonstaticObject):
 		if(self.body.position.y < 0):
 			self._ground_collision()
 			
-		#~ print self.body.position
-		#~ print self.to_pygame(self.body.position)
+		print self.body.position
+		print self.to_pygame(self.body.position)
 		#~ print self.rect
 		
 		# Constrain movement of player to screen
@@ -54,7 +55,6 @@ class Player(NonstaticObject):
 			self.body.force.x = 0
 			self.body.velocity.x = 0
 		elif(self.x + width > window_width):
-			print "right side"
 			self.x = window_width - width
 			self.body.force.x = 0
 			self.body.velocity.x = 0

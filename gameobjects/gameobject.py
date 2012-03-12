@@ -78,7 +78,8 @@ class StaticObject(GameObject):
 		
 		# Draw polygon on image
 		color = pygame.Color("red")
-		pygame.draw.polygon(self.image, color, verts)
+		self.image.fill(color)
+		#~ pygame.draw.polygon(self.image, color, verts)
 		
 		self.rect = self.image.get_rect()
 		#~ self.rect.left = self.body.position[0]

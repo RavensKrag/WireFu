@@ -42,20 +42,21 @@ class Window(object):
 		# Initialize game objects
 		self.gameobjects = pygame.sprite.Group()
 		self.player = Player()
-		#~ self.platforms = [Platform([0,0], [100, 10]),
-					#~ Platform([0,0], [100, 10]),
-					#~ Platform([0,0], [100, 10])]
+		self.platforms = [Platform([0,1], [1, 0.1]),
+					Platform([3,2], [1, 0.1]),
+					Platform([4,1], [1, 0.1])]
 		
 		# Add objects to space
 		self.player.add_to(self.space)
 		#~ self.space.add_static(self.platforms.shape)
-		#~ for p in self.platforms:
-			#~ self.space.add_static(p.shape)
+		for p in self.platforms:
+			self.space.add_static(p.shape)
 			#~ p.add_to(self.space)
 		
 		# Initialize systems
 		Physics.screen_height = self.height
 		self.input_processor = EventProcessor(self, self.player)
+		self._init_collision_handlers()
 		
 		# Set running to True so main game loop will execute
 		self.running = True
@@ -72,8 +73,8 @@ class Window(object):
 		
 		self.player.draw(self.screen)
 		
-		#~ for p in self.platforms:
-			#~ p.draw(self.screen)
+		for p in self.platforms:
+			p.draw(self.screen)
 	
 	def main(self):
 		while self.running:

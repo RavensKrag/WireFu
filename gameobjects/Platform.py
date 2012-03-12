@@ -2,11 +2,14 @@ from gameobject import StaticObject
 
 class Platform(StaticObject):
 	def __init__(self, pos, dimensions):
+		self.width = dimensions[0]
+		self.height = dimensions[1]
+		
 		# Counterclockwise winding
 		# Start from bottom left
 		# Pos x: right		Pos y: up
-		half_width = dimensions[0]/2.0
-		half_height = dimensions[1]/2.0
+		half_width = self.width/2.0
+		half_height = self.height/2.0
 		
 		verts = [(-half_width, -half_height),
 				(half_width, -half_height),

@@ -30,7 +30,7 @@ class Window(object):
 		
 		self.space = pm.Space()
 		#~ self.space._set_damping(0.12)
-		self.space.damping = 0.01
+		self.space.damping = 0.12
 		#~ print self.space._get_damping()
 		#~ self.space.damping = 0.8
 		#~ self.space._set_gravity = (0, -9.8)

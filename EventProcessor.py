@@ -19,9 +19,13 @@ class EventProcessor(object):
 				if event.key == pygame.K_ESCAPE:
 					self.window.running = False
 				elif event.key == self.jump_key:
-					self.player.jump()
+					if(self.player.handhold != None):
+						print "let go"
+						self.window.space.remove(self.player.handhold)
+						self.player.handhold = None
+					else:
+						self.player.jump()
 					
-				
 				else:	# Get button hold keydowns
 					self.inputs[event.key] = True
 			elif event.type == pygame.KEYUP:

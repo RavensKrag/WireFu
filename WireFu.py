@@ -72,6 +72,14 @@ class Window(object):
 		self.player.update(self.width)
 		
 		pygame.display.set_caption("fps: " + str(self.clock.get_fps()))
+		
+		for joint in Collisions.PlayerZiplineCollision.joint_queue:
+			if(self.player.handhold == None):
+				self.space.add(joint)
+				self.player.handhold = joint
+		
+		joints = Collisions.PlayerZiplineCollision.joint_queue
+		while(len(joints) > 0): joints.pop()
 	
 	def draw(self):
 		self.screen.fill([0,0,0])
@@ -90,11 +98,14 @@ class Window(object):
 	
 	def _init_collision_handlers(self):
 		self.player.collision_type = Collisions.PLAYER
-		for p in self.platforms:
-			p.collision_type = Collisions.PLATFORM
+		#~ for p in self.platforms:
+			#~ p.collision_type = Collisions.PLATFORM
 		
 		self._add_collision_handler(Collisions.PLAYER, Collisions.PLATFORM, 
 									Collisions.PlayerEnvCollision)
+		
+		self._add_collision_handler(Collisions.PLAYER, Collisions.ZIPLINE, 
+									Collisions.PlayerZiplineCollision)
 		
 	def _add_collision_handler(self, a, b, collision_class):
 		self.space.add_collision_handler(a, b, 

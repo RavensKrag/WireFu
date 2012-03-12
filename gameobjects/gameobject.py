@@ -55,6 +55,9 @@ class NonstaticObject(GameObject):
 		#~ pos = Physics.to_pygame(self.body.position)
 		#~ self.rect.left = pos[0]
 		#~ self.rect.bottom = pos[1]
+	
+	def get_height(self):
+		return self._animation.get_height()
 		
 
 class StaticObject(GameObject):

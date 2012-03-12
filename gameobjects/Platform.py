@@ -23,3 +23,7 @@ class Platform(StaticObject):
 		
 	def update(self):
 		pass
+	
+	def draw(self, screen):
+		pos = self.to_pygame(self.body.position)
+		screen.blit(self.image, (pos[0], pos[1]-self.height))

@@ -12,19 +12,21 @@ class Physics(object):
 		self.shape = shape
 		self.body = shape.body
 	
-	def to_px(self, meters):
-		return int(meters*self.scale)
+	@staticmethod
+	def to_px(meters):
+		return int(meters*Physics.scale)
 	
-	def to_meters(self, px):
-		return float(px)/self.scale
+	@staticmethod
+	def to_meters(px):
+		return float(px)/Physics.scale
 		
 	def to_pygame(self, vec):
 		# Convert from pymunk coordinates to pygame coordinates
-		return self.to_px(vec.x), self.screen_height-self.to_px(vec.y)
+		return Physics.to_px(vec.x), self.screen_height-Physics.to_px(vec.y)
 	
 	def to_pymunk(self, point):
 		# Only implement if necessary
-		return Vec2d(self.to_meters(point[0]), self.to_meters(point[1]))
+		return Vec2d(Physics.to_meters(point[0]), Physics.to_meters(point[1]))
 	
 	def add_to(self, space):
 		space.add(self.body, self.shape)

@@ -19,12 +19,14 @@ class Physics(object):
 	@staticmethod
 	def to_meters(px):
 		return float(px)/Physics.scale
-		
-	def to_pygame(self, vec):
-		# Convert from pymunk coordinates to pygame coordinates
-		return Physics.to_px(vec.x), self.screen_height-Physics.to_px(vec.y)
 	
-	def to_pymunk(self, point):
+	@staticmethod	
+	def to_pygame(vec):
+		# Convert from pymunk coordinates to pygame coordinates
+		return Physics.to_px(vec.x), Physics.screen_height-Physics.to_px(vec.y)
+	
+	@staticmethod
+	def to_pymunk(point):
 		# Only implement if necessary
 		return Vec2d(Physics.to_meters(point[0]), Physics.to_meters(point[1]))
 	

@@ -23,7 +23,7 @@ class GameObject(pygame.sprite.Sprite, Physics):
 		pass
 		
 	def draw(self, surface):
-		surface.blit(self.image, self.to_pygame(self.body.position))
+		surface.blit(self.image, Physics.to_pygame(self.body.position))
 		#~ surface.blit(self.image, self.rect)
 
 class NonstaticObject(GameObject):
@@ -44,7 +44,7 @@ class NonstaticObject(GameObject):
 		
 		for i in range(0, len(verts)):
 			#~ print verts[i]
-			verts[i] = self.to_pymunk(verts[i])
+			verts[i] = Physics.to_pymunk(verts[i])
 			#~ print "...{}".format(verts[i])
 		
 		super(NonstaticObject, self).__init__(body, verts)
@@ -52,7 +52,7 @@ class NonstaticObject(GameObject):
 	def update(self):
 		self.image, self.rect = self._animation.update()
 		
-		pos = self.to_pygame(self.body.position)
+		#~ pos = Physics.to_pygame(self.body.position)
 		#~ self.rect.left = pos[0]
 		#~ self.rect.bottom = pos[1]
 		
@@ -74,7 +74,7 @@ class StaticObject(GameObject):
 			if bottom == None or v[1] < bottom:
 				bottom = v[1]
 		
-		self.image = pygame.Surface([self.to_px(right-left), self.to_px(top-bottom)])
+		self.image = pygame.Surface([Physics.to_px(self.width), Physics.to_px(self.height)])
 		
 		# Draw polygon on image
 		color = pygame.Color("red")

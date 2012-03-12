@@ -1,3 +1,5 @@
+import pygame
+from Physics import Physics
 from gameobject import StaticObject
 
 class Platform(StaticObject):
@@ -30,5 +32,21 @@ class Platform(StaticObject):
 		pass
 	
 	def draw(self, screen):
-		pos = self.to_pygame(self.body.position)
-		screen.blit(self.image, (pos[0], pos[1]-self.height))
+		pos = Physics.to_pygame(self.body.position)
+		screen.blit(self.image, (pos[0], pos[1]-Physics.to_px(self.height)))
+		
+		# Debug outline
+		#~ x_px = Physics.to_px(self.body.position.x)
+		#~ y_px = Physics.to_px(self.body.position.y)
+		#~ width_px = Physics.to_px(self.width)
+		#~ height_px = Physics.to_px(self.height)
+		
+		#~ color = pygame.Color("green")
+		#~ 
+		#~ verts =	[(x_px, Physics.screen_height-y_px) ,
+				#~ (x_px+width_px, Physics.screen_height-y_px),
+				#~ (x_px+width_px, Physics.screen_height-y_px-height_px),
+				#~ (x_px, Physics.screen_height-y_px-height_px)]
+		#~ 
+		#~ pygame.draw.polygon(screen, color, verts, 2)
+			

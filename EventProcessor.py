@@ -35,6 +35,8 @@ class EventProcessor(object):
 		
 		# Process held buttons
 		if self.inputs.get(self.right_key, False):
+			#~ pass
 			self.player.move_right()
 		if self.inputs.get(self.left_key, False):
+			#~ pass
 			self.player.move_left()

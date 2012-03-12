@@ -19,7 +19,8 @@ class GameObject(pygame.sprite.Sprite, Physics):
 		pass
 		
 	def draw(self, surface):
-		surface.blit(self.image, self.rect)
+		surface.blit(self.image, self.to_pygame(self.body.position))
+		#~ surface.blit(self.image, self.rect)
 
 class NonstaticObject(GameObject):
 	# All moving objects should have some sort of animation.
@@ -28,7 +29,7 @@ class NonstaticObject(GameObject):
 		self._animation = Animation()
 		self.image, self.rect = self._animation.update()
 		
-		body = pm.Body(mass, moment)
+		body = pm.Body(mass, pm.inf)
 		# Counterclockwise winding
 		# Start from bottom left
 		# Pos x: right		Pos y: up
@@ -37,10 +38,20 @@ class NonstaticObject(GameObject):
 				(self._animation.get_width()/2, self._animation.get_height()),
 				(-self._animation.get_width()/2, self._animation.get_height())]
 		
+		for i in range(0, len(verts)):
+			#~ print verts[i]
+			verts[i] = self.to_pymunk(verts[i])
+			#~ print "...{}".format(verts[i])
+		
 		super(NonstaticObject, self).__init__(body, verts)
 	
 	def update(self):
 		self.image, self.rect = self._animation.update()
+		
+		pos = self.to_pygame(self.body.position)
+		#~ self.rect.left = pos[0]
+		#~ self.rect.bottom = pos[1]
+		
 
 class StaticObject(GameObject):
 	static_body = pm.Body()
@@ -61,13 +72,18 @@ class StaticObject(GameObject):
 			if bottom == None or v[1] < bottom:
 				bottom = v[1]
 		
-		self.image = pygame.Surface([right-left, top-bottom])
+		self.image = pygame.Surface([self.to_px(right-left), self.to_px(top-bottom)])
 		
 		# Draw polygon on image
 		color = pygame.Color("red")
 		pygame.draw.polygon(self.image, color, verts)
 		
 		self.rect = self.image.get_rect()
+		#~ self.rect.left = self.body.position[0]
+		#~ self.rect.bottom = self.body.position[1]
 		
 	def update(self):
 		pass
+	
+	def add_to(self, space):
+		space.add_static(self)

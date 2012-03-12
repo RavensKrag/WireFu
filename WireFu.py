@@ -11,7 +11,7 @@ import math, sys, random
 # Import files
 from EventProcessor import EventProcessor
 from gameobjects import *
-import Physics
+from Physics import Physics
 from Animation import *
 
 
@@ -29,31 +29,45 @@ class Window(object):
 		self.framerate = 50
 		
 		self.space = pm.Space()
+		#~ self.space._set_damping(0.12)
+		self.space.damping = 0.01
+		#~ print self.space._get_damping()
+		#~ self.space.damping = 0.8
+		#~ self.space._set_gravity = (0, -9.8)
+		self.space.gravity = (0, -9.8)
+		#~ self.space._set_gravity((0.0, -15.0))
+		#~ print self.space._get_gravity()
 		
 		# Initialize game objects
 		self.gameobjects = pygame.sprite.Group()
 		self.player = Player()
-		self.platforms = [Platform([0,0], [100, 10]),
-					Platform([0,0], [100, 10]),
-					Platform([0,0], [100, 10])]
+		#~ self.platforms = [Platform([0,0], [100, 10]),
+					#~ Platform([0,0], [100, 10]),
+					#~ Platform([0,0], [100, 10])]
 		
 		# Add objects to space
 		self.player.add_to(self.space)
-		#~ for p in platforms:
-			#~ p.add_to(space)
+		#~ self.space.add_static(self.platforms.shape)
+		#~ for p in self.platforms:
+			#~ self.space.add_static(p.shape)
+			#~ p.add_to(self.space)
 		
 		# Initialize systems
-		Physics.screen_height = height
+		Physics.screen_height = self.height
 		self.input_processor = EventProcessor(self, self.player)
 	
 	def update(self):
-		self.space.step(self.framerate)
 		self.input_processor.update()
+		self.space.step(1.0/self.framerate)
+		self.player.update()
 		
 	def draw(self):
+		self.screen.fill([0,0,0])
+		
 		self.player.draw(self.screen)
-		for p in self.platforms:
-			p.draw(self.screen)
+		
+		#~ for p in self.platforms:
+			#~ p.draw(self.screen)
 	
 	def main(self):
 		while 1:
@@ -62,4 +76,4 @@ class Window(object):
 			pygame.display.flip()
 			self.clock.tick(self.framerate)
 	
-Window(600,600).main()
+Window(1020, 600).main()

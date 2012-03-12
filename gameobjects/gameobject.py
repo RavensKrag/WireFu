@@ -89,4 +89,4 @@ class StaticObject(GameObject):
 		pass
 	
 	def add_to(self, space):
-		space.add_static(self)
+		space.add_static(self.shape)

@@ -42,29 +42,34 @@ class Player(NonstaticObject):
 		#~ print self.rect
 		
 	
-	def move_up(self):
-		pass
-	
-	def move_down(self):
-		pass
-	
 	def move_left(self):
-		self.body.apply_force((-100, 0.0))
+		if(self.in_air):
+			self.body.apply_force((-15, 0.0))
+		else:
+			self.body.apply_force((-30, 0.0))
 	
 	def move_right(self):
-		self.body.apply_force((100, 0.0))
+		if(self.in_air):
+			self.body.apply_force((15, 0.0))
+		else:
+			self.body.apply_force((30, 0.0))
 	
 	def jump(self):
 		if self.jump_count < self.jump_limit:
+			self.in_air = True
 			self.body.velocity.y += 5
 			self.jump_count += 1
 	
 	def _ground_collision(self):
 		#~ print "ground"
+		self.in_air = False
+		
 		self.jump_count = 0
 		
 		self.body.position.y = 0
 		self.body.velocity.y = 0
 		self.body.reset_forces
-		
-		
+	
+	def is_in_air(self):
+		return self.in_air
+	

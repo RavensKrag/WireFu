@@ -12,8 +12,10 @@ class GameObject(pygame.sprite.Sprite, Physics):
 	# specified by self.rect.  When animating, simply update the image reference
 	# in time for the next draw.
 	def __init__(self, body, verts):
-		self.body = body
-		self.shape = pm.Poly(body, verts)
+		shape = pm.Poly(body, verts)
+		Physics.__init__(self, shape)
+		
+		pygame.sprite.Sprite.__init__(self)
 	
 	def update(self):
 		pass

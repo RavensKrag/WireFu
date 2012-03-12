@@ -8,6 +8,10 @@ class Physics(object):
 	screen_height = None
 	scale = 50*3# Number of pixels per meter
 	
+	def __init__(self, shape):
+		self.shape = shape
+		self.body = shape.body
+	
 	def to_px(self, meters):
 		return int(meters*self.scale)
 	

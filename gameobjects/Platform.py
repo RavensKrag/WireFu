@@ -3,7 +3,7 @@ from Physics import Physics
 from gameobject import StaticObject
 
 class Platform(StaticObject):
-	def __init__(self, pos, dimensions):
+	def __init__(self, pos, dimensions, color=pygame.Color("red")):
 		self.width = dimensions[0]
 		self.height = dimensions[1]
 		
@@ -28,7 +28,6 @@ class Platform(StaticObject):
 		self.body.position.x = pos[0]
 		self.body.position.y = pos[1]
 		
-		color = pygame.Color("red")
 		self.image.fill(color)
 		
 	def update(self):

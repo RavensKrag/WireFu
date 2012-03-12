@@ -10,8 +10,10 @@ import math, sys, random
 
 # Import files
 from EventProcessor import EventProcessor
-from gameobjects import *
 from Physics import Physics
+from gameobjects import *
+#~ from gameobjects import zipline
+from gameobjects.zipline import ZiplineWire
 from Animation import *
 import Collisions
 
@@ -40,15 +42,17 @@ class Window(object):
 		# Initialize game objects
 		self.gameobjects = pygame.sprite.Group()
 		self.player = Player()
-		self.platforms = pygame.sprite.Group(Platform([0,1], [1, 0.1]),
-											Platform([3,2], [1, 0.1]),
-											Platform([4,1], [1, 0.1]),
-											Ramp([5,1], [5.2,2], width=5, skew=100))
+		self.platforms = pygame.sprite.Group(Platform([0,2.4], [1, 0.1], pygame.Color("yellow")),
+											Platform([3.8,2.7], [1, 0.1]),
+											Platform([3,1], [2, 0.1]),
+											Platform([1.3,0.3], [1, 0.1]),
+											Ramp([5,1], [5.5,2.5], width=5),
+											ZiplineWire([0.5,3.6], [3.8,3.9]))
 		
 		# Add objects to space
 		self.player.add_to(self.space)
 		for p in self.platforms:
-			self.space.add_static(p.shape)
+			p.add_to(self.space)
 		
 		# Assign collision handlers
 		self._init_collision_handlers()
@@ -61,6 +65,10 @@ class Window(object):
 	def update(self):
 		self.input_processor.update()
 		self.space.step(1.0/self.framerate)
+		
+		for p in self.platforms:
+			p.update()
+		
 		self.player.update(self.width)
 		
 		pygame.display.set_caption("fps: " + str(self.clock.get_fps()))

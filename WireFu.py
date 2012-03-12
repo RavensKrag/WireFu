@@ -55,6 +55,9 @@ class Window(object):
 		# Initialize systems
 		Physics.screen_height = self.height
 		self.input_processor = EventProcessor(self, self.player)
+		
+		# Set running to True so main game loop will execute
+		self.running = True
 	
 	def update(self):
 		self.input_processor.update()
@@ -70,7 +73,7 @@ class Window(object):
 			#~ p.draw(self.screen)
 	
 	def main(self):
-		while 1:
+		while self.running:
 			self.update()
 			self.draw()
 			pygame.display.flip()

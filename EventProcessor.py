@@ -17,7 +17,7 @@ class EventProcessor(object):
 			if event.type == pygame.KEYDOWN:
 				# Get button press events
 				if event.key == pygame.K_ESCAPE:
-					sys.exit()
+					self.window.running = False
 				elif event.key == self.jump_key:
 					self.player.jump()
 					
@@ -27,7 +27,7 @@ class EventProcessor(object):
 			elif event.type == pygame.KEYUP:
 				self.inputs[event.key] = False
 			elif event.type == pygame.QUIT:
-				sys.exit()
+				self.window.running = False
 			#~ elif event.type == pygame.MOUSEBUTTONDOWN:
 				#~ if event.button == 1: # Left Click
 					#~ pos = (event.pos[0]-self.window.offset_x, event.pos[1])

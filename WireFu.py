@@ -64,6 +64,8 @@ class Window(object):
 		self.input_processor.update()
 		self.space.step(1.0/self.framerate)
 		self.player.update(self.width)
+		
+		pygame.display.set_caption("fps: " + str(self.clock.get_fps()))
 	
 	def draw(self):
 		self.screen.fill([0,0,0])

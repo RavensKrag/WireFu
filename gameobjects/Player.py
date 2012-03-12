@@ -4,6 +4,7 @@ from pymunk import Vec2d
 import math, sys, random
 
 from gameobject import NonstaticObject
+from Physics import Physics
 
 class Player(NonstaticObject):
 	def __init__(self):
@@ -35,14 +36,28 @@ class Player(NonstaticObject):
 		pos = self.to_pygame(self.body.position)
 		screen.blit(self.image, (pos[0], pos[1]-self._animation.get_height()))
 	
-	def update(self):
+	def update(self, window_width):
 		super(Player, self).update()
 		if(self.body.position.y < 0):
 			self._ground_collision()
 			
-		print self.body.position
+		#~ print self.body.position
 		#~ print self.to_pygame(self.body.position)
 		#~ print self.rect
+		
+		# Constrain movement of player to screen
+		window_width = Physics.to_meters(window_width)
+		width = Physics.to_meters(self._animation.get_width())
+		#~ print self.body.force
+		if(self.x < 0):
+			self.x = 0
+			self.body.force.x = 0
+			self.body.velocity.x = 0
+		elif(self.x + width > window_width):
+			print "right side"
+			self.x = window_width - width
+			self.body.force.x = 0
+			self.body.velocity.x = 0
 		
 	
 	def move_left(self):

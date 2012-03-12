@@ -59,8 +59,8 @@ class Window(object):
 	def update(self):
 		self.input_processor.update()
 		self.space.step(1.0/self.framerate)
-		self.player.update()
-		
+		self.player.update(self.width)
+	
 	def draw(self):
 		self.screen.fill([0,0,0])
 		

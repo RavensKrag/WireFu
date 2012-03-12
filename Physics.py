@@ -29,3 +29,9 @@ class Physics(object):
 	def add_to(self, space):
 		space.add(self.body, self.shape)
 	
+	def get_x(self):
+		return self.body.position.x
+	
+	def get_y(self):
+		return self.body.position.y
+	

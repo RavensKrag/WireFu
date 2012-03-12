@@ -27,6 +27,9 @@ class Player(NonstaticObject):
 		
 		self.jump_count = 0
 		self.jump_limit = 2
+		
+		self.movement_force = Vec2d(15, 0.0)
+		self.air_movement_force = self.movement_force/2
 	
 	def draw(self, screen):
 		pos = self.to_pygame(self.body.position)
@@ -44,15 +47,15 @@ class Player(NonstaticObject):
 	
 	def move_left(self):
 		if(self.in_air):
-			self.body.apply_force((-15, 0.0))
+			self.body.apply_force(-self.air_movement_force)
 		else:
-			self.body.apply_force((-30, 0.0))
+			self.body.apply_force(-self.movement_force)
 	
 	def move_right(self):
 		if(self.in_air):
-			self.body.apply_force((15, 0.0))
+			self.body.apply_force(self.air_movement_force)
 		else:
-			self.body.apply_force((30, 0.0))
+			self.body.apply_force(self.movement_force)
 	
 	def jump(self):
 		if self.jump_count < self.jump_limit:

@@ -45,7 +45,7 @@ class Window(object):
 		self.platforms = pygame.sprite.Group(Platform([0,2.4], [1, 0.1], pygame.Color("yellow")),
 											Platform([3.8,2.7], [1, 0.1]),
 											Platform([3,1], [2, 0.1]),
-											Platform([1.3,0.3], [1, 0.1]),
+											Platform([1.3,0.5], [1, 0.1]),
 											Ramp([5,1], [5.5,2.5], width=5),
 											ZiplineWire([0.5,3.6], [3.8,3.9]))
 		

@@ -20,7 +20,7 @@ class Player(NonstaticObject):
 		self.rect = self.image.get_rect()
 		self.rect.topleft = [0,0]
 		
-		self.body.velocity_limit = 8
+		self.body.velocity_limit = 12
 		
 		self.body.position.x = 0
 		self.body.position.y = 1
@@ -100,6 +100,10 @@ class Player(NonstaticObject):
 			self.in_air = True
 			self.body.velocity.y += 5	# Add instead of setting to take momentum into account
 			self.jump_count += 1
+	
+	def let_go(self, space):
+		space.remove(self.handhold)
+		self.handhold = None
 	
 	def ground_collision(self):
 		#~ print "ground"

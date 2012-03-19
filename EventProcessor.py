@@ -21,8 +21,7 @@ class EventProcessor(object):
 				elif event.key == self.jump_key:
 					if(self.player.handhold != None):
 						print "let go"
-						self.window.space.remove(self.player.handhold)
-						self.player.handhold = None
+						self.player.let_go(self.window.space)
 					else:
 						self.player.jump()
 					

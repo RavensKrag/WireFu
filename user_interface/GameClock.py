@@ -41,6 +41,7 @@ class GameClock(object):
 	
 	def stop(self):
 		self.active = False
+		self.color = pygame.Color("red")
 	
 	def start(self):
 		self.active = True

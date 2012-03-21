@@ -16,7 +16,8 @@ from gameobjects import *
 from gameobjects.zipline import ZiplineWire
 from Animation import *
 import Collisions
-
+#~ import user_interface
+from user_interface.GameClock import *
 
 class Window(object):
 	def __init__(self, width, height):
@@ -38,6 +39,7 @@ class Window(object):
 		
 		# Initialize other systems
 		Physics.screen_height = self.height
+		self.gameclock = GameClock(self.clock)
 		
 		# Initialize game objects
 		self.gameobjects = pygame.sprite.Group()
@@ -65,6 +67,7 @@ class Window(object):
 	def update(self):
 		self.input_processor.update()
 		self.space.step(1.0/self.framerate)
+		self.gameclock.update()
 		
 		for p in self.platforms:
 			p.update()
@@ -82,12 +85,18 @@ class Window(object):
 		while(len(joints) > 0): joints.pop()
 	
 	def draw(self):
+		# Background
 		self.screen.fill([0,0,0])
 		
+		# Environment
 		for p in self.platforms:
 			p.draw(self.screen)
 			
+		# Player
 		self.player.draw(self.screen)
+		
+		# Draw UI
+		self.gameclock.draw(self.screen)
 	
 	def main(self):
 		while self.running:

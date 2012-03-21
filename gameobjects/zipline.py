@@ -12,7 +12,7 @@ class ZiplineWire(Ramp):
 	# creation of angled ziplines.
 	def __init__(self, p1, p2):
 		super(ZiplineWire, self).__init__(p1, p2, 50)
-		self.handle = ZiplineHandle()
+		#~ self.handle = ZiplineHandle()
 		#~ self.handle.body.position = Vec2d(p1)
 		
 		#~ self.joint = pm.GrooveJoint(self.body, self.handle.body,
@@ -23,17 +23,17 @@ class ZiplineWire(Ramp):
 		self.shape.friction = 0.1
 	
 	def update(self):
-		#~ pass
-		self.handle.update()
+		pass
+		#~ self.handle.update()
 	
 	def draw(self, screen):
 		#~ print "zipline draw"
 		super(ZiplineWire, self).draw(screen)
-		self.handle.draw(screen)
+		#~ self.handle.draw(screen)
 	
 	def add_to(self, space):
 		super(ZiplineWire, self).add_to(space)
-		self.handle.add_to(space)
+		#~ self.handle.add_to(space)
 		
 		#~ space.add(self.joint)
 		

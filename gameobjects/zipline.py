@@ -20,6 +20,7 @@ class ZiplineWire(Ramp):
 									#~ (0,0))
 		
 		self.shape.collision_type = Collisions.ZIPLINE
+		self.shape.friction = 0.1
 	
 	def update(self):
 		#~ pass

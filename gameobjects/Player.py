@@ -20,7 +20,7 @@ class Player(NonstaticObject):
 		self.rect = self.image.get_rect()
 		self.rect.topleft = [0,0]
 		
-		self.body.velocity_limit = 12
+		self.body.velocity_limit = 8
 		
 		self.body.position.x = 0
 		self.body.position.y = 1
@@ -38,8 +38,10 @@ class Player(NonstaticObject):
 		self.jump_limit = 2
 		self.in_air = False
 		
-		self.movement_force = Vec2d(250, 0.0)
-		self.air_movement_force = Vec2d(120, 0.0)
+		self.movement_force = Vec2d(200, 0.0)
+		self.air_movement_force = Vec2d(100, 0.0)
+		
+		self.shape.friction = 0.12
 	
 	def draw(self, screen):
 		pos = Physics.to_pygame(self.body.position)
@@ -98,7 +100,7 @@ class Player(NonstaticObject):
 	def jump(self):
 		if self.jump_count < self.jump_limit:
 			self.in_air = True
-			self.body.velocity.y += 5	# Add instead of setting to take momentum into account
+			self.body.velocity.y += 4	# Add instead of setting to take momentum into account
 			self.jump_count += 1
 	
 	def let_go(self, space):

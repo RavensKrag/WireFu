@@ -33,7 +33,7 @@ class Window(object):
 		
 		# Initialize physics
 		self.space = pm.Space()
-		self.space.damping = 0.12
+		#~ self.space.damping = 0.12
 		self.space.gravity = (0, -9.8)
 		
 		# Initialize other systems

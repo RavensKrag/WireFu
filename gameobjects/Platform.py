@@ -32,6 +32,7 @@ class Platform(StaticObject):
 		self.image.fill(color)
 		
 		self.shape.collision_type = Collisions.PLATFORM
+		self.shape.friction = 0.8
 		
 	def update(self):
 		pass

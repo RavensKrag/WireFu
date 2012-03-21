@@ -5,6 +5,8 @@ import pymunk as pm
 from pymunk import Vec2d
 import math, sys, random
 
+from ExitTimer import *
+
 # Define collision handlers in this package
 PLAYER = 0
 PLATFORM = 1
@@ -153,21 +155,36 @@ class GroundCollision(object):
 		return False
 
 class PlayerExitCollision(object):
+	timer = ExitTimer(3000)
+	
 	@staticmethod
 	def begin(space, arbiter):
-		#~ player_shape, env_shape = arbiter.shapes
+		player_shape, env_shape = arbiter.shapes
+		
+		# When the collision occurs, start the level exit timer.
+		# When this timer finishes, then complete the level.
+		
+		if(player_shape.body.velocity.y < 0 and player_shape.body.position.y > env_shape.body.position.y):
+			player_shape.gameobject.ground_collision()
+			print "exiting zone..."
 		
 		return True
 	
 	@staticmethod
 	def pre_solve(space, arbiter):
-		#~ a, b = arbiter.shapes
-		#~ player_shape, env_shape = arbiter.shapes
+		player_shape, env_shape = arbiter.shapes
 		
-		# When the collision occurs, start the level exit timer.
-		# When this timer finishes, then complete the level.
+		#~ if(player_shape.body.velocity.y < 0 and player_shape.body.position.y > env_shape.body.position.y):
+		#~ print "out"
+		PlayerExitCollision.timer.update(20) # 50 FPS
+		#~ timer.update(16) # 60 FPS
 		
-		
+		if PlayerExitCollision.timer.can_exit():
+			print "level complete"
+			
+			# Complete the level
+			
+			PlayerExitCollision.timer.kill()
 		
 		return True
 	
@@ -180,5 +197,8 @@ class PlayerExitCollision(object):
 	@staticmethod
 	def separate(space, arbiter):
 		#~ player_shape, env_shape = arbiter.shapes
+		print "Exit interrupted"
+		
+		PlayerExitCollision.timer.reset()
 		
 		return False

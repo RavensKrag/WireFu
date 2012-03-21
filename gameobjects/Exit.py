@@ -13,6 +13,8 @@ class Exit(Platform):
 	def __init__(self, position, dimensions):
 		color = pygame.Color("yellow")
 		super(Exit, self).__init__(position, dimensions, color)
+		
+		self.shape.collision_type = Collisions.EXIT_ZONE
 	
 	#~ def update(self):
 		#~ pass

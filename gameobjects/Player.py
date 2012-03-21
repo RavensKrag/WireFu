@@ -100,7 +100,7 @@ class Player(NonstaticObject):
 	def jump(self):
 		if self.jump_count < self.jump_limit:
 			self.in_air = True
-			self.body.velocity.y += 4	# Add instead of setting to take momentum into account
+			self.body.velocity.y = 4	# Add instead of setting to take momentum into account
 			self.jump_count += 1
 	
 	def let_go(self, space):

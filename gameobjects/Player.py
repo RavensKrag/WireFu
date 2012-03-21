@@ -57,9 +57,9 @@ class Player(NonstaticObject):
 		self.image = pygame.transform.rotate(image, self.body.angle/math.pi*180)
 		#~ print "{:03.5f}".format(self.body.angle/math.pi*180)
 		
-		if(self.body.position.y < 0):
-			self.ground_collision()
-			self.body.position.y = 0
+		#~ if(self.body.position.y < 0):
+			#~ self.ground_collision()
+			#~ self.body.position.y = 0
 			
 		#~ print self.body.position
 		#~ print Physics.to_pygame(self.body.position)

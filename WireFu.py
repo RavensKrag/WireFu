@@ -42,12 +42,13 @@ class Window(object):
 		# Initialize game objects
 		self.gameobjects = pygame.sprite.Group()
 		self.player = Player()
-		self.platforms = pygame.sprite.Group(Platform([0,2.4], [1, 0.1], pygame.Color("yellow")),
+		self.platforms = pygame.sprite.Group(Ground(),
+											Platform([0,2.4], [1, 0.1], pygame.Color("yellow")),
 											Platform([3.8,2.7], [1, 0.1]),
 											Platform([3,1], [2, 0.1]),
 											Platform([1.3,0.5], [1, 0.1]),
 											Ramp([5,1], [5.5,2.5], width=5),
-											ZiplineWire([0.5,3.6], [3.8,3.9]))
+											ZiplineWire([1.5,3.6], [3.8,3.9]))
 		
 		# Add objects to space
 		self.player.add_to(self.space)
@@ -106,6 +107,9 @@ class Window(object):
 		
 		self._add_collision_handler(Collisions.PLAYER, Collisions.ZIPLINE, 
 									Collisions.PlayerZiplineCollision)
+		
+		self._add_collision_handler(Collisions.PLAYER, Collisions.GROUND,
+									Collisions.GroundCollision)
 		
 	def _add_collision_handler(self, a, b, collision_class):
 		self.space.add_collision_handler(a, b, 

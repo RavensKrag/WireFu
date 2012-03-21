@@ -11,6 +11,7 @@ import math, sys, random
 PLAYER = 0
 PLATFORM = 1
 ZIPLINE = 2
+GROUND = 3
 
 
 class PlayerEnvCollision(object):
@@ -118,6 +119,43 @@ class PlayerZiplineCollision(object):
 		#~ player_shape, env_shape = arbiter.shapes
 		
 		#~ arbiter.shapes[0].body.angle = 0
+		
+		return False
+
+class GroundCollision(object):
+	def __init__(self):
+		pass
+	
+	@staticmethod
+	def begin(space, arbiter):
+		#~ player_shape, env_shape = arbiter.shapes
+		
+		return True
+	
+	@staticmethod
+	def pre_solve(space, arbiter):
+		#~ a, b = arbiter.shapes
+		
+		a, b = arbiter.shapes
+		
+		if(a.collision_type == PLAYER):
+			#~ print "player a"
+			a.gameobject.ground_collision()
+		elif(b.collision_type == PLAYER):
+			#~ print "player b"
+			b.gameobject.ground_collision()
+		
+		return True
+	
+	@staticmethod
+	def post_solve(space, arbiter):
+		#~ player_shape, env_shape = arbiter.shapes
+		
+		return True
+	
+	@staticmethod
+	def separate(space, arbiter):
+		#~ player_shape, env_shape = arbiter.shapes
 		
 		return False
 		

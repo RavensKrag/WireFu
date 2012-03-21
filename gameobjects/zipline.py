@@ -53,6 +53,8 @@ class ZiplineHandle(NonstaticObject):
 		# Override the image from NonstaticObject for now
 		self.image = pygame.Surface([0.2*2, 0.2*2])
 		self.image.fill(pygame.Color("yellow"))
+		
+		self.shape.collision_type = -1
 	
 	def update(self):
 		pass

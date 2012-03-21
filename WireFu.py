@@ -41,10 +41,13 @@ class Window(object):
 		Physics.screen_height = self.height
 		self.gameclock = GameClock(self.clock)
 		
+		self.player = Player()
+		self.input_processor = EventProcessor(self, self.player)
+		
 		# Initialize game objects
 		self.gameobjects = pygame.sprite.Group()
-		self.player = Player()
-		self.platforms = pygame.sprite.Group(Ground(), Exit([0.3,2.4], [1, 0.1], self.gameclock),
+		
+		self.platforms = pygame.sprite.Group(Ground(), Exit([0.3,2.4], [1, 0.1], self.gameclock, self.input_processor),
 											Platform([3.8,2.7], [1, 0.1]),
 											Platform([3,1], [2, 0.1]),
 											Platform([1.3,0.5], [1, 0.1]),
@@ -58,8 +61,6 @@ class Window(object):
 		
 		# Assign collision handlers
 		self._init_collision_handlers()
-		
-		self.input_processor = EventProcessor(self, self.player)
 		
 		# Set running to True so main game loop will execute
 		self.running = True

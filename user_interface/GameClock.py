@@ -20,7 +20,7 @@ class GameClock(object):
 		self.font = pygame.font.SysFont("Dejavu Sans", 20)
 		self.color = color
 		
-		self.active = True
+		self.active = False
 	
 	def update(self):
 		if self.active:
@@ -44,7 +44,8 @@ class GameClock(object):
 		self.color = pygame.Color("red")
 	
 	def start(self):
-		self.active = True
+		if self.active == False:
+			self.active = True
 	
 	def reset(self, color=pygame.Color("green")):
 		self.milliseconds = 0
@@ -54,4 +55,11 @@ class GameClock(object):
 		self.active = True
 		
 		self.color = color
+	
+	def get_time(self):
+		# Return time as a tuple, little-endian style
+		return (self.milliseconds, self.seconds, self.minutes)
+	
+	def is_active(self):
+		return self.active
 	

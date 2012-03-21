@@ -182,6 +182,7 @@ class PlayerExitCollision(object):
 			PlayerExitCollision.timer.kill()
 			
 			env_shape.gameobject.gameclock.stop()
+			env_shape.gameobject.input_handler.deactivate_input()
 			print "level complete"
 			
 		return True

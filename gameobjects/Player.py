@@ -39,7 +39,7 @@ class Player(NonstaticObject):
 		self.in_air = False
 		
 		self.movement_force = Vec2d(200, 0.0)
-		self.air_movement_force = Vec2d(100, 0.0)
+		self.air_movement_force = Vec2d(50, 0.0)
 		
 		self.shape.friction = 0.12
 	
@@ -113,8 +113,8 @@ class Player(NonstaticObject):
 		
 		self.jump_count = 0
 		
-		self.body.velocity.y = 0
-		self.body.reset_forces
+		#~ self.body.velocity.y = 0
+		#~ self.body.reset_forces
 	
 	def is_in_air(self):
 		return self.in_air

@@ -110,6 +110,9 @@ class Window(object):
 		self._add_collision_handler(Collisions.PLAYER, Collisions.GROUND,
 									Collisions.GroundCollision)
 		
+		self._add_collision_handler(Collisions.PLAYER, Collisions.EXIT_ZONE,
+									Collisions.PlayerExitCollision)
+		
 	def _add_collision_handler(self, a, b, collision_class):
 		self.space.add_collision_handler(a, b, 
 			collision_class.begin, collision_class.pre_solve, 

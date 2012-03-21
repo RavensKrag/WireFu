@@ -6,18 +6,14 @@ from pymunk import Vec2d
 import math, sys, random
 
 # Define collision handlers in this package
-#~ LAYER_PLAYER = 0
-#~ LAYER_PLATFORM = 1
 PLAYER = 0
 PLATFORM = 1
 ZIPLINE = 2
 GROUND = 3
+EXIT_ZONE = 4
 
 
 class PlayerEnvCollision(object):
-	def __init__(self):
-		pass
-	
 	@staticmethod
 	def begin(space, arbiter):
 		#~ player_shape, env_shape = arbiter.shapes
@@ -81,9 +77,6 @@ class PlayerEnvCollision(object):
 class PlayerZiplineCollision(object):
 	joint_queue = []
 	
-	def __init__(self):
-		pass
-	
 	@staticmethod
 	def begin(space, arbiter):
 		#~ player_shape, env_shape = arbiter.shapes
@@ -123,9 +116,6 @@ class PlayerZiplineCollision(object):
 		return False
 
 class GroundCollision(object):
-	def __init__(self):
-		pass
-	
 	@staticmethod
 	def begin(space, arbiter):
 		#~ player_shape, env_shape = arbiter.shapes
@@ -161,4 +151,34 @@ class GroundCollision(object):
 		#~ player_shape, env_shape = arbiter.shapes
 		
 		return False
+
+class PlayerExitCollision(object):
+	@staticmethod
+	def begin(space, arbiter):
+		#~ player_shape, env_shape = arbiter.shapes
 		
+		return True
+	
+	@staticmethod
+	def pre_solve(space, arbiter):
+		#~ a, b = arbiter.shapes
+		#~ player_shape, env_shape = arbiter.shapes
+		
+		# When the collision occurs, start the level exit timer.
+		# When this timer finishes, then complete the level.
+		
+		
+		
+		return True
+	
+	@staticmethod
+	def post_solve(space, arbiter):
+		#~ player_shape, env_shape = arbiter.shapes
+		
+		return True
+	
+	@staticmethod
+	def separate(space, arbiter):
+		#~ player_shape, env_shape = arbiter.shapes
+		
+		return False

@@ -8,7 +8,8 @@ class ExitTimer(object):
 		self.time = 0
 		
 		# An active timer can trigger when the full duration elapses.
-		# Using kill() can 
+		# Using kill() can set this value to false, disabling the
+		# timer.
 		self.active = True
 	
 	def update(self, timestep):
@@ -16,6 +17,7 @@ class ExitTimer(object):
 	
 	def reset(self):
 		# Reset the timer
+		self.active = True
 		self.time = 0
 	
 	def can_exit(self):

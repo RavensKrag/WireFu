@@ -155,7 +155,7 @@ class GroundCollision(object):
 		return False
 
 class PlayerExitCollision(object):
-	timer = ExitTimer(3000)
+	timer = ExitTimer(500)
 	
 	@staticmethod
 	def begin(space, arbiter):
@@ -166,6 +166,7 @@ class PlayerExitCollision(object):
 		
 		if(player_shape.body.velocity.y < 0 and player_shape.body.position.y > env_shape.body.position.y):
 			player_shape.gameobject.ground_collision()
+			
 			print "exiting zone..."
 		
 		return True
@@ -174,18 +175,14 @@ class PlayerExitCollision(object):
 	def pre_solve(space, arbiter):
 		player_shape, env_shape = arbiter.shapes
 		
-		#~ if(player_shape.body.velocity.y < 0 and player_shape.body.position.y > env_shape.body.position.y):
-		#~ print "out"
 		PlayerExitCollision.timer.update(20) # 50 FPS
 		#~ timer.update(16) # 60 FPS
 		
 		if PlayerExitCollision.timer.can_exit():
+			PlayerExitCollision.timer.kill()
+			
 			print "level complete"
 			
-			# Complete the level
-			
-			PlayerExitCollision.timer.kill()
-		
 		return True
 	
 	@staticmethod

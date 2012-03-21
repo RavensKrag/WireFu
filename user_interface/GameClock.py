@@ -46,3 +46,12 @@ class GameClock(object):
 	def start(self):
 		self.active = True
 	
+	def reset(self, color=pygame.Color("green")):
+		self.milliseconds = 0
+		self.seconds = 0
+		self.minutes = 0
+		
+		self.active = True
+		
+		self.color = color
+	

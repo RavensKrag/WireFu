@@ -181,6 +181,7 @@ class PlayerExitCollision(object):
 		if PlayerExitCollision.timer.can_exit():
 			PlayerExitCollision.timer.kill()
 			
+			env_shape.gameobject.gameclock.stop()
 			print "level complete"
 			
 		return True

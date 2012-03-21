@@ -17,7 +17,7 @@ class GameClock(object):
 		self.minutes = 0
 		
 		# Things to draw the clock with
-		self.font = pygame.font.SysFont("Dejavu Sans", 12)
+		self.font = pygame.font.SysFont("Dejavu Sans", 20)
 		self.color = color
 		
 		self.active = True

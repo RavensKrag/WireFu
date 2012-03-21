@@ -42,8 +42,7 @@ class Window(object):
 		# Initialize game objects
 		self.gameobjects = pygame.sprite.Group()
 		self.player = Player()
-		self.platforms = pygame.sprite.Group(Ground(),
-											Platform([0,2.4], [1, 0.1], pygame.Color("yellow")),
+		self.platforms = pygame.sprite.Group(Ground(), Exit([0.3,2.4], [1, 0.1]),
 											Platform([3.8,2.7], [1, 0.1]),
 											Platform([3,1], [2, 0.1]),
 											Platform([1.3,0.5], [1, 0.1]),

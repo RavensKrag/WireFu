@@ -16,32 +16,32 @@ class GameClock(object):
 		self.seconds = 0
 		self.minutes = 0
 		
+		# Things to draw the clock with
 		self.font = pygame.font.SysFont("Dejavu Sans", 12)
 		self.color = color
+		
+		self.active = True
 	
 	def update(self):
-		self.milliseconds += self.clock.get_time()
-		if self.milliseconds > 1000:
-			self.milliseconds %= 1000
-			self.seconds += 1
-		if self.seconds > 60:
-			self.seconds %= 60
-			self.minutes += 1
+		if self.active:
+			self.milliseconds += self.clock.get_time()
+			if self.milliseconds > 1000:
+				self.milliseconds %= 1000
+				self.seconds += 1
+			if self.seconds > 60:
+				self.seconds %= 60
+				self.minutes += 1
 	
 	def draw(self, screen):
-		#~ time_display = None
-		
-		#~ if self.minutes > 0:
-			#~ time_display = self.font.render("time: {}".format(self.time), False, self.color)
-		#~ elif self.seconds > 0:
-			#~ time_display = self.font.render("time: {}".format(self.time), False, self.color)
-		#~ else # Only milliseconds
-			#~ time_display = self.font.render("time: {}".format(self.time), False, self.color)
-		
 		timestamp = "time: {}:{}:{}".format(self.minutes, self.seconds, self.milliseconds)
 		time_display = self.font.render(timestamp, False, self.color)
-		
 		time_display.get_rect().topleft = (0, 0)
 		
 		screen.blit(time_display, time_display.get_rect())
+	
+	def stop(self):
+		self.active = False
+	
+	def start(self):
+		self.active = True
 	

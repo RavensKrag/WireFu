@@ -9,7 +9,7 @@ from Physics import Physics
 class Player(NonstaticObject):
 	def __init__(self):
 		mass = 60
-		moment = 1
+		moment = pm.inf
 		
 		super(Player, self).__init__(mass, moment, verts=[])
 		

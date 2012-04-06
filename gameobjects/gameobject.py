@@ -33,7 +33,7 @@ class NonstaticObject(GameObject):
 		self._animation = Animation()
 		self.image, self.rect = self._animation.update()
 		
-		body = pm.Body(mass, pm.inf)
+		body = pm.Body(mass, moment)
 		# Counterclockwise winding
 		# Start from bottom left
 		# Pos x: right		Pos y: up

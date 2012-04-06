@@ -18,6 +18,8 @@ mindful of the gap behind the yellow platform.
 ===== OS Deployment Notes =====
 The game only works on Linux and 32 bit Windows.  For 64 bit versions of
 windows, only 32 bit python is supported.
+
+update
 ==========
 
 ===== Code Structure =====

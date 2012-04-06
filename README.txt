@@ -15,6 +15,11 @@ before the timer will stop, signaling the end of the level.  Thus, be
 mindful of the gap behind the yellow platform.
 ==============================
 
+===== OS Deployment Notes =====
+The game only works on Linux and 32 bit Windows.  For 64 bit versions of
+windows, only 32 bit python is supported.
+==========
+
 ===== Code Structure =====
 Most of the packages should be fairly self explanatory, based on their names.
 An attempt to provide insight into the reasoning behind the division of

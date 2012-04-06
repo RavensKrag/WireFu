@@ -18,6 +18,7 @@ from Animation import *
 import Collisions
 #~ import user_interface
 from user_interface.GameClock import *
+from user_interface.KillScreen import *
 
 class Window(object):
 	def __init__(self, width, height):
@@ -64,6 +65,9 @@ class Window(object):
 		
 		# Set running to True so main game loop will execute
 		self.running = True
+		
+		# Create killscreen
+		self.killscreen = KillScreen(self)
 	
 	def update(self):
 		self.input_processor.update()
@@ -98,6 +102,10 @@ class Window(object):
 		
 		# Draw UI
 		self.gameclock.draw(self.screen)
+		
+		# Draw killscreen if level over
+		if not self.gameclock.is_active():
+			self.killscreen.draw(self.screen)
 	
 	def main(self):
 		while self.running:

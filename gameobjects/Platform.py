@@ -5,6 +5,9 @@ import Collisions
 
 class Platform(StaticObject):
 	def __init__(self, pos, dimensions, color=pygame.Color("red")):
+		# Position: 	Bottom left of platform
+		# Dimensions:	width, height
+		
 		self.width = dimensions[0]
 		self.height = dimensions[1]
 		

@@ -24,6 +24,9 @@ class Player(NonstaticObject):
 		
 		self.body.position.x = 0
 		self.body.position.y = 1
+
+		#added by Hwan
+		self.jump_height_limit = 4
 		
 		self.handhold = None # Pointer to a joint used to hold the player somewhere
 		
@@ -86,7 +89,8 @@ class Player(NonstaticObject):
 	def jump(self):
 		if self.jump_count < self.jump_limit:
 			self.in_air = True
-			self.body.velocity.y = 4
+			#modified by Hwan
+			self.body.velocity.y = self.jump_height_limit
 			self.jump_count += 1
 	
 	def let_go(self, space):
@@ -109,5 +113,15 @@ class Player(NonstaticObject):
 	def rotate(self, angle):
 		image = self._animation.update()[0]
 		self.image = pygame.transform.rotate(image, angle)
-		
+
+        #added by Hwan
+        def powerup_collision(self, p_type):
+                #0 = num of jumps + 1
+                if(p_type == 0):
+                        self.jump_limit = self.jump_limit + 1
+                elif(p_type == 1):
+                        self.shape.friction = self.shape.friction - 0.02
+                #2 = longer jumps
+                elif(p_type == 2):
+                        self.jump_height_limit = self.jump_height_limit + 10
 	

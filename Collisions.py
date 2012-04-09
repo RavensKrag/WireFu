@@ -13,6 +13,7 @@ PLATFORM = 1
 ZIPLINE = 2
 GROUND = 3
 EXIT_ZONE = 4
+POWERUP = 5
 
 
 class PlayerEnvCollision(object):
@@ -199,5 +200,48 @@ class PlayerExitCollision(object):
 		print "Exit interrupted"
 		
 		PlayerExitCollision.timer.reset()
+		
+		return False
+
+
+#added by Hwan
+class Powerup_Collision(object):
+	@staticmethod
+	def begin(space, arbiter):
+		#~ player_shape, env_shape = arbiter.shapes
+		
+		return True
+	
+	@staticmethod
+	def pre_solve(space, arbiter):
+		#~ a, b = arbiter.shapes
+		player_shape, env_shape = arbiter.shapes
+		
+		#~ print "collide"
+		#~ if(isinstance(a, Player) and isinstance(b, StaticObject)):
+			#~ print "proper"
+		#~ player_shape = a
+		#~ env_shape = b
+		
+		#~ if(player_shape.body.velocity.y < 0 and env_shape.point_query(player_shape.body.position)):
+		if(player_shape.body.velocity.y < 0 and player_shape.body.position.y > env_shape.body.position.y):
+			# If moving downwards from above
+			print 'jump limit: ' , player_shape.gameobject.jump_limit
+			player_shape.gameobject.powerup_collision(env_shape.gameobject.type)
+			env_shape.gameobject.visible = False
+			
+		return True
+	
+	@staticmethod
+	def post_solve(space, arbiter):
+		#~ player_shape, env_shape = arbiter.shapes
+		
+		return True
+	
+	@staticmethod
+	def separate(space, arbiter):
+		#~ player_shape, env_shape = arbiter.shapes
+		
+		arbiter.shapes[0].body.angle = 0
 		
 		return False

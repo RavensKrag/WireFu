@@ -210,16 +210,14 @@ class Powerup_Collision(object):
 	def begin(space, arbiter):
 		player_shape, env_shape = arbiter.shapes
 		
-		#~ print "collide"
-		#~ if(isinstance(a, Player) and isinstance(b, StaticObject)):
-			#~ print "proper"
-		#~ player_shape = a
-		#~ env_shape = b
-		
 		if(player_shape.body.velocity.y < 0 and player_shape.body.position.y > env_shape.body.position.y):
 			# If moving downwards from above
+			
+			player = player_shape.gameobject
+			powerup = env_shape.gameobject
+			
 			print 'jump limit: ' , player_shape.gameobject.jump_limit
-			player_shape.gameobject.powerup_collision(env_shape.gameobject.type)
+			powerup.apply_effect(player)
 			env_shape.gameobject.visible = False
 		
 		return True

@@ -113,15 +113,3 @@ class Player(NonstaticObject):
 	def rotate(self, angle):
 		image = self._animation.update()[0]
 		self.image = pygame.transform.rotate(image, angle)
-
-        #added by Hwan
-        def powerup_collision(self, p_type):
-                #0 = num of jumps + 1
-                if(p_type == 0):
-                        self.jump_limit = self.jump_limit + 1
-                elif(p_type == 1):
-                        self.shape.friction = self.shape.friction - 0.02
-                #2 = longer jumps
-                elif(p_type == 2):
-                        self.jump_height_limit = self.jump_height_limit + 10
-	

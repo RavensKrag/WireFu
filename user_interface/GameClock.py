@@ -57,8 +57,8 @@ class GameClock(object):
 		self.color = color
 	
 	def get_time(self):
-		# Return time as a tuple, little-endian style
-		return (self.milliseconds, self.seconds, self.minutes)
+		# Return time as a tuple, big-endian style
+		return (self.minutes, self.seconds, self.milliseconds)
 	
 	def is_active(self):
 		return self.active

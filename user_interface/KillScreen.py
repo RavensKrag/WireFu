@@ -26,9 +26,9 @@ class KillScreen(object):
 		# To get the score, the time at the end of the level must be less that the time specified
 		time_benchmarks = [
 			(0,6,1000),		# 5 star maximum time
-			(0,9,1000),		# 4 star maximum time
-			(0,12,500),		# 3 star maximum time
-			(0,20,5000)	# 2 star maximum time
+			(0,10,0),		# 4 star maximum time
+			(0,15,500),		# 3 star maximum time
+			(0,25,5000)	# 2 star maximum time
 			# 1 star is any time greater than the 2 star time
 		]
 		

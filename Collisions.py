@@ -203,23 +203,18 @@ class PlayerExitCollision(object):
 		
 		return False
 
-
-#added by Hwan
 class Powerup_Collision(object):
 	@staticmethod
 	def begin(space, arbiter):
 		player_shape, env_shape = arbiter.shapes
 		
-		if(player_shape.body.velocity.y < 0 and player_shape.body.position.y > env_shape.body.position.y):
-			# If moving downwards from above
-			
-			player = player_shape.gameobject
-			powerup = env_shape.gameobject
-			
-			print 'jump limit: ' , player.jump_limit
-			powerup.apply_effect(player)
-			
-			env_shape.gameobject.visible = False
+		player = player_shape.gameobject
+		powerup = env_shape.gameobject
+		
+		print 'jump limit: ' , player.jump_limit
+		powerup.apply_effect(player)
+		
+		env_shape.gameobject.visible = False
 		
 		return True
 	

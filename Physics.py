@@ -35,7 +35,8 @@ class Physics(object):
 		space.add(self.body, self.shape)
 	
 	def remove_from_space(self):
-		self.space.remove(self.body, self.shape)
+		if self.space:
+			self.space.remove(self.body, self.shape)
 	
 	def _get_x(self):
 		return self.body.position.x

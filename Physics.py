@@ -31,7 +31,11 @@ class Physics(object):
 		return Vec2d(Physics.to_meters(point[0]), Physics.to_meters(point[1]))
 	
 	def add_to(self, space):
+		self.space = space	# Store reference to space, so that the object can remove itself
 		space.add(self.body, self.shape)
+	
+	def remove_from_space(self):
+		self.space.remove(self.body, self.shape)
 	
 	def _get_x(self):
 		return self.body.position.x

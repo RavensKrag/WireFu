@@ -216,8 +216,9 @@ class Powerup_Collision(object):
 			player = player_shape.gameobject
 			powerup = env_shape.gameobject
 			
-			print 'jump limit: ' , player_shape.gameobject.jump_limit
+			print 'jump limit: ' , player.jump_limit
 			powerup.apply_effect(player)
+			
 			env_shape.gameobject.visible = False
 		
 		return True

@@ -111,6 +111,7 @@ class Window(object):
 		
 		# Draw killscreen if level over
 		if not self.gameclock.is_active():
+			self.killscreen.update()
 			self.killscreen.draw(self.screen)
 	
 	def main(self):

@@ -10,12 +10,14 @@ class KillScreen(object):
 		
 		self.font = pygame.font.SysFont("Dejavu Sans", 20)
 		self.color = color
+		self.time_score = None
 	
 	def update(self):
-		pass
+		if not self.time_score:
+			self.time_score = self._time_score()
 	
 	def draw(self, screen):
-		time_score_image = self.font.render("time score: {}/5".format(self._time_score()), True, self.color)
+		time_score_image = self.font.render("time score: {}/5".format(self.time_score), True, self.color)
 		screen.blit(time_score_image, (self.window.width/2, 0))
 	
 	def _time_score(self):

@@ -21,13 +21,11 @@ class Player(NonstaticObject):
 		self.rect.topleft = [0,0]
 		
 		self.body.velocity_limit = 8
+		self.jump_velocity = 4
 		
 		self.body.position.x = 0
 		self.body.position.y = 1
 
-		#added by Hwan
-		self.jump_height_limit = 4
-		
 		self.handhold = None # Pointer to a joint used to hold the player somewhere
 		
 		self.jump_count = 0
@@ -89,8 +87,7 @@ class Player(NonstaticObject):
 	def jump(self):
 		if self.jump_count < self.jump_limit:
 			self.in_air = True
-			#modified by Hwan
-			self.body.velocity.y = self.jump_height_limit
+			self.body.velocity.y = self.jump_velocity
 			self.jump_count += 1
 	
 	def let_go(self, space):

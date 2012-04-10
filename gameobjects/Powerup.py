@@ -66,6 +66,6 @@ class Powerup(StaticObject):
 				player.shape.friction = player.shape.friction - 0.02
 		#2 = longer jumps
 		elif(self.type == 2):
-				player.jump_height_limit = player.jump_height_limit + 10
+				player.jump_velocity = player.jump_velocity + 10
 
 		

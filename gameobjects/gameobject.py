@@ -25,6 +25,15 @@ class GameObject(pygame.sprite.Sprite, Physics):
 	def draw(self, surface):
 		surface.blit(self.image, Physics.to_pygame(self.body.position))
 		#~ surface.blit(self.image, self.rect)
+	
+	def delete(self):
+		# Remove the gameobject from all groups which contain it, as well as the Pymunk space
+		# TODO: Test this method.  Remove this comment when tested
+		self.remove_from_space()
+		
+		groups = super(GameObject, self).groups()
+		super(GameObject, self).remove(groups)
+		
 
 class NonstaticObject(GameObject):
 	# All moving objects should have some sort of animation.

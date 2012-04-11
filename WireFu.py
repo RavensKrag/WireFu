@@ -20,6 +20,7 @@ import Collisions
 from user_interface.GameClock import *
 from user_interface.KillScreen import *
 
+
 class Window(object):
 	def __init__(self, width, height):
 		# Main gamestate initialization

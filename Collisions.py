@@ -7,6 +7,7 @@ import math, sys, random
 
 from ExitTimer import *
 
+
 # Define collision handlers in this package
 PLAYER = 0
 PLATFORM = 1

@@ -51,5 +51,3 @@ class Powerup_Jump_Number(StaticObject):
 		#2 = longer jumps
 		#elif(self.type == 2):
 		#		player.jump_velocity = player.jump_velocity + 10
-
-		

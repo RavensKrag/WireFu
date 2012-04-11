@@ -54,15 +54,13 @@ class Window(object):
 											Platform([1.3,0.5], [1, 0.1]),
 											Ramp([5,1], [5.5,2.5], width=5),
 											ZiplineWire([1.5,3.6], [3.8,3.9]),
-                                                                                        #added by Hwan, type=0 for additional jump ability
-                                                                                        Powerup([6, 0], [0.3, 0.3], 0))
+                                                                                        Powerup_Jump_Number([6, 0], [0.3, 0.3]))
 		
 		# Add objects to space
 		self.player.add_to(self.space)
 		for p in self.platforms:
 			p.add_to(self.space)
 
-		
 		# Assign collision handlers
 		self._init_collision_handlers()
 		
@@ -77,11 +75,9 @@ class Window(object):
 		self.space.step(1.0/self.framerate)
 		self.gameclock.update()
 
-
 		for p in self.platforms:
 			p.update()
 
-		
 		self.player.update(self.width)
 		
 		pygame.display.set_caption("fps: " + str(self.clock.get_fps()))
@@ -102,7 +98,6 @@ class Window(object):
 		for p in self.platforms:
 			p.draw(self.screen)
 		
-			
 		# Player
 		self.player.draw(self.screen)
 		
@@ -138,9 +133,8 @@ class Window(object):
 		self._add_collision_handler(Collisions.PLAYER, Collisions.EXIT_ZONE,
 									Collisions.PlayerExitCollision)
 
-                #added by Hwan
-		self._add_collision_handler(Collisions.PLAYER, Collisions.POWERUP,
-									Collisions.Powerup_Collision)
+		self._add_collision_handler(Collisions.PLAYER, Collisions.POWERUP_JUMP_NUMBER,
+									Collisions.Powerup_Jump_Number_Collision)
 		
 	def _add_collision_handler(self, a, b, collision_class):
 		self.space.add_collision_handler(a, b, 

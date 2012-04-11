@@ -13,7 +13,7 @@ PLATFORM = 1
 ZIPLINE = 2
 GROUND = 3
 EXIT_ZONE = 4
-POWERUP = 5
+POWERUP_JUMP_NUMBER = 5
 
 
 class PlayerEnvCollision(object):
@@ -203,7 +203,7 @@ class PlayerExitCollision(object):
 		
 		return False
 
-class Powerup_Collision(object):
+class Powerup_Jump_Number_Collision(object):
 	@staticmethod
 	def begin(space, arbiter):
 		player_shape, env_shape = arbiter.shapes
@@ -211,10 +211,12 @@ class Powerup_Collision(object):
 		player = player_shape.gameobject
 		powerup = env_shape.gameobject
 		
-		print 'jump limit: ' , player.jump_limit
 		powerup.apply_effect(player)
+		print 'jump limit: ' , player.jump_limit
 		
-		env_shape.gameobject.visible = False
+		env_shape.gameobject.untouched = False
+		color = pygame.Color("red")
+		env_shape.gameobject.image.fill(color)
 		
 		return True
 	

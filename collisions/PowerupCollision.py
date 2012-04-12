@@ -8,6 +8,8 @@ import math, sys, random
 from utilities import ExitTimer
 
 class PowerupCollision(object):
+	old_powerups_queue = []	# Contains consumed powerups waiting to be removed
+	
 	@staticmethod
 	def begin(space, arbiter):
 		player_shape, env_shape = arbiter.shapes
@@ -17,7 +19,7 @@ class PowerupCollision(object):
 		
 		powerup.apply_effect(player)
 		
-		
+		PowerupCollision.old_powerups_queue.append(powerup)
 		
 		return True
 	

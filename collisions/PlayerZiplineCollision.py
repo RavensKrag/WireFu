@@ -8,7 +8,7 @@ import math, sys, random
 from utilities import ExitTimer
 
 class PlayerZiplineCollision(object):
-	joint_queue = []
+	new_handhold = None # new constraint to bind player to zipline
 	
 	@staticmethod
 	def begin(space, arbiter):
@@ -25,12 +25,10 @@ class PlayerZiplineCollision(object):
 		
 		arbiter.contacts[0].position
 		
-		joint = pm.GrooveJoint(zipline_shape.body, player_shape.body,
+		PlayerZiplineCollision.new_handhold = pm.GrooveJoint(zipline_shape.body, player_shape.body,
 									(-zipline_shape.gameobject.width, -zipline_shape.gameobject.height), 
 									(zipline_shape.gameobject.width, zipline_shape.gameobject.height),
 									(0, 0.4))
-		
-		PlayerZiplineCollision.joint_queue.append(joint)
 		
 		return True
 	
@@ -47,3 +45,12 @@ class PlayerZiplineCollision(object):
 		#~ arbiter.shapes[0].body.angle = 0
 		
 		return False
+	
+	@staticmethod
+	def post_collision_callback(space, player):
+		# Assumption: Player must let go of current zipline before grabbing a new one
+		if(player.handhold == None and PlayerZiplineCollision.new_handhold):
+			space.add(PlayerZiplineCollision.new_handhold)
+			player.handhold = PlayerZiplineCollision.new_handhold
+		
+		PlayerZiplineCollision.new_handhold = None

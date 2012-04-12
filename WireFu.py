@@ -84,15 +84,9 @@ class Window(object):
 
 		self.player.update(self.width)
 		
+		collisions.PlayerZiplineCollision.post_collision_callback(self.space, self.player)
+		
 		pygame.display.set_caption("fps: " + str(self.clock.get_fps()))
-		
-		for joint in collisions.PlayerZiplineCollision.joint_queue:
-			if(self.player.handhold == None):
-				self.space.add(joint)
-				self.player.handhold = joint
-		
-		joints = collisions.PlayerZiplineCollision.joint_queue
-		while(len(joints) > 0): joints.pop()
 	
 	def draw(self):
 		# Background

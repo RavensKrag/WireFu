@@ -16,19 +16,20 @@ class PlayerZiplineCollision(object):
 		
 		print "yeaaaaaaaah"
 		
-		return True
-	
-	@staticmethod
-	def pre_solve(space, arbiter):
-		#~ a, b = arbiter.shapes
-		player_shape, zipline_shape = arbiter.shapes
-		
 		arbiter.contacts[0].position
+		
+		player_shape, zipline_shape = arbiter.shapes
 		
 		PlayerZiplineCollision.new_handhold = pm.GrooveJoint(zipline_shape.body, player_shape.body,
 									(-zipline_shape.gameobject.width, -zipline_shape.gameobject.height), 
 									(zipline_shape.gameobject.width, zipline_shape.gameobject.height),
 									(0, 0.4))
+		
+		return True
+	
+	@staticmethod
+	def pre_solve(space, arbiter):
+		#~ a, b = arbiter.shapes
 		
 		return True
 	

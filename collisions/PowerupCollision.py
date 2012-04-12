@@ -26,13 +26,13 @@ class PowerupCollision(object):
 		#~ a, b = arbiter.shapes
 		player_shape, env_shape = arbiter.shapes
 		
-		return True
+		return False
 	
 	@staticmethod
 	def post_solve(space, arbiter):
 		#~ player_shape, env_shape = arbiter.shapes
 		
-		return True
+		return False
 	
 	@staticmethod
 	def separate(space, arbiter):

@@ -8,7 +8,7 @@ import math, sys, random
 from utilities import ExitTimer
 
 class PowerupCollision(object):
-	old_powerups_queue = []	# Contains consumed powerups waiting to be removed
+	consumed_powerups = []	# Contains consumed powerups waiting to be removed
 	
 	@staticmethod
 	def begin(space, arbiter):
@@ -19,7 +19,7 @@ class PowerupCollision(object):
 		
 		powerup.apply_effect(player)
 		
-		PowerupCollision.old_powerups_queue.append(powerup)
+		PowerupCollision.consumed_powerups.append(powerup)
 		
 		return True
 	

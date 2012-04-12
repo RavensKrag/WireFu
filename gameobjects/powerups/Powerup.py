@@ -1,9 +1,10 @@
 import pygame
-from Physics import Physics
-from gameobject import StaticObject
-import Collisions
 
-class Powerup_Jump_Number(StaticObject):
+import Physics
+from gameobjects import StaticObject
+import collisions
+
+class Powerup(StaticObject):
 	def __init__(self, pos, dimensions, color=pygame.Color("green")):
 		self.width = dimensions[0]
 		self.height = dimensions[1]
@@ -24,30 +25,39 @@ class Powerup_Jump_Number(StaticObject):
 				(self.width, self.height),
 				(0, self.height)]
 		
-		super(Powerup_Jump_Number, self).__init__(verts)
+		super(Powerup, self).__init__(verts)
 		
 		self.body.position.x = pos[0]
 		self.body.position.y = pos[1]
 		
 		self.image.fill(color)
 		
-		self.shape.collision_type = Collisions.POWERUP_JUMP_NUMBER
-		self.shape.friction = 0.2
-		
-		self.untouched = True
+		self.shape.collision_type = collisions.POWERUP
+		self.shape.friction = 0.8
+
+		self.visible = True
 		
 	def update(self):
                 pass
 	
 	def draw(self, screen):
-                pos = Physics.to_pygame(self.body.position)
-                screen.blit(self.image, (pos[0], pos[1]-Physics.to_px(self.height)))
-
+		if(self.visible == True):
+				pos = Physics.to_pygame(self.body.position)
+				screen.blit(self.image, (pos[0], pos[1]-Physics.to_px(self.height)))
+	
+	def getPowerup_Type(self):
+		print self.type
+	def setPowerup_Type(self, p_type):
+		self.type = p_type
+	
 	def apply_effect(self, player):
-		if(self.untouched == True):
+		#0 = num of jumps + 1
+		if(self.type == 0):
 				player.jump_limit = player.jump_limit + 1
-		#elif(self.type == 1):
-		#		player.shape.friction = player.shape.friction - 0.02
+		elif(self.type == 1):
+				player.shape.friction = player.shape.friction - 0.02
 		#2 = longer jumps
-		#elif(self.type == 2):
-		#		player.jump_velocity = player.jump_velocity + 10
+		elif(self.type == 2):
+				player.jump_velocity = player.jump_velocity + 10
+
+		

@@ -1,7 +1,7 @@
 import pygame
-from Physics import Physics
-from gameobject import StaticObject
-import Collisions
+import Physics
+import collisions
+from gameobjects import StaticObject
 
 class Platform(StaticObject):
 	def __init__(self, pos, dimensions, color=pygame.Color("red")):
@@ -34,7 +34,7 @@ class Platform(StaticObject):
 		
 		self.image.fill(color)
 		
-		self.shape.collision_type = Collisions.PLATFORM
+		self.shape.collision_type = collisions.PLATFORM
 		self.shape.friction = 0.8
 		
 	def update(self):

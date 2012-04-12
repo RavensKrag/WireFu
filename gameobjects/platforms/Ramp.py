@@ -1,10 +1,10 @@
-import pygame
-from Physics import Physics
-import Collisions
-from gameobject import StaticObject
-
 import pymunk as pm
 from pymunk import Vec2d
+
+import pygame
+import Physics
+import collisions
+from gameobjects import StaticObject
 
 class Ramp(StaticObject):
 	# Should probably get rid of skew.  It would make more sense not to have it.
@@ -61,7 +61,7 @@ class Ramp(StaticObject):
 		
 		# TODO: Trim image size
 		
-		self.shape.collision_type = Collisions.PLATFORM
+		self.shape.collision_type = collisions.PLATFORM
 		
 	def update(self):
 		pass

@@ -3,8 +3,8 @@ import pymunk as pm
 from pymunk import Vec2d
 import math, sys, random
 
-from gameobject import NonstaticObject
-from Physics import Physics
+from gameobjects import NonstaticObject
+import Physics
 
 class Player(NonstaticObject):
 	def __init__(self):

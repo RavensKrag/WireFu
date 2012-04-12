@@ -53,5 +53,5 @@ class PlayerZiplineCollision(object):
 		if(player.handhold == None and PlayerZiplineCollision.new_handhold):
 			space.add(PlayerZiplineCollision.new_handhold)
 			player.handhold = PlayerZiplineCollision.new_handhold
-		
-		PlayerZiplineCollision.new_handhold = None
+			
+			PlayerZiplineCollision.new_handhold = None

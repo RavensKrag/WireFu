@@ -13,10 +13,11 @@ class KillScreen(object):
 		self.time_score = None
 	
 	def update(self):
-		self.time_score = self._time_score()
+		if not self.time_score:
+			self.time_score = self._time_score()
 	
 	def draw(self, screen):
-		time_score_image = self.font.render("time score: {}/5".format(self._time_score()), True, self.color)
+		time_score_image = self.font.render("time score: {}/5".format(self.time_score), True, self.color)
 		screen.blit(time_score_image, (self.window.width/2, 0))
 	
 	def _time_score(self):
@@ -35,6 +36,7 @@ class KillScreen(object):
 		
 		time_score = 5
 		time = self.window.gameclock.get_time()
+		#~ print time
 		for benchmark in time_benchmarks:
 			#~ print time_score
 			if time[0] <= benchmark[0] and time[1] <= benchmark[1] and time[2] <= benchmark[2]:

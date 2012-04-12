@@ -116,7 +116,7 @@ class Window(object):
 		self.gameclock.draw(self.screen)
 		
 		# Draw killscreen if level over
-		if not self.gameclock.is_active():
+		if((not self.gameclock.is_active()) and (self.gameclock.get_time() != (0,0,0))):
 			self.killscreen.update()
 			self.killscreen.draw(self.screen)
 	

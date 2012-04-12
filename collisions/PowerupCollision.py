@@ -12,10 +12,10 @@ class PowerupCollision(object):
 	
 	@staticmethod
 	def begin(space, arbiter):
-		player_shape, env_shape = arbiter.shapes
+		player_shape, powerup_shape = arbiter.shapes
 		
 		player = player_shape.gameobject
-		powerup = env_shape.gameobject
+		powerup = powerup_shape.gameobject
 		
 		powerup.apply_effect(player)
 		

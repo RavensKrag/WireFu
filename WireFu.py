@@ -13,17 +13,10 @@ import Physics
 import collisions
 
 from utilities import EventProcessor
-from user_interface import GameClock
-from user_interface import KillScreen
+from user_interface import GameClock, KillScreen
 
-from gameobjects.platforms import Ground
-from gameobjects.platforms import Exit
-from gameobjects.platforms import Platform
-from gameobjects.platforms import Ramp
-
-from gameobjects.zipline import ZiplineHandle
-from gameobjects.zipline import ZiplineWire
-
+from gameobjects.platforms import Ground, Exit, Platform, Ramp
+from gameobjects.zipline import ZiplineHandle, ZiplineWire
 from gameobjects.powerups import Powerup_Jump_Number
 
 from gameobjects import Player

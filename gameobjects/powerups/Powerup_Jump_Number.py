@@ -17,6 +17,12 @@ class Powerup_Jump_Number(Powerup):
 	def apply_effect(self, player):
 		if(self.untouched == True):
 			player.jump_limit = player.jump_limit + 1
+			print 'jump limit: ' , player.jump_limit
+			
+			color = pygame.Color("red")
+			self.image.fill(color)
+			
+			self.untouched = False
 		#elif(self.type == 1):
 		#		player.shape.friction = player.shape.friction - 0.02
 		#2 = longer jumps

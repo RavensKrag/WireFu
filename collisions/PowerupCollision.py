@@ -16,11 +16,8 @@ class PowerupCollision(object):
 		powerup = env_shape.gameobject
 		
 		powerup.apply_effect(player)
-		print 'jump limit: ' , player.jump_limit
 		
-		env_shape.gameobject.untouched = False
-		color = pygame.Color("red")
-		env_shape.gameobject.image.fill(color)
+		
 		
 		return True
 	

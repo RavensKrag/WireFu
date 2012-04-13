@@ -42,16 +42,15 @@ class Player(NonstaticObject):
 	
 	def draw(self, screen):
 		pos = Physics.to_pygame(self.body.position)
-		print pos
 		#~ pos = self.body.position
 		screen.blit(self.image, (pos[0]-self._animation.get_width()/2, 
 								pos[1]-self._animation.get_height()))
 	
 	def update(self, window_width):
 		super(Player, self).update()
-		print "=== Player ==="
-		print self.body.position
-		print "====="
+		#~ print "=== Player ==="
+		#~ print self.body.position
+		#~ print "====="
 		
 		image, rect = self._animation.update()
 		self.image = pygame.transform.rotate(image, self.body.angle/math.pi*180)

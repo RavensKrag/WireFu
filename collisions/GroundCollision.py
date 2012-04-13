@@ -21,12 +21,10 @@ class GroundCollision(object):
 		#~ a, b = arbiter.shapes
 		player_shape, env_shape = arbiter.shapes
 		
-		print "==== Ground Collision ===="
-		print player_shape.gameobject
-		#~ for contact in arbiter.contacts:
-			#~ print contact.normal
-		print arbiter.contacts[0].normal
-		print "=========="
+		#~ print "==== Ground Collision ===="
+		#~ print player_shape.gameobject
+		#~ print arbiter.contacts[0].normal
+		#~ print "=========="
 		
 		#~ if(player_shape.body.velocity.y < 0 and player_shape.body.position.y > env_shape.body.position.y):
 			# If moving downwards from above

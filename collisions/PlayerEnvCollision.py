@@ -20,12 +20,10 @@ class PlayerEnvCollision(object):
 		#~ a, b = arbiter.shapes
 		player_shape, env_shape = arbiter.shapes
 		
-		print "==== Collision ===="
-		print player_shape.gameobject
-		#~ for contact in arbiter.contacts:
-			#~ print contact.normal
-		print arbiter.contacts[0].normal
-		print "=========="
+		#~ print "==== Collision ===="
+		#~ print player_shape.gameobject
+		#~ print arbiter.contacts[0].normal
+		#~ print "=========="
 		
 		
 		#~ print "collide"

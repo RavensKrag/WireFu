@@ -10,7 +10,8 @@ from utilities import ExitTimer
 class PlayerEnvCollision(object):
 	@staticmethod
 	def begin(space, arbiter):
-		#~ player_shape, env_shape = arbiter.shapes
+		player_shape, env_shape = arbiter.shapes
+		player_shape.gameobject.normal = arbiter.contacts[0].normal
 		
 		return True
 	
@@ -19,6 +20,14 @@ class PlayerEnvCollision(object):
 		#~ a, b = arbiter.shapes
 		player_shape, env_shape = arbiter.shapes
 		
+		print "==== Collision ===="
+		print player_shape.gameobject
+		#~ for contact in arbiter.contacts:
+			#~ print contact.normal
+		print arbiter.contacts[0].normal
+		print "=========="
+		
+		
 		#~ print "collide"
 		#~ if(isinstance(a, Player) and isinstance(b, StaticObject)):
 			#~ print "proper"
@@ -26,9 +35,7 @@ class PlayerEnvCollision(object):
 		#~ env_shape = b
 		
 		#~ if(player_shape.body.velocity.y < 0 and env_shape.point_query(player_shape.body.position)):
-		if(player_shape.body.velocity.y < 0 and player_shape.body.position.y > env_shape.body.position.y):
-			# If moving downwards from above
-			player_shape.gameobject.ground_collision()
+		
 			
 			#~ print "===contacts"
 			#~ for p in arbiter.contacts:
@@ -56,7 +63,12 @@ class PlayerEnvCollision(object):
 	
 	@staticmethod
 	def post_solve(space, arbiter):
-		#~ player_shape, env_shape = arbiter.shapes
+		player_shape, env_shape = arbiter.shapes
+		
+		#~ if(player_shape.body.velocity.y < 0 and player_shape.body.position.y > env_shape.body.position.y):
+		if arbiter.contacts[0].normal.y > 0:
+			# If moving downwards from above
+			player_shape.gameobject.ground_collision()
 		
 		return True
 	
@@ -64,6 +76,6 @@ class PlayerEnvCollision(object):
 	def separate(space, arbiter):
 		#~ player_shape, env_shape = arbiter.shapes
 		
-		arbiter.shapes[0].body.angle = 0
+		#~ arbiter.shapes[0].body.angle = 0
 		
-		return False
+		return True

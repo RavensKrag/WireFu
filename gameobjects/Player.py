@@ -29,7 +29,7 @@ class Player(NonstaticObject):
 		self.handhold = None # Pointer to a joint used to hold the player somewhere
 		
 		self.jump_count = 0
-		self.jump_limit = 1000
+		self.jump_limit = 1
 		self.in_air = False
 		
 		self.movement_force = Vec2d(200*150, 0.0)
@@ -112,6 +112,9 @@ class Player(NonstaticObject):
 		
 		self.jump_count = 0
 		
+		
+		self.body.velocity -= self.body.velocity.projection(self.normal)
+		self.body.force -= self.body.force.projection(self.normal)
 		#~ self.body.velocity.y = 0
 		#~ self.body.reset_forces
 	

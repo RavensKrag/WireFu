@@ -23,9 +23,9 @@ class NonstaticObject(GameObject):
 				(self._animation.get_width()/2, self._animation.get_height()),
 				(-self._animation.get_width()/2, self._animation.get_height())]
 		
-		for i in range(0, len(verts)):
+		#~ for i in range(0, len(verts)):
 			#~ print verts[i]
-			verts[i] = Physics.to_pymunk(verts[i])
+			#~ verts[i] = Physics.to_pymunk(verts[i])
 			#~ print "...{}".format(verts[i])
 		
 		super(NonstaticObject, self).__init__(body, verts)

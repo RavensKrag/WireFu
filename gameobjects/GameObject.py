@@ -24,6 +24,7 @@ class GameObject(pygame.sprite.Sprite, PhysicsInterface):
 		
 	def draw(self, surface):
 		surface.blit(self.image, Physics.to_pygame(self.body.position))
+		#~ surface.blit(self.image, self.body.position)
 		#~ surface.blit(self.image, self.rect)
 	
 	def delete(self):

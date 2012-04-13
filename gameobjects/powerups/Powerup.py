@@ -42,8 +42,9 @@ class Powerup(StaticObject):
 	
 	def draw(self, screen):
 		if(self.visible == True):
-				pos = Physics.to_pygame(self.body.position)
-				screen.blit(self.image, (pos[0], pos[1]-Physics.to_px(self.height)))
+			#~ super(Powerup, self).draw(screen)
+			pos = Physics.to_pygame(self.body.position)
+			screen.blit(self.image, (pos[0], pos[1]-self.height))
 	
 	def getPowerup_Type(self):
 		print self.type

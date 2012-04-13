@@ -23,7 +23,8 @@ class StaticObject(GameObject):
 			if bottom == None or v[1] < bottom:
 				bottom = v[1]
 		
-		self.image = pygame.Surface([Physics.to_px(self.width), Physics.to_px(self.height)])
+		#~ self.image = pygame.Surface([Physics.to_px(self.width), Physics.to_px(self.height)])
+		self.image = pygame.Surface([self.width, self.height])
 		
 		# Draw polygon on image
 		#~ color = pygame.Color("red")
@@ -36,6 +37,9 @@ class StaticObject(GameObject):
 		
 	def update(self):
 		pass
+	
+	def draw(self, screen):
+		super(StaticObject, self).draw(screen)
 	
 	def add_to(self, space):
 		space.add_static(self.shape)

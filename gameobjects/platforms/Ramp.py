@@ -10,7 +10,7 @@ class Ramp(StaticObject):
 	# Should probably get rid of skew.  It would make more sense not to have it.
 	
 	def __init__(self, p1, p2, width=2):
-		self.line_width = Physics.to_meters(width)
+		self.line_width = width
 		
 		# Sort by y
 		if(p1[1] > p2[1]):
@@ -47,8 +47,8 @@ class Ramp(StaticObject):
 		self.body.position.x = p1[0]
 		self.body.position.y = p1[1]
 		
-		line_width = Physics.to_px(self.line_width)
-		width = Physics.to_px(self.width)
+		line_width = self.line_width
+		width = self.width
 		points = [(0, self.image.get_height()),
 				(0 + line_width, self.image.get_height()),
 				(0 + width + line_width, 0),
@@ -68,7 +68,7 @@ class Ramp(StaticObject):
 	
 	def draw(self, screen):
 		pos = Physics.to_pygame(self.body.position)
-		screen.blit(self.image, (pos[0], pos[1]-Physics.to_px(self.height)))
+		screen.blit(self.image, (pos[0], pos[1]-self.height))
 		
 		# Debug outline
 		#~ x_px = Physics.to_px(self.body.position.x)

@@ -32,12 +32,12 @@ class Window(object):
 		
 		self.screen = pygame.display.set_mode(self.dimentions)
 		self.clock = pygame.time.Clock()
-		self.framerate = 50
+		self.framerate = 60
 		
 		# Initialize physics
-		self.space = pm.Space()
+		self.space = pm.Space(100)
 		#~ self.space.damping = 0.12
-		self.space.gravity = (0, -9.8)
+		self.space.gravity = (0, -10*150)
 		
 		# Initialize other systems
 		Physics.screen_height = self.height
@@ -51,13 +51,13 @@ class Window(object):
 		
 		self.platforms = pygame.sprite.Group(
 				Ground(), 
-				Exit([0.3,2.4], [1, 0.1], self.gameclock, self.input_processor),
-				Platform([3.8,2.7], [1, 0.1]),
-				Platform([3,1], [2, 0.1]),
-				Platform([1.3,0.5], [1, 0.1]),
-				Ramp([5,1], [5.5,2.5], width=5),
-				ZiplineWire([1.5,3.6], [3.8,3.9]),
-				Powerup_Jump_Number([6, 0], [0.3, 0.3])
+				Exit([0.3*150,2.4*150], [1*150, 0.3*150], self.gameclock, self.input_processor),
+				Platform([3.8*150,2.7*150], [1*150, 0.3*150]),
+				Platform([3*150,1*150], [2*150, 0.3*150]),
+				Platform([1.3*150,0.5*150], [1*150, 0.3*150]),
+				Ramp([5*150,1*150], [5.5*150,2.5*150], width=10),
+				ZiplineWire([1.5*150,3.6*150], [3.8*150,3.9*150]),
+				Powerup_Jump_Number([6*150, 0*150], [0.3*150, 0.3*150])
 		)
 		
 		# Add objects to space

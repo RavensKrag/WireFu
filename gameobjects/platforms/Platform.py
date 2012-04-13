@@ -42,7 +42,10 @@ class Platform(StaticObject):
 	
 	def draw(self, screen):
 		pos = Physics.to_pygame(self.body.position)
-		screen.blit(self.image, (pos[0], pos[1]-Physics.to_px(self.height)))
+		#~ screen.blit(self.image, (pos[0], pos[1]-Physics.to_px(self.height)))
+		
+		#~ pos = self.body.position
+		screen.blit(self.image, (pos[0], pos[1]-self.height))
 		
 		# Debug outline
 		#~ x_px = Physics.to_px(self.body.position.x)

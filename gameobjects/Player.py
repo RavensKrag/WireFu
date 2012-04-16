@@ -3,13 +3,13 @@ import pymunk as pm
 from pymunk import Vec2d
 import math, sys, random
 
-from gameobject import NonstaticObject
-from Physics import Physics
+from gameobjects import NonstaticObject
+import Physics
 
 class Player(NonstaticObject):
 	def __init__(self):
 		mass = 60
-		moment = 1
+		moment = pm.inf
 		
 		super(Player, self).__init__(mass, moment, verts=[])
 		
@@ -20,29 +20,38 @@ class Player(NonstaticObject):
 		self.rect = self.image.get_rect()
 		self.rect.topleft = [0,0]
 		
-		self.body.velocity_limit = 8
+		#~ self.body.velocity_limit = 
+		self.jump_velocity = 4*150
 		
 		self.body.position.x = 0
-		self.body.position.y = 1
-		
+		self.body.position.y = 0
+
 		self.handhold = None # Pointer to a joint used to hold the player somewhere
 		
 		self.jump_count = 0
 		self.jump_limit = 1
 		self.in_air = False
 		
-		self.movement_force = Vec2d(200, 0.0)
-		self.air_movement_force = Vec2d(50, 0.0)
+		self.movement_force = Vec2d(200*150, 0.0)
+		self.air_movement_force = Vec2d(50*150, 0.0)
 		
 		self.shape.friction = 0.12
+		
+		# Normal vector of the surface the player is currently on
+		self.normal = Vec2d(0.0, 1.0)
 	
 	def draw(self, screen):
 		pos = Physics.to_pygame(self.body.position)
+		#~ pos = self.body.position
 		screen.blit(self.image, (pos[0]-self._animation.get_width()/2, 
 								pos[1]-self._animation.get_height()))
 	
 	def update(self, window_width):
-		#~ super(Player, self).update()
+		super(Player, self).update()
+		#~ print "=== Player ==="
+		#~ print self.body.position
+		#~ print "====="
+		
 		image, rect = self._animation.update()
 		self.image = pygame.transform.rotate(image, self.body.angle/math.pi*180)
 		#~ print "{:03.5f}".format(self.body.angle/math.pi*180)
@@ -52,8 +61,10 @@ class Player(NonstaticObject):
 			#~ self.body.position.y = 0
 			
 		# Constrain movement of player to screen
-		window_width = Physics.to_meters(window_width)
-		width = Physics.to_meters(self._animation.get_width())
+		#~ window_width = Physics.to_meters(window_width)
+		#~ width = Physics.to_meters(self._animation.get_width())
+		
+		width = self._animation.get_width()
 		#~ print self.body.force
 		if(self.x < width/2):
 			self.x = width/2
@@ -86,7 +97,7 @@ class Player(NonstaticObject):
 	def jump(self):
 		if self.jump_count < self.jump_limit:
 			self.in_air = True
-			self.body.velocity.y = 4
+			self.body.velocity.y = self.jump_velocity
 			self.jump_count += 1
 	
 	def let_go(self, space):
@@ -100,6 +111,9 @@ class Player(NonstaticObject):
 		
 		self.jump_count = 0
 		
+		
+		self.body.velocity -= self.body.velocity.projection(self.normal)
+		self.body.force -= self.body.force.projection(self.normal)
 		#~ self.body.velocity.y = 0
 		#~ self.body.reset_forces
 	
@@ -109,5 +123,3 @@ class Player(NonstaticObject):
 	def rotate(self, angle):
 		image = self._animation.update()[0]
 		self.image = pygame.transform.rotate(image, angle)
-		
-	

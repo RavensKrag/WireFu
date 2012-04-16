@@ -1,10 +1,13 @@
 import pygame
-from Physics import Physics
-from gameobject import StaticObject
-import Collisions
+import Physics
+import collisions
+from gameobjects import StaticObject
 
 class Platform(StaticObject):
 	def __init__(self, pos, dimensions, color=pygame.Color("red")):
+		# Position: 	Bottom left of platform
+		# Dimensions:	width, height
+		
 		self.width = dimensions[0]
 		self.height = dimensions[1]
 		
@@ -31,7 +34,7 @@ class Platform(StaticObject):
 		
 		self.image.fill(color)
 		
-		self.shape.collision_type = Collisions.PLATFORM
+		self.shape.collision_type = collisions.PLATFORM
 		self.shape.friction = 0.8
 		
 	def update(self):
@@ -39,7 +42,10 @@ class Platform(StaticObject):
 	
 	def draw(self, screen):
 		pos = Physics.to_pygame(self.body.position)
-		screen.blit(self.image, (pos[0], pos[1]-Physics.to_px(self.height)))
+		#~ screen.blit(self.image, (pos[0], pos[1]-Physics.to_px(self.height)))
+		
+		#~ pos = self.body.position
+		screen.blit(self.image, (pos[0], pos[1]-self.height))
 		
 		# Debug outline
 		#~ x_px = Physics.to_px(self.body.position.x)

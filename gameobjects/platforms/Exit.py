@@ -5,9 +5,9 @@
 # of skill to stopping appropriately at the end of a level, while still
 # minimizing the time it takes to complete a course.
 import pygame
-from Physics import Physics
-from gameobjects import Platform
-import Collisions
+import Physics
+import collisions
+from gameobjects.platforms import Platform
 
 class Exit(Platform):
 	def __init__(self, position, dimensions, gameclock, input_handler):
@@ -18,7 +18,7 @@ class Exit(Platform):
 		color = pygame.Color("yellow")
 		super(Exit, self).__init__(position, dimensions, color)
 		
-		self.shape.collision_type = Collisions.EXIT_ZONE
+		self.shape.collision_type = collisions.EXIT_ZONE
 	
 	#~ def update(self):
 		#~ pass

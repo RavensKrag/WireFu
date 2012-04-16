@@ -9,16 +9,17 @@ from pymunk import Vec2d
 import math, sys, random
 
 # Import files
-from EventProcessor import EventProcessor
-from Physics import Physics
-from gameobjects import *
-#~ from gameobjects import zipline
-from gameobjects.zipline import ZiplineWire
-from Animation import *
-import Collisions
-#~ import user_interface
-from user_interface.GameClock import *
-from user_interface.KillScreen import *
+import Physics
+import collisions
+
+from utilities import EventProcessor
+from user_interface import GameClock, KillScreen
+
+from gameobjects.platforms import Ground, Exit, Platform, Ramp
+from gameobjects.zipline import ZiplineHandle, ZiplineWire
+from gameobjects.powerups import Powerup_Jump_Number
+
+from gameobjects import Player
 
 class Window(object):
 	def __init__(self, width, height):
@@ -31,12 +32,12 @@ class Window(object):
 		
 		self.screen = pygame.display.set_mode(self.dimentions)
 		self.clock = pygame.time.Clock()
-		self.framerate = 50
+		self.framerate = 60
 		
 		# Initialize physics
-		self.space = pm.Space()
+		self.space = pm.Space(100)
 		#~ self.space.damping = 0.12
-		self.space.gravity = (0, -9.8)
+		self.space.gravity = (0, -10*150)
 		
 		# Initialize other systems
 		Physics.screen_height = self.height
@@ -48,12 +49,16 @@ class Window(object):
 		# Initialize game objects
 		self.gameobjects = pygame.sprite.Group()
 		
-		self.platforms = pygame.sprite.Group(Ground(), Exit([0.3,2.4], [1, 0.1], self.gameclock, self.input_processor),
-											Platform([3.8,2.7], [1, 0.1]),
-											Platform([3,1], [2, 0.1]),
-											Platform([1.3,0.5], [1, 0.1]),
-											Ramp([5,1], [5.5,2.5], width=5),
-											ZiplineWire([1.5,3.6], [3.8,3.9]))
+		self.platforms = pygame.sprite.Group(
+				Ground(), 
+				Exit([0.3*150,2.4*150], [1*150, 0.3*150], self.gameclock, self.input_processor),
+				Platform([3.8*150,2.7*150], [1*150, 0.3*150]),
+				Platform([3*150,1*150], [2*150, 0.3*150]),
+				Platform([1.3*150,0.5*150], [1*150, 0.3*150]),
+				Ramp([5*150,1*150], [5.5*150,2.5*150], width=10),
+				ZiplineWire([1.5*150,3.6*150], [3.8*150,3.9*150]),
+				Powerup_Jump_Number([6*150, 0*150], [0.3*150, 0.3*150])
+		)
 		
 		# Add objects to space
 		self.player.add_to(self.space)
@@ -66,28 +71,22 @@ class Window(object):
 		# Set running to True so main game loop will execute
 		self.running = True
 		
-		# Create killscreen
+		#~ # Create killscreen
 		self.killscreen = KillScreen(self)
 	
 	def update(self):
 		self.input_processor.update()
 		self.space.step(1.0/self.framerate)
 		self.gameclock.update()
-		
+
 		for p in self.platforms:
 			p.update()
-		
+
 		self.player.update(self.width)
 		
+		collisions.PlayerZiplineCollision.post_collision_callback(self.space, self.player)
+		
 		pygame.display.set_caption("fps: " + str(self.clock.get_fps()))
-		
-		for joint in Collisions.PlayerZiplineCollision.joint_queue:
-			if(self.player.handhold == None):
-				self.space.add(joint)
-				self.player.handhold = joint
-		
-		joints = Collisions.PlayerZiplineCollision.joint_queue
-		while(len(joints) > 0): joints.pop()
 	
 	def draw(self):
 		# Background
@@ -96,7 +95,7 @@ class Window(object):
 		# Environment
 		for p in self.platforms:
 			p.draw(self.screen)
-			
+		
 		# Player
 		self.player.draw(self.screen)
 		
@@ -104,7 +103,8 @@ class Window(object):
 		self.gameclock.draw(self.screen)
 		
 		# Draw killscreen if level over
-		if not self.gameclock.is_active():
+		if((not self.gameclock.is_active()) and (self.gameclock.get_time() != (0,0,0))):
+			self.killscreen.update()
 			self.killscreen.draw(self.screen)
 	
 	def main(self):
@@ -115,21 +115,20 @@ class Window(object):
 			self.clock.tick(self.framerate)
 	
 	def _init_collision_handlers(self):
-		self.player.collision_type = Collisions.PLAYER
-		#~ for p in self.platforms:
-			#~ p.collision_type = Collisions.PLATFORM
+		self._add_collision_handler(collisions.PLAYER, collisions.PLATFORM, 
+									collisions.PlayerEnvCollision)
 		
-		self._add_collision_handler(Collisions.PLAYER, Collisions.PLATFORM, 
-									Collisions.PlayerEnvCollision)
+		self._add_collision_handler(collisions.PLAYER, collisions.ZIPLINE, 
+									collisions.PlayerZiplineCollision)
 		
-		self._add_collision_handler(Collisions.PLAYER, Collisions.ZIPLINE, 
-									Collisions.PlayerZiplineCollision)
+		self._add_collision_handler(collisions.PLAYER, collisions.GROUND,
+									collisions.GroundCollision)
 		
-		self._add_collision_handler(Collisions.PLAYER, Collisions.GROUND,
-									Collisions.GroundCollision)
-		
-		self._add_collision_handler(Collisions.PLAYER, Collisions.EXIT_ZONE,
-									Collisions.PlayerExitCollision)
+		self._add_collision_handler(collisions.PLAYER, collisions.EXIT_ZONE,
+									collisions.PlayerExitCollision)
+
+		self._add_collision_handler(collisions.PLAYER, collisions.POWERUP,
+									collisions.PowerupCollision)
 		
 	def _add_collision_handler(self, a, b, collision_class):
 		self.space.add_collision_handler(a, b, 

@@ -1,10 +1,8 @@
-__all__ = ["Player", "Ground", "Platform", "Ramp", "zipline", "Exit"]
+__all__ = ["GameObject", "NonstaticObject", "StaticObject", "Player"]
+
+from GameObject import *
+
+from StaticObject import *
+from NonstaticObject import *
 
 from Player import *
-from Ground import *
-from Platform import *
-from Ramp import *
-from zipline import *
-from zipline import ZiplineHandle
-from zipline import ZiplineWire
-from Exit import *

@@ -6,7 +6,7 @@ import pygame
 #~ from pygame.color import *
 import pymunk as pm
 from pymunk import Vec2d
-import math, sys, random
+import math, sys, random, os
 
 # Import files
 import Physics
@@ -22,10 +22,30 @@ from gameobjects.powerups import Powerup_Jump_Number
 
 from gameobjects import Player
 
+from data import Jukebox
+
+def load_sound(name):
+    class NoneSound:
+        def play(self): pass
+    if not pygame.mixer or not pygame.mixer.get_init():
+        return NoneSound()
+    fullname = os.path.join('data', name)
+    try:
+        sound = pygame.mixer.Sound(fullname)
+    except pygame.error, message:
+        print 'Cannot load sound:', name
+        raise SystemExit, message
+    return sound
+
 class Window(object):
 	def __init__(self, width, height):
 		# Main gamestate initialization
 		pygame.init()
+
+		#background music plays endlessly
+		self.j = Jukebox()
+		self.j.play_bgm()
+		#self.aa.ToggleSound(False)
 		
 		self.width = width
 		self.height = height
@@ -122,6 +142,7 @@ class Window(object):
 			self.draw()
 			pygame.display.flip()
 			self.clock.tick(self.framerate)
+
 	
 	def _init_collision_handlers(self):
 		self._add_collision_handler(collisions.PLAYER, collisions.PLATFORM, 

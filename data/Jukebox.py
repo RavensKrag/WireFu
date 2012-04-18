@@ -13,9 +13,14 @@ class Jukebox:
         self.music_on = MUSIC_ON
         self.sound_on = SOUND_ON
 
-        self.bgm = self.load_sound('HawaiiFive.wav')
+        self.currentlvl = 0
+
+        self.bgm = []
+        self.bgm.append(self.load_sound('elec_Spin.wav')) #for level 1
+        self.bgm.append(self.load_sound('elec_Run_The_Blockade.wav')) #for level 2
+        #self.bgm = self.load_sound('elec_Follow_Me.wav')
         
-        self.powerup_sound = self.load_sound('shiny-ding.wav')
+        self.powerup_sound = self.load_sound('beep-01.wav')
 
     def ToggleMusic(self,on=True):
         self.music_on = on
@@ -27,9 +32,9 @@ class Jukebox:
     def ToggleSound(self,on=True):
         self.sound_on = on
         if self.sound_on == False:
-                self.bgm.stop()
+                self.bgm[0].stop()
         else:
-                self.bgm.play()
+                self.bgm[0].play()
 
     def load_sound(self, name):
         class NoneSound:
@@ -45,7 +50,7 @@ class Jukebox:
         return sound
 
     def play_bgm(self):
-        self.bgm.play(-1)
+        self.bgm[0].play(-1)
 
     def play_powerup(self):
         self.powerup_sound.play()

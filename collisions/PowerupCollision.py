@@ -20,10 +20,10 @@ class PowerupCollision(object):
 		player = player_shape.gameobject
 		powerup = powerup_shape.gameobject
 
-                #play the sound
+		#play the sound
 		if powerup.untouched:
-                        j = Jukebox()
-                        j.play_powerup()
+			j = Jukebox()
+			j.play_powerup()
 		
 		powerup.apply_effect(player)
 		

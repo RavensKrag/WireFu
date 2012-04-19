@@ -96,7 +96,7 @@ class Level:
 	def draw(self, screen):
 		# Background
 		self.screen.fill([0,0,0])
-		
+
 		print('TESTING -- self.platforms', self.platforms)
 		
 		# Environment

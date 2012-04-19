@@ -1,11 +1,14 @@
 import pygame
 import pymunk as pm
 from pymunk import Vec2d
-import math, sys, random
+import math, sys, random, os
 
 class Animation(object):
 	def __init__(self):
-		self._image = pygame.Surface([30,50])
+		#~ self._image = pygame.Surface([30,50])
+		name = 'player.png'
+		fullname = os.path.join('sprites', name)
+		self._image = pygame.image.load(fullname)
 		self._rect = self._image.get_rect()
 	
 	def update(self):

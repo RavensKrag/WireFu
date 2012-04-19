@@ -13,10 +13,6 @@ class Player(NonstaticObject):
 		
 		super(Player, self).__init__(mass, moment, verts=[])
 		
-		#~ self.image = pygame.Surface([30,50])
-		color = pygame.Color("blue")
-		self.image.fill(color)
-		
 		self.rect = self.image.get_rect()
 		self.rect.topleft = [0,0]
 		

@@ -1,14 +1,17 @@
-import os, pygame, re
+import os, pygame, re, sys
 import pymunk as pm
 from pymunk import Vec2d
-from gameobjects.zipline import ZiplineWire
-from pygame.locals import *
-from gameobjects import *
-from types import *
 
+# Import files
+import Physics
+import collisions
+
+from gameobjects.platforms import Ground, Exit, Platform, Ramp
+from gameobjects.zipline import ZiplineHandle, ZiplineWire
+from gameobjects.powerups import Powerup_Jump_Number
 
 class Level:
-	def __init__(self, screen, filename):
+	def __init__(self, screen, filename, game_clock, input_handler):
 		pygame.init()
 		
 		# Open level file
@@ -46,7 +49,6 @@ class Level:
 				line = level_file.readline()
 			elif(section == 2): 	# Load ramps
 				matches = self.findPatterns(r'\d+.\d+', line)
-				print('matches', matches)
 				endPoint1 = [float(matches[0]),float(matches[1])]
 				endPoint2 = [float(matches[2]),float(matches[3])]
 				rampWidth = int(float(matches[4]))
@@ -62,9 +64,16 @@ class Level:
 				platform = ZiplineWire(endPoint1,endPoint2)
 				self.platforms.add(platform)			
 				line = level_file.readline()
-			elif(section == 4): line = level_file.readline()
+			elif(section == 4): 	# Load Exit platform
+				matches = self.findPatterns(r'\d+.\d+', line)
+				pos = [float(matches[0]),float(matches[1])]
+				dimensions = [float(matches[2]),float(matches[3])]
+				platform = Exit(pos,dimensions,game_clock,input_handler)
+				self.platforms.add(platform)				
+				line = level_file.readline()				
 			else:
 				print('Format error in ' + filename + '. Program terminated.')
+				sys.exit()
 			
 			
 
@@ -88,10 +97,10 @@ class Level:
 		# Background
 		self.screen.fill([0,0,0])
 		
+		print('TESTING -- self.platforms', self.platforms)
+		
 		# Environment
 		for p in self.platforms:
-			print('p.platform', p)
-			print('width, height', p.width, p.height)
 			p.draw(self.screen)
 			
 		#self.screen.blit(self.background, (0,0))
@@ -112,15 +121,18 @@ def main():
 	screen = pygame.display.set_mode()
 	pygame.display.set_caption('Level Tester')
 	pygame.mouse.set_visible(0)
-
-	level01 = Level(screen, 'level01.txt')
 	
-	#while True: 
+	clock = pygame.time.Clock()
+	gameclock = GameClock(clock)
+	
+	player = Player()
+	input_processor = EventProcessor(player)
+
+	level01 = Level(screen, 'level01.txt', gameclock, input_processor)
 	level01.draw(screen)
-		#print(level01.level_width, level01.level_height)
 
 	pygame.quit()
 	
 #this calls the 'main' function when this script is executed
-if __name__ == '__main__': main()
+#if __name__ == '__main__': main()
 	

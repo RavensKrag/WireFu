@@ -1,5 +1,4 @@
 #!/usr/bin/python
-
 # Import core libraries
 import pygame
 #~ from pygame.locals import *
@@ -7,6 +6,12 @@ import pygame
 import pymunk as pm
 from pymunk import Vec2d
 import math, sys, random, os
+
+# Change to the directory where this file resides
+abspath = os.path.abspath(__file__)
+dname = os.path.dirname(abspath)
+os.chdir(dname)
+
 
 # Import files
 import Physics

@@ -2,16 +2,13 @@ import pygame
 import os
 pygame.mixer.init()
  
-MUSIC_ON = True
-SOUND_ON = True
- 
  
 class Jukebox:
 	def __init__(self):
 		self.name = "Jukebox"
 		
-		self.music_on = MUSIC_ON
-		self.sound_on = SOUND_ON
+		self.music_on = True
+		self.sound_on = True
 		
 		self.currentlvl = 0
 		

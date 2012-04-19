@@ -14,14 +14,13 @@ class PowerupCollision(object):
 	def begin(space, arbiter, jukebox):
                 
 		player_shape, powerup_shape = arbiter.shapes
-		j = jukebox
 		
 		player = player_shape.gameobject
 		powerup = powerup_shape.gameobject
 
 		#play the sound
 		if powerup.untouched:
-			j.play_powerup()
+			jukebox.play_powerup()
 		
 		powerup.apply_effect(player)
 		

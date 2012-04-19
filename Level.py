@@ -6,7 +6,7 @@ from pymunk import Vec2d
 import Physics
 import collisions
 
-from gameobjects.platforms import Ground, Exit, Platform, Ramp
+from gameobjects.platforms import Exit, Platform, Ramp
 from gameobjects.zipline import ZiplineHandle, ZiplineWire
 from gameobjects.powerups import Powerup_Jump_Number
 

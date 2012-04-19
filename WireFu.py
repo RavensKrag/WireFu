@@ -21,7 +21,7 @@ from Level import Level
 from utilities import EventProcessor
 from user_interface import GameClock, KillScreen
 
-from gameobjects.platforms import Ground, Exit, Platform, Ramp
+from gameobjects.platforms import Exit, Platform, Ramp
 from gameobjects.zipline import ZiplineHandle, ZiplineWire
 from gameobjects.powerups import Powerup_Jump_Number
 

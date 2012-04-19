@@ -29,8 +29,8 @@ class Window(object):
 		pygame.init()
 
 		#background music plays endlessly
-		self.j = Jukebox()
-		self.j.play_bgm()
+		self.jukebox = Jukebox()
+		self.jukebox.play_bgm()
 		
 		self.width = width
 		self.height = height
@@ -123,19 +123,19 @@ class Window(object):
 	
 	def _init_collision_handlers(self):
 		self._add_collision_handler(collisions.PLAYER, collisions.PLATFORM, 
-									collisions.PlayerEnvCollision, self.j)
+									collisions.PlayerEnvCollision, self.jukebox)
 		
 		self._add_collision_handler(collisions.PLAYER, collisions.ZIPLINE, 
-									collisions.PlayerZiplineCollision, self.j)
+									collisions.PlayerZiplineCollision, self.jukebox)
 		
 		self._add_collision_handler(collisions.PLAYER, collisions.GROUND,
-									collisions.GroundCollision, self.j)
+									collisions.GroundCollision, self.jukebox)
 		
 		self._add_collision_handler(collisions.PLAYER, collisions.EXIT_ZONE,
-									collisions.PlayerExitCollision, self.j)
+									collisions.PlayerExitCollision, self.jukebox)
 
 		self._add_collision_handler(collisions.PLAYER, collisions.POWERUP,
-									collisions.PowerupCollision, self.j)
+									collisions.PowerupCollision, self.jukebox)
 		
 	def _add_collision_handler(self, a, b, collision_class, jukebox):
 		self.space.add_collision_handler(a, b, 

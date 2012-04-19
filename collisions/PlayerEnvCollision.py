@@ -9,14 +9,14 @@ from utilities import ExitTimer
 
 class PlayerEnvCollision(object):
 	@staticmethod
-	def begin(space, arbiter):
+	def begin(space, arbiter, jukebox):
 		player_shape, env_shape = arbiter.shapes
 		player_shape.gameobject.normal = arbiter.contacts[0].normal
 		
 		return True
 	
 	@staticmethod
-	def pre_solve(space, arbiter):
+	def pre_solve(space, arbiter, jukebox):
 		#~ a, b = arbiter.shapes
 		player_shape, env_shape = arbiter.shapes
 		
@@ -60,7 +60,7 @@ class PlayerEnvCollision(object):
 		return True
 	
 	@staticmethod
-	def post_solve(space, arbiter):
+	def post_solve(space, arbiter, jukebox):
 		player_shape, env_shape = arbiter.shapes
 		
 		#~ if(player_shape.body.velocity.y < 0 and player_shape.body.position.y > env_shape.body.position.y):
@@ -71,7 +71,7 @@ class PlayerEnvCollision(object):
 		return True
 	
 	@staticmethod
-	def separate(space, arbiter):
+	def separate(space, arbiter, jukebox):
 		#~ player_shape, env_shape = arbiter.shapes
 		
 		#~ arbiter.shapes[0].body.angle = 0

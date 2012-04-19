@@ -10,14 +10,14 @@ from utilities import ExitTimer
 
 class GroundCollision(object):
 	@staticmethod
-	def begin(space, arbiter):
+	def begin(space, arbiter, jukebox):
 		player_shape, env_shape = arbiter.shapes
 		player_shape.gameobject.normal = arbiter.contacts[0].normal
 		
 		return True
 	
 	@staticmethod
-	def pre_solve(space, arbiter):
+	def pre_solve(space, arbiter, jukebox):
 		#~ a, b = arbiter.shapes
 		player_shape, env_shape = arbiter.shapes
 		
@@ -39,7 +39,7 @@ class GroundCollision(object):
 		return True
 	
 	@staticmethod
-	def post_solve(space, arbiter):
+	def post_solve(space, arbiter, jukebox):
 		player_shape, env_shape = arbiter.shapes
 		
 		player_shape.gameobject.ground_collision()
@@ -47,7 +47,7 @@ class GroundCollision(object):
 		return True
 	
 	@staticmethod
-	def separate(space, arbiter):
+	def separate(space, arbiter, jukebox):
 		#~ player_shape, env_shape = arbiter.shapes
 		
 		return False

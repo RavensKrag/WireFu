@@ -21,20 +21,7 @@ from gameobjects.powerups import Powerup_Jump_Number
 
 from gameobjects import Player
 
-from data import Jukebox
-
-def load_sound(name):
-    class NoneSound:
-        def play(self): pass
-    if not pygame.mixer or not pygame.mixer.get_init():
-        return NoneSound()
-    fullname = os.path.join('data', name)
-    try:
-        sound = pygame.mixer.Sound(fullname)
-    except pygame.error, message:
-        print 'Cannot load sound:', name
-        raise SystemExit, message
-    return sound
+from utilities import Jukebox
 
 class Window(object):
 	def __init__(self, width, height):
@@ -44,7 +31,6 @@ class Window(object):
 		#background music plays endlessly
 		self.j = Jukebox()
 		self.j.play_bgm()
-		#self.aa.ToggleSound(False)
 		
 		self.width = width
 		self.height = height
@@ -137,23 +123,23 @@ class Window(object):
 	
 	def _init_collision_handlers(self):
 		self._add_collision_handler(collisions.PLAYER, collisions.PLATFORM, 
-									collisions.PlayerEnvCollision)
+									collisions.PlayerEnvCollision, self.j)
 		
 		self._add_collision_handler(collisions.PLAYER, collisions.ZIPLINE, 
-									collisions.PlayerZiplineCollision)
+									collisions.PlayerZiplineCollision, self.j)
 		
 		self._add_collision_handler(collisions.PLAYER, collisions.GROUND,
-									collisions.GroundCollision)
+									collisions.GroundCollision, self.j)
 		
 		self._add_collision_handler(collisions.PLAYER, collisions.EXIT_ZONE,
-									collisions.PlayerExitCollision)
+									collisions.PlayerExitCollision, self.j)
 
 		self._add_collision_handler(collisions.PLAYER, collisions.POWERUP,
-									collisions.PowerupCollision)
+									collisions.PowerupCollision, self.j)
 		
-	def _add_collision_handler(self, a, b, collision_class):
+	def _add_collision_handler(self, a, b, collision_class, jukebox):
 		self.space.add_collision_handler(a, b, 
 			collision_class.begin, collision_class.pre_solve, 
-			collision_class.post_solve, collision_class.separate)
+			collision_class.post_solve, collision_class.separate, jukebox)
 	
 Window(1020, 600).main()

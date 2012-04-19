@@ -16,6 +16,7 @@ os.chdir(dname)
 # Import files
 import Physics
 import collisions
+from Level import Level
 
 from utilities import EventProcessor
 from user_interface import GameClock, KillScreen
@@ -60,16 +61,24 @@ class Window(object):
 		# Initialize game objects
 		self.gameobjects = pygame.sprite.Group()
 		
-		self.platforms = pygame.sprite.Group(
-				Ground(), 
-				Exit([0.3*150,2.4*150], [1*150, 0.3*150], self.gameclock, self.input_processor),
-				Platform([3.8*150,2.7*150], [1*150, 0.3*150]),
-				Platform([3*150,1*150], [2*150, 0.3*150]),
-				Platform([1.3*150,0.5*150], [1*150, 0.3*150]),
-				Ramp([5*150,1*150], [5.5*150,2.5*150], width=10),
-				ZiplineWire([1.5*150,3.6*150], [3.8*150,3.9*150]),
-				Powerup_Jump_Number([6*150, 0*150], [0.3*150, 0.3*150])
-		)
+		
+		
+		level1 = Level(self.screen, 'level01.txt', self.gameclock, self.input_processor)
+		self.platforms = level1.platforms
+		
+#		self.platforms = pygame.sprite.Group(
+#				Ground(), 
+#				Exit([0.3*150,2.4*150], [1*150, 0.3*150], self.gameclock, self.input_processor),
+#				Platform([1.0*150,1.0*150], [1*150, 0.3*150]),
+#				Platform([1.0*150,2.0*150], [1*150, 0.3*150]),
+#				Platform([1.0*150,3.0*150], [1*150, 0.3*150]),
+#				Platform([3.8*150,2.7*150], [1*150, 0.3*150]),
+#				Platform([3*150,1*150], [2*150, 0.3*150]),
+#				Platform([1.3*150,0.5*150], [1*150, 0.3*150]),
+#				Ramp([5*150,1*150], [5.5*150,2.5*150], width=10),
+#				ZiplineWire([1.5*150,3.6*150], [3.8*150,3.9*150]),
+#				Powerup_Jump_Number([6*150, 0*150], [0.3*150, 0.3*150])
+#		)
 		
 		# Add objects to space
 		self.player.add_to(self.space)

@@ -41,9 +41,9 @@ class Platform(StaticObject):
 		pass
 	
 	def draw(self, screen):
+		print('TESTING -- Entering Platform.draw()')
 		pos = Physics.to_pygame(self.body.position)
 		#~ screen.blit(self.image, (pos[0], pos[1]-Physics.to_px(self.height)))
-		
 		#~ pos = self.body.position
 		screen.blit(self.image, (pos[0], pos[1]-self.height))
 		

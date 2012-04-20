@@ -11,7 +11,7 @@ class PlayerExitCollision(object):
 	timer = ExitTimer(500)
 	
 	@staticmethod
-	def begin(space, arbiter):
+	def begin(space, arbiter, jukebox):
 		player_shape, env_shape = arbiter.shapes
 		
 		# When the collision occurs, start the level exit timer.
@@ -25,7 +25,7 @@ class PlayerExitCollision(object):
 		return True
 	
 	@staticmethod
-	def pre_solve(space, arbiter):
+	def pre_solve(space, arbiter, jukebox):
 		player_shape, env_shape = arbiter.shapes
 		
 		PlayerExitCollision.timer.update(20) # 50 FPS
@@ -41,13 +41,13 @@ class PlayerExitCollision(object):
 		return True
 	
 	@staticmethod
-	def post_solve(space, arbiter):
+	def post_solve(space, arbiter, jukebox):
 		#~ player_shape, env_shape = arbiter.shapes
 		
 		return True
 	
 	@staticmethod
-	def separate(space, arbiter):
+	def separate(space, arbiter, jukebox):
 		#~ player_shape, env_shape = arbiter.shapes
 		print "Exit interrupted"
 		

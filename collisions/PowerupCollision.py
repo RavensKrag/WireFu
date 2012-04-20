@@ -7,23 +7,20 @@ import math, sys, random
 
 from utilities import ExitTimer
 
-from data import Jukebox
-
 class PowerupCollision(object):
 	consumed_powerups = []	# Contains consumed powerups waiting to be removed
 	
 	@staticmethod
-	def begin(space, arbiter):
+	def begin(space, arbiter, jukebox):
                 
 		player_shape, powerup_shape = arbiter.shapes
 		
 		player = player_shape.gameobject
 		powerup = powerup_shape.gameobject
 
-                #play the sound
+		#play the sound
 		if powerup.untouched:
-                        j = Jukebox()
-                        j.play_powerup()
+			jukebox.play_powerup()
 		
 		powerup.apply_effect(player)
 		
@@ -32,20 +29,20 @@ class PowerupCollision(object):
 		return True
 	
 	@staticmethod
-	def pre_solve(space, arbiter):
+	def pre_solve(space, arbiter, jukebox):
 		#~ a, b = arbiter.shapes
 		player_shape, env_shape = arbiter.shapes
 		
 		return False
 	
 	@staticmethod
-	def post_solve(space, arbiter):
+	def post_solve(space, arbiter, jukebox):
 		#~ player_shape, env_shape = arbiter.shapes
 		
 		return False
 	
 	@staticmethod
-	def separate(space, arbiter):
+	def separate(space, arbiter, jukebox):
 		#~ player_shape, env_shape = arbiter.shapes
 		
 		arbiter.shapes[0].body.angle = 0

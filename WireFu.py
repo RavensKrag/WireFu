@@ -70,10 +70,9 @@ class Window(object):
 		# Initialize game objects
 		self.gameobjects = pygame.sprite.Group()
 		
-		
-		
-		level1 = Level(self.screen, 'level01.txt', self.gameclock, self.input_processor)
-		self.platforms = level1.platforms
+		self.loadLevel('level01.txt')
+		# Initialize level background
+		self.background
 		
 #		self.platforms = pygame.sprite.Group(
 #				Ground(), 
@@ -102,6 +101,11 @@ class Window(object):
 		
 		#~ # Create killscreen
 		self.killscreen = KillScreen(self)
+		
+	def loadLevel(self, levelFName):
+		level = Level(self.screen, levelFName, self.gameclock, self.input_processor)
+		self.platforms = level.platforms
+		self.background = level.background
 	
 	def update(self):
 		self.input_processor.update()
@@ -118,8 +122,9 @@ class Window(object):
 		pygame.display.set_caption("fps: " + str(self.clock.get_fps()))
 	
 	def draw(self):
-		# Background
+		# Display Background
 		self.screen.fill([0,0,0])
+		self.screen.blit(self.background, (0, 0))	
 		
 		# Environment
 		for p in self.platforms:

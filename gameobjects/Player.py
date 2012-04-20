@@ -24,7 +24,7 @@ class Player(NonstaticObject):
 		self.jump_velocity = 4*150
 		
 		self.body.position.x = 0
-		self.body.position.y = 0
+		self.body.position.y = 100
 
 		self.handhold = None # Pointer to a joint used to hold the player somewhere
 		
@@ -41,6 +41,7 @@ class Player(NonstaticObject):
 		self.normal = Vec2d(0.0, 1.0)
 	
 	def draw(self, screen):
+		print('TESTING -- Entering Player.draw()')
 		pos = Physics.to_pygame(self.body.position)
 		#~ pos = self.body.position
 		screen.blit(self.image, (pos[0]-self._animation.get_width()/2, 

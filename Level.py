@@ -70,7 +70,14 @@ class Level:
 				dimensions = [float(matches[2]),float(matches[3])]
 				platform = Exit(pos,dimensions,game_clock,input_handler)
 				self.platforms.add(platform)				
-				line = level_file.readline()				
+				line = level_file.readline()
+			elif(section == 5):		# Load Jump powerups
+				matches = self.findPatterns(r'\d+.\d+', line)
+				pos = [float(matches[0]),float(matches[1])]
+				dimensions = [float(matches[2]),float(matches[3])]
+				platform = Powerup_Jump_Number(pos,dimensions)
+				self.platforms.add(platform)
+				line = level_file.readline()
 			else:
 				print('Format error in ' + filename + '. Program terminated.')
 				sys.exit()

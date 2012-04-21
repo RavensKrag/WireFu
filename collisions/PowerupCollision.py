@@ -19,8 +19,8 @@ class PowerupCollision(object):
 		powerup = powerup_shape.gameobject
 
 		#play the sound
-		if powerup.untouched:
-			jukebox.play_powerup()
+		#~ if powerup.untouched:
+		jukebox.play_powerup()
 		
 		powerup.apply_effect(player)
 		
@@ -48,3 +48,10 @@ class PowerupCollision(object):
 		arbiter.shapes[0].body.angle = 0
 		
 		return False
+	
+	@staticmethod
+	def post_collision_callback():
+		for powerup in PowerupCollision.consumed_powerups:
+			powerup.delete()
+		del PowerupCollision.consumed_powerups[:]
+

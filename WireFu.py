@@ -8,9 +8,9 @@ from pymunk import Vec2d
 import math, sys, random, os
 
 # Change to the directory where this file resides
-#abspath = os.path.abspath(__file__)
-#dname = os.path.dirname(abspath)
-#os.chdir(dname)
+abspath = os.path.abspath(__file__)
+dname = os.path.dirname(abspath)
+os.chdir(dname)
 
 
 # Import files
@@ -58,7 +58,7 @@ class Window(object):
 		self.gameclock = GameClock(self.clock)
 		
 		self.player = Player()
-		self.input_processor = EventProcessor(self, self.player)
+		self.input_processor = EventProcessor(self, self.player, self.jukebox)
 		
 		# Initialize game objects
 		self.gameobjects = pygame.sprite.Group()

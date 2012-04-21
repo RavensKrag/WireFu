@@ -86,11 +86,11 @@ class Jukebox:
 		return self.bgm.get_volume()
 
 	def lower_volume(self):
-		vol = self.bgm.get_volume() - 0.1
+		vol = self.bgm.get_volume() - 0.01
 		self.bgm.set_volume(vol)
 
 	def higher_volume(self):
-		vol = self.bgm.get_volume() + 0.1
+		vol = self.bgm.get_volume() + 0.01
 		self.bgm.set_volume(vol)
                 
 	

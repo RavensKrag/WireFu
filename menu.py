@@ -1,9 +1,26 @@
-import pygame
+import pygame, os
 
 WHITE = (255, 255, 255)
 RED = (255, 0, 0)
 
+def load_image(name, colorkey=None):
+    fullname = os.path.join('data', name)
+    try:
+        image = pygame.image.load(fullname)
+    except pygame.error, message:
+        print 'Cannot load image:', fullname
+        raise SystemExit, message
+    image = image.convert()
+    if colorkey is not None:
+        if colorkey is -1:
+            colorkey = image.get_at((0,0))
+        image.set_colorkey(colorkey, RLEACCEL) # accelerate 
+    return image, image.get_rect()
+
 def display_Menu(screen):
+        background, backRect = load_image('bg2.png')
+        screen.blit(background, (0,0))
+        
 	menu_list = ["New Game", "Load Game", "Credits", "Exit"]
 	menu_list_pos = []
 	font = pygame.font.Font(None, 32)
@@ -53,3 +70,4 @@ def display_Menu(screen):
 
                                 elif event.key == pygame.K_RETURN:
                                         return menu_list[selected]
+

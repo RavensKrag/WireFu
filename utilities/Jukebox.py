@@ -73,24 +73,24 @@ class Jukebox:
 		self.powerup_sound.stop()
 
 	def play_victory(self):
-                self.victory.play()
+		self.victory.play()
 
-        def stop_victory(self):
-                self.victory.stop()
+	def stop_victory(self):
+		self.victory.stop()
 
-        def set_volume(self, vol):
-                #vol is between 0.1 - 1.0
-                self.bgm.set_volume(vol)
+	def set_volume(self, vol):
+		#vol is between 0.1 - 1.0
+		self.bgm.set_volume(vol)
 
-        def get_volume(self):
-                return self.bgm.get_volume()
+	def get_volume(self):
+		return self.bgm.get_volume()
 
-        def lower_volume(self):
-                vol = self.bgm.get_volume() - 0.1
-                self.bgm.set_volume(vol)
+	def lower_volume(self):
+		vol = self.bgm.get_volume() - 0.1
+		self.bgm.set_volume(vol)
 
-        def higher_volume(self):
-                vol = self.bgm.get_volume() + 0.1
-                self.bgm.set_volume(vol)
+	def higher_volume(self):
+		vol = self.bgm.get_volume() + 0.1
+		self.bgm.set_volume(vol)
                 
 	

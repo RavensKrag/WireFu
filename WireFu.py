@@ -114,9 +114,15 @@ class Window(object):
 			self.killscreen.draw(self.screen)
 	
 	def main(self):
+		firstTime = True
 		choice = menu.display_Menu(self.screen)
 		while self.running:
 			if choice == "New Game":
+				if firstTime:
+					self.jukebox.stop_bgm()
+					self.jukebox.set_bgm('elec_Spin.wav')
+					self.jukebox.play_bgm()
+					firstTime = False
 				self.update()
 				self.draw()
 				pygame.display.flip()

@@ -53,4 +53,5 @@ class PowerupCollision(object):
 	def post_collision_callback():
 		for powerup in PowerupCollision.consumed_powerups:
 			powerup.delete()
-		PowerupCollision.consumed_powerups = []
+		del PowerupCollision.consumed_powerups[:]
+

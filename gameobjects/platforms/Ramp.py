@@ -17,16 +17,24 @@ class Ramp(StaticObject):
 			swap = p2
 			p2 = p1
 			p1 = swap
-		
-		self.height = p2[1] - p1[1]
+			self.height = p2[1] - p1[1]
+			swap = p2
+			p2 = p1
+			p1 = swap
+		else:
+			self.height = p2[1] - p1[1]
 		
 		# Sort by x
 		if(p1[0] > p2[0]):
 			swap = p2
 			p2 = p1
 			p1 = swap
-		
-		self.width = p2[0] - p1[0]
+			self.width = p2[0] - p1[0]
+			swap = p2
+			p2 = p1
+			p1 = swap
+		else:
+			self.width = p2[0] - p1[0]
 		
 		# Counterclockwise winding
 		# Start from bottom left

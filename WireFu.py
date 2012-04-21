@@ -57,8 +57,8 @@ class Window(object):
 		Physics.screen_height = self.height
 		self.gameclock = GameClock(self.clock)
 		
-		self.player = Player()
-		self.input_processor = EventProcessor(self, self.player)
+		##self.player = Player()
+		##self.input_processor = EventProcessor(self, self.player)
 		
 		# Initialize game objects
 		self.gameobjects = pygame.sprite.Group()
@@ -81,6 +81,10 @@ class Window(object):
 		self.killscreen = KillScreen(self)
 		
 	def loadLevel(self, levelFName):
+		self.currentLevel = levelFName
+		self.gameclock.reset()
+		self.player = Player()
+		self.input_processor = EventProcessor(self, self.player)
 		level = Level(self.screen, levelFName, self.gameclock, self.input_processor)
 		self.platforms = level.platforms
 		self.background = level.background

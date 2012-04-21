@@ -16,6 +16,9 @@ class EventProcessor(object):
 		
 		self.restart_key = pygame.K_r
 		
+		self.volume_up_key = pygame.K_1
+		self.volume_down_key = pygame.K_2
+		
 		self.active = True;
 	
 	def update(self):
@@ -35,14 +38,6 @@ class EventProcessor(object):
 					elif event.key == self.restart_key:
 						# Restart level
 						self.window.loadLevel(self.window.currentLevel)
-					elif event.key == pygame.K_1:
-						self.jukebox.lower_volume()
-					elif event.key == pygame.K_2:
-						self.jukebox.higher_volume()
-					elif event.key == pygame.K_1:
-						self.jukebox.lower_volume()
-					elif event.key == pygame.K_2:
-							self.jukebox.higher_volume()
 					else:	# Get button hold keydowns
 						self.inputs[event.key] = True
 				elif event.type == pygame.KEYUP:
@@ -56,11 +51,14 @@ class EventProcessor(object):
 			
 			# Process held buttons
 			if self.inputs.get(self.right_key, False):
-				#~ pass
 				self.player.move_right()
 			if self.inputs.get(self.left_key, False):
-				#~ pass
 				self.player.move_left()
+			
+			if self.inputs.get(self.volume_up_key, False):
+				self.jukebox.higher_volume()
+			if self.inputs.get(self.volume_down_key, False):
+				self.jukebox.lower_volume()
 		
 		for event in pygame.event.get():
 			if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:

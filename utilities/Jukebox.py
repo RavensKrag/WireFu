@@ -11,7 +11,8 @@ class Jukebox:
 		self.sound_on = True
 		
 		#default bgm
-		self.bgm = self.load_sound('elec_Spin.wav')
+		#self.bgm = self.load_sound('elec_Spin.wav')
+		self.bgm = self.load_sound('elec_Run_The_Blockade.wav')
 		#default powerup_sound
 		self.powerup_sound = self.load_sound('beep-01.wav')
 		#default
@@ -61,12 +62,12 @@ class Jukebox:
 	#play or stop audio manually
 	def play_bgm(self):
 		self.bgm.play(-1)
+		
+	def stop_bgm(self):
+		self.bgm.stop()
 	
 	def play_powerup(self):
 		self.powerup_sound.play()
-
-	def stop_bgm(self):
-		self.bgm.stop()
 
 	def stop_powerup(self):
 		self.powerup_sound.stop()

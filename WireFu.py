@@ -124,19 +124,27 @@ class Window(object):
 			self.killscreen.draw(self.screen)
 	
 	def main(self):
+		firstTime = True
 		choice = menu.display_Menu(self.screen)
 		while self.running:
 			if choice == "New Game":
+				if firstTime:
+					self.jukebox.stop_bgm()
+					self.jukebox.set_bgm('elec_Spin.wav')
+					self.jukebox.play_bgm()
+					firstTime = False
 				self.update()
 				self.draw()
 				pygame.display.flip()
 				self.clock.tick(self.framerate)
 
-			elif choice == "Load Game":
+			elif choice == "Options":
 				print 'not implemented'
+				choice = menu.display_Menu(self.screen)
 
 			elif choice == "Credits":
-				print 'show credits'
+				menu.display_Credits(self.screen)
+				choice = menu.display_Menu(self.screen)
 
 			elif choice == "Exit":
 				self.running = False

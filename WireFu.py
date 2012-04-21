@@ -8,9 +8,9 @@ from pymunk import Vec2d
 import math, sys, random, os
 
 # Change to the directory where this file resides
-#abspath = os.path.abspath(__file__)
-#dname = os.path.dirname(abspath)
-#os.chdir(dname)
+abspath = os.path.abspath(__file__)
+dname = os.path.dirname(abspath)
+os.chdir(dname)
 
 
 # Import files
@@ -65,6 +65,18 @@ class Window(object):
 		
 		# Load level
 		self.loadLevel('level01.txt')
+		self.player = Player()
+		self.input_processor = EventProcessor(self, self.player, self.jukebox)
+		
+		# Initialize game objects
+		self.gameobjects = pygame.sprite.Group()
+		
+		self.loadLevel('level01.txt')
+		# Initialize level background
+		#self.background
+
+		level1 = Level(self.screen, 'level01.txt', self.gameclock, self.input_processor)
+		self.platforms = level1.platforms
 		
 		# Add objects to space
 		self.player.add_to(self.space)
@@ -100,6 +112,7 @@ class Window(object):
 		self.player.update(self.width)
 		
 		collisions.PlayerZiplineCollision.post_collision_callback(self.space, self.player)
+		collisions.PowerupCollision.post_collision_callback()
 		
 		pygame.display.set_caption("fps: " + str(self.clock.get_fps()))
 	

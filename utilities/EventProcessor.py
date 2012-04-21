@@ -2,7 +2,7 @@
 import sys, pygame
 
 class EventProcessor(object):
-	def __init__(self, window, player):
+	def __init__(self, window, player, jukebox):
 		self.window = window
 		self.player = player
 		
@@ -11,6 +11,8 @@ class EventProcessor(object):
 		self.right_key = pygame.K_RIGHT
 		self.left_key = pygame.K_LEFT
 		self.jump_key = pygame.K_SPACE
+
+		self.jukebox = jukebox
 		
 		self.active = True;
 	
@@ -28,6 +30,11 @@ class EventProcessor(object):
 							self.player.let_go(self.window.space)
 						else:
 							self.player.jump()
+					elif event.key == pygame.K_1:
+                                                self.jukebox.lower_volume()
+
+                                        elif event.key == pygame.K_2:
+                                                self.jukebox.higher_volume()
 						
 					else:	# Get button hold keydowns
 						self.inputs[event.key] = True

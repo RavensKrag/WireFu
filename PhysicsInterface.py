@@ -8,12 +8,20 @@ class PhysicsInterface(object):
 		self.body = shape.body
 	
 	def add_to(self, space):
+		print "adding"
 		self.space = space	# Store reference to space, so that the object can remove itself
 		space.add(self.body, self.shape)
 	
 	def remove_from_space(self):
 		if self.space:
-			self.space.remove(self.body, self.shape)
+			#~ if self.body == pm.Body():
+			self.space.remove(self.body)
+			self.space.remove(self.shape)
+			
+			#~ if self.body:
+				#~ self.space.remove(self.body)
+			#~ if self.shape:
+				#~ self.space.remove(self.shape)
 	
 	def _get_x(self):
 		return self.body.position.x

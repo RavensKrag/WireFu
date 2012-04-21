@@ -43,3 +43,18 @@ class StaticObject(GameObject):
 	
 	def add_to(self, space):
 		space.add_static(self.shape)
+		self.space = space
+	
+	def delete(self):
+		# Remove the gameobject from all groups which contain it, as well as the Pymunk space
+		# TODO: Test this method.  Remove this comment when tested
+		self.space.remove_static(self.shape)
+		self.space = None
+		
+		groups = super(StaticObject, self).groups()
+		super(StaticObject, self).remove(groups)
+
+	
+	def remove_from_space(self):
+		self.space.remove_static(self.space)
+		self.space = None

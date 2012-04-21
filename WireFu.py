@@ -65,18 +65,12 @@ class Window(object):
 		
 		# Load level
 		self.loadLevel('level01.txt')
-		self.player = Player()
-		self.input_processor = EventProcessor(self, self.player, self.jukebox)
+		#self.player = Player()
+		#self.input_processor = EventProcessor(self, self.player, self.jukebox)
 		
-		# Initialize game objects
-		self.gameobjects = pygame.sprite.Group()
-		
-		self.loadLevel('level01.txt')
+		#self.loadLevel('level01.txt')
 		# Initialize level background
 		#self.background
-
-		level1 = Level(self.screen, 'level01.txt', self.gameclock, self.input_processor)
-		self.platforms = level1.platforms
 		
 		# Add objects to space
 		self.player.add_to(self.space)
@@ -96,7 +90,7 @@ class Window(object):
 		self.currentLevel = levelFName
 		self.gameclock.reset()
 		self.player = Player()
-		self.input_processor = EventProcessor(self, self.player)
+		self.input_processor = EventProcessor(self, self.player, self.jukebox)
 		level = Level(self.screen, levelFName, self.gameclock, self.input_processor)
 		self.platforms = level.platforms
 		self.background = level.background

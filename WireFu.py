@@ -100,6 +100,7 @@ class Window(object):
 		self.player.update(self.width)
 		
 		collisions.PlayerZiplineCollision.post_collision_callback(self.space, self.player)
+		collisions.PowerupCollision.post_collision_callback()
 		
 		pygame.display.set_caption("fps: " + str(self.clock.get_fps()))
 	

@@ -97,7 +97,7 @@ class Level:
 		# Background
 		self.screen.fill([0,0,0])
 
-		print('TESTING -- self.platforms', self.platforms)
+		#print('TESTING -- self.platforms', self.platforms)
 		
 		# Environment
 		for p in self.platforms:

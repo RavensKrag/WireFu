@@ -19,3 +19,7 @@ jazz goin up - http://www.newgrounds.com/audio/listen/408604
 
 
 i like to hit thing - http://www.newgrounds.com/audio/listen/124697
+
+jungle run - http://www.soundjay.com/free-music-7.html
+
+anime splash - http://www.allmusiclibrary.com/free_sound_effects.php

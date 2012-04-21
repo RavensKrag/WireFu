@@ -122,11 +122,13 @@ class Window(object):
 				pygame.display.flip()
 				self.clock.tick(self.framerate)
 
-			elif choice == "Load Game":
+			elif choice == "Options":
 				print 'not implemented'
+				choice = menu.display_Menu(self.screen)
 
 			elif choice == "Credits":
-				print 'show credits'
+				menu.display_Credits(self.screen)
+				choice = menu.display_Menu(self.screen)
 
 			elif choice == "Exit":
 				self.running = False

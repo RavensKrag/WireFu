@@ -37,6 +37,9 @@ class PlayerExitCollision(object):
 			env_shape.gameobject.gameclock.stop()
 			env_shape.gameobject.input_handler.deactivate_input()
 			print "level complete"
+
+			jukebox.stop_bgm()
+			jukebox.play_victory()
 			
 		return True
 	

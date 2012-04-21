@@ -27,7 +27,6 @@ class ZiplineWire(Ramp):
 		#~ self.handle.update()
 	
 	def draw(self, screen):
-		#~ print('TESTING -- Entering ZiplineWire.draw()')
 		#~ print "zipline draw"
 		super(ZiplineWire, self).draw(screen)
 		#~ self.handle.draw(screen)

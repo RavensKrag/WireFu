@@ -1,0 +1,16 @@
+level01.jpg
+1020 600
+
+# Section 1 - Platforms
+1.5 2.5 1.0 0.1
+3.0 2.5 1.0 0.1
+3.5 0.5 1.0 0.1
+
+# Section 2 - Ramps
+
+
+# Section 3 - Ziplines
+
+
+# Section 4 - Finish platform
+5.5 2.0 1.0 0.1

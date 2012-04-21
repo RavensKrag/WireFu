@@ -14,6 +14,8 @@ class Jukebox:
 		self.bgm = self.load_sound('elec_Spin.wav')
 		#default powerup_sound
 		self.powerup_sound = self.load_sound('beep-01.wav')
+		#default
+		self.victory = self.load_sound('victory.wav')
 	
 	def ToggleMusic(self):
 		if self.music_on == False:
@@ -37,6 +39,9 @@ class Jukebox:
 
 	def set_powerup(self, name):
 		self.powerup_sound = self.load_sound(name)
+
+	def set_victory(self, name):
+                self.victory = self.load_sound(name)
 	
 	def load_sound(self, name):
 		class NoneSound:
@@ -65,4 +70,10 @@ class Jukebox:
 
 	def stop_powerup(self):
 		self.powerup_sound.stop()
+
+	def play_victory(self):
+                self.victory.play()
+
+        def stop_victory(self):
+                self.victory.stop()
 	

@@ -8,9 +8,9 @@ from pymunk import Vec2d
 import math, sys, random, os
 
 # Change to the directory where this file resides
-abspath = os.path.abspath(__file__)
-dname = os.path.dirname(abspath)
-os.chdir(dname)
+#abspath = os.path.abspath(__file__)
+#dname = os.path.dirname(abspath)
+#os.chdir(dname)
 
 
 # Import files
@@ -29,6 +29,8 @@ from gameobjects import Player
 
 from utilities import Jukebox
 
+import menu
+
 class Window(object):
 	def __init__(self, width, height):
 		# Main gamestate initialization
@@ -45,7 +47,7 @@ class Window(object):
 		self.screen = pygame.display.set_mode(self.dimentions)
 		self.clock = pygame.time.Clock()
 		self.framerate = 60
-		
+
 		# Initialize physics
 		self.space = pm.Space(100)
 		#~ self.space.damping = 0.12
@@ -64,20 +66,9 @@ class Window(object):
 		self.loadLevel('level01.txt')
 		# Initialize level background
 		#self.background
-		
-#		self.platforms = pygame.sprite.Group(
-#				Ground(), 
-#				Exit([0.3*150,2.4*150], [1*150, 0.3*150], self.gameclock, self.input_processor),
-#				Platform([1.0*150,1.0*150], [1*150, 0.3*150]),
-#				Platform([1.0*150,2.0*150], [1*150, 0.3*150]),
-#				Platform([1.0*150,3.0*150], [1*150, 0.3*150]),
-#				Platform([3.8*150,2.7*150], [1*150, 0.3*150]),
-#				Platform([3*150,1*150], [2*150, 0.3*150]),
-#				Platform([1.3*150,0.5*150], [1*150, 0.3*150]),
-#				Ramp([5*150,1*150], [5.5*150,2.5*150], width=10),
-#				ZiplineWire([1.5*150,3.6*150], [3.8*150,3.9*150]),
-#				Powerup_Jump_Number([6*150, 0*150], [0.3*150, 0.3*150])
-#		)
+
+		level1 = Level(self.screen, 'level01.txt', self.gameclock, self.input_processor)
+		self.platforms = level1.platforms
 		
 		# Add objects to space
 		self.player.add_to(self.space)
@@ -133,11 +124,22 @@ class Window(object):
 			self.killscreen.draw(self.screen)
 	
 	def main(self):
+		choice = menu.display_Menu(self.screen)
 		while self.running:
-			self.update()
-			self.draw()
-			pygame.display.flip()
-			self.clock.tick(self.framerate)
+			if choice == "New Game":
+				self.update()
+				self.draw()
+				pygame.display.flip()
+				self.clock.tick(self.framerate)
+
+			elif choice == "Load Game":
+				print 'not implemented'
+
+			elif choice == "Credits":
+				print 'show credits'
+
+			elif choice == "Exit":
+				self.running = False
 
 	
 	def _init_collision_handlers(self):

@@ -18,10 +18,9 @@ class Level:
 		level_file = self.openFile(filename)
 		
 		# Read load the background image
-		line = level_file.readline()
-		##image_fname = openFile(line)
-		##fullname = os.path.join('levels', line)
-		self.background = pygame.image.load('levels/level03.jpg').convert()
+		line = level_file.readline().rstrip('\n')
+		fullname = os.path.join('levels', line)
+		self.background = pygame.image.load(fullname).convert()
 		
 		# Set level size from file
 		line = level_file.readline()
@@ -29,7 +28,6 @@ class Level:
 		self.level_width = int(matches[0])
 		self.level_height = int(matches[1])
 		screen = pygame.display.set_mode((self.level_width,self.level_height))
-		print('screen', screen)
 		
 		# Load platforms, ramps, and ziplines
 		self.platforms = pygame.sprite.Group()
@@ -104,8 +102,6 @@ class Level:
 		# Environment
 		for p in self.platforms:
 			p.draw(self.screen)
-			
-		#self.screen.blit(self.background, (0,0))
 
 	def openFile(self, filename):
 		fullname = os.path.join('levels', filename)

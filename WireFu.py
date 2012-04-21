@@ -161,4 +161,4 @@ class Window(object):
 			collision_class.begin, collision_class.pre_solve, 
 			collision_class.post_solve, collision_class.separate, jukebox)
 	
-Window(1020, 600).main()
+Window(2100, 768).main()

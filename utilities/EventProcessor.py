@@ -39,6 +39,10 @@ class EventProcessor(object):
 						self.jukebox.lower_volume()
 					elif event.key == pygame.K_2:
 						self.jukebox.higher_volume()
+					elif event.key == pygame.K_1:
+						self.jukebox.lower_volume()
+					elif event.key == pygame.K_2:
+							self.jukebox.higher_volume()
 					else:	# Get button hold keydowns
 						self.inputs[event.key] = True
 				elif event.type == pygame.KEYUP:

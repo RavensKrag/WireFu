@@ -63,12 +63,8 @@ class Window(object):
 		# Initialize game objects
 		self.gameobjects = pygame.sprite.Group()
 		
+		# Load level
 		self.loadLevel('level01.txt')
-		# Initialize level background
-		#self.background
-
-		level1 = Level(self.screen, 'level01.txt', self.gameclock, self.input_processor)
-		self.platforms = level1.platforms
 		
 		# Add objects to space
 		self.player.add_to(self.space)

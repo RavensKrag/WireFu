@@ -67,7 +67,7 @@ class Ramp(StaticObject):
 		pass
 	
 	def draw(self, screen):
-		print('TESTING -- Entering Ramp.draw()')
+		#~ print('TESTING -- Entering Ramp.draw()')
 		pos = Physics.to_pygame(self.body.position)
 		screen.blit(self.image, (pos[0], pos[1]-self.height))
 		

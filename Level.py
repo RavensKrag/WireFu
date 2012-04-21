@@ -21,7 +21,7 @@ class Level:
 		line = level_file.readline()
 		##image_fname = openFile(line)
 		##fullname = os.path.join('levels', line)
-		self.background = pygame.image.load('levels/level01.jpg').convert()
+		self.background = pygame.image.load('levels/level03.jpg').convert()
 		
 		# Set level size from file
 		line = level_file.readline()
@@ -36,7 +36,6 @@ class Level:
 		line = level_file.readline()
 		section = 0
 		while line != '':
-			print('section', section)
 			if(line[0] == '#' or line[0] == '\n'):
 				if line[0] == '#': section += 1
 				line = level_file.readline()
@@ -59,8 +58,6 @@ class Level:
 				matches = self.findPatterns(r'\d+.\d+', line)
 				endPoint1 = [float(matches[0]),float(matches[1])]
 				endPoint2 = [float(matches[2]),float(matches[3])]
-				print('endPoint1', endPoint1)
-				print('endPoint2', endPoint2)
 				platform = ZiplineWire(endPoint1,endPoint2)
 				self.platforms.add(platform)			
 				line = level_file.readline()
@@ -103,8 +100,6 @@ class Level:
 	def draw(self, screen):
 		# Background
 		self.screen.fill([0,0,0])
-
-		print('TESTING -- self.platforms', self.platforms)
 		
 		# Environment
 		for p in self.platforms:

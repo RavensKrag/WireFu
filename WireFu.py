@@ -63,7 +63,7 @@ class Window(object):
 		
 		self.loadLevel('level01.txt')
 		# Initialize level background
-		self.background
+		#self.background
 		
 #		self.platforms = pygame.sprite.Group(
 #				Ground(), 

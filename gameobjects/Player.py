@@ -37,7 +37,7 @@ class Player(NonstaticObject):
 		self.normal = Vec2d(0.0, 1.0)
 	
 	def draw(self, screen):
-		print('TESTING -- Entering Player.draw()')
+		#~ print('TESTING -- Entering Player.draw()')
 		pos = Physics.to_pygame(self.body.position)
 		#~ pos = self.body.position
 		screen.blit(self.image, (pos[0]-self._animation.get_width()/2, 

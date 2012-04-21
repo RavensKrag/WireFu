@@ -12,6 +12,8 @@ class EventProcessor(object):
 		self.left_key = pygame.K_LEFT
 		self.jump_key = pygame.K_SPACE
 		
+		self.restart_key = pygame.K_r
+		
 		self.active = True;
 	
 	def update(self):
@@ -28,7 +30,9 @@ class EventProcessor(object):
 							self.player.let_go(self.window.space)
 						else:
 							self.player.jump()
-						
+					elif event.key == self.restart_key:
+						# Restart level
+						self.window.loadLevel(self.window.currentLevel)
 					else:	# Get button hold keydowns
 						self.inputs[event.key] = True
 				elif event.type == pygame.KEYUP:

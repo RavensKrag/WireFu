@@ -1,6 +1,9 @@
 # Module for processing pygame events
 import sys, pygame
 
+from states import Menu, Killscreen, CreditsScreen
+from Level import Level;
+
 class EventProcessor(object):
 	def __init__(self, window, jukebox):
 		self.window = window
@@ -33,15 +36,15 @@ class EventProcessor(object):
 					else:	# Get button hold keydowns
 						self.inputs[event.key] = True
 					
-					if self.window.state == 'menu':
+					if isinstance(self.window.states[-1], Menu):
 						pass
-					elif self.window.state == 'options':
+					#~ elif self.window.state == 'options':
+						#~ pass
+					elif isinstance(self.window.states[-1], Killscreen):
 						pass
-					elif self.window.state == 'killscreen':
+					elif isinstance(self.window.states[-1], CreditsScreen):
 						pass
-					elif self.window.state == 'credits':
-						pass
-					elif self.window.state == 'gameplay':
+					elif isinstance(self.window.states[-1], Level):
 						if event.key == self.jump_key:
 							if(self.player.handhold != None):
 								self.player.let_go(self.window.space)
@@ -50,8 +53,8 @@ class EventProcessor(object):
 						if event.key == self.restart_key:
 							# Restart level
 							self.window.loadLevel(self.window.currentLevel)
-					elif self.window.state == 'pause':
-						pass
+					#~ elif self.window.state == 'pause':
+						#~ pass
 					
 				elif event.type == pygame.KEYUP:
 					self.inputs[event.key] = False
@@ -61,21 +64,21 @@ class EventProcessor(object):
 			
 			# ===== Process held buttons
 			# State specific hold events
-			if self.window.state == 'menu':
+			if isinstance(self.window.states[-1], Menu):
 				pass
-			elif self.window.state == 'options':
+			#~ elif self.window.state == 'options':
+				#~ pass
+			elif isinstance(self.window.states[-1], Killscreen):
 				pass
-			elif self.window.state == 'killscreen':
+			elif isinstance(self.window.states[-1], CreditsScreen):
 				pass
-			elif self.window.state == 'credits':
-				pass
-			elif self.window.state == 'gameplay':
+			elif isinstance(self.window.states[-1], Level):
 				if self.inputs.get(self.right_key, False):
 					self.player.move_right()
 				if self.inputs.get(self.left_key, False):
 					self.player.move_left()
-			elif self.window.state == 'pause':
-				pass
+			#~ elif self.window.state == 'pause':
+				#~ pass
 			
 			# Universal button hold events
 			if self.inputs.get(self.volume_up_key, False):

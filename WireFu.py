@@ -102,8 +102,6 @@ class Window(object):
 		
 	
 	def main(self):
-		self.state = 'menu'
-		
 		firstTime = True
 		choice = menu.display_Menu(self.screen)
 		while self.running:
@@ -114,7 +112,6 @@ class Window(object):
 					self.jukebox.play_bgm()
 					firstTime = False
 					
-					self.state = 'gameplay'
 					self.states.append(Level(self, self.space, 'level01.txt', 
 										self.input_processor, self.gameclock))
 					

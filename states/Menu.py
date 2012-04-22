@@ -55,11 +55,11 @@ class Menu(object):
 		elif self.menu_list[self.selected] == "Options":
 			pass
 		elif self.menu_list[self.selected] == "Credits":
-			state = CreditsScreen(self.window.screen)
+			state = CreditsScreen.CreditsScreen(self.window.screen)
 		elif self.menu_list[self.selected] == "Exit":
 			pass
 		
-		self.window.states.append(state)
+		self.window.push_state(state)
 	
 	def _load_image(self, name, colorkey=None):
 		fullname = os.path.join('data', name)

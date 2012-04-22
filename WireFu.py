@@ -107,6 +107,14 @@ class Window(object):
 			self.draw()
 			pygame.display.flip()
 			self.clock.tick(self.framerate)
+	
+	def push_state(self, state):
+		self.jukebox.stop_bgm()
+		self.states.append(state)
+		
+	
+	def pop_state(self):
+		self.states.pop()
 		
 	def _init_collision_handlers(self):
 		self._add_collision_handler(collisions.PLAYER, collisions.PLATFORM, 

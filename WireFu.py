@@ -114,8 +114,10 @@ class Window(object):
 					self.jukebox.play_bgm()
 					firstTime = False
 					
+					self.state = 'gameplay'
 					self.states.append(Level(self, self.space, 'level01.txt', 
 										self.input_processor, self.gameclock))
+					
 				self.update()
 				self.draw()
 				pygame.display.flip()

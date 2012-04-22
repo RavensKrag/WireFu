@@ -61,19 +61,22 @@ class Jukebox:
 
 	#play or stop audio manually
 	def play_bgm(self):
-		self.bgm.play(-1)
+                if self.music_on:
+                        self.bgm.play(-1)
 		
 	def stop_bgm(self):
 		self.bgm.stop()
 	
 	def play_powerup(self):
-		self.powerup_sound.play()
+                if self.sound_on:
+                        self.powerup_sound.play()
 
 	def stop_powerup(self):
 		self.powerup_sound.stop()
 
 	def play_victory(self):
-		self.victory.play()
+                if self.sound_on:
+                        self.victory.play()
 
 	def stop_victory(self):
 		self.victory.stop()

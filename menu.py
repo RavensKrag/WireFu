@@ -19,7 +19,7 @@ def load_image(name, colorkey=None):
     return image, image.get_rect()
 
 def display_Menu(screen, jukebox):
-    background, backRect = load_image('bg2.png')
+    background, back_rect = load_image('bg2.png')
     screen.blit(background, (0,0))
         
     menu_list = ["New Game", "Options", "Credits", "Exit"]
@@ -93,8 +93,8 @@ def display_Credits(screen):
     pos_x = screen.get_width()/2
     pos_y = screen.get_width()/2
 
-    background, backRect = load_image('bg1.jpg')
-    screen.blit(background, backRect)
+    background, back_rect = load_image('bg1.jpg')
+    screen.blit(background, back_rect)
     pygame.display.flip()
 
     s = pygame.Surface((1020, 2000), pygame.SRCALPHA, 32)
@@ -125,7 +125,7 @@ def display_Credits(screen):
     while running:
         clock.tick(50)
         s.scroll(0, -1)
-        screen.blit(background, backRect)
+        screen.blit(background, back_rect)
         screen.blit(s, s_rect)
         pygame.display.flip()
         for event in pygame.event.get():
@@ -159,8 +159,8 @@ def display_Options(screen, jukebox):
     text = font.render("PRESS SPACE BAR TO GO BACK....", 1, WHITE)
     textpos = text.get_rect(centerx = 500, centery = 500) 
     
-    background, backRect = load_image('bg1.jpg')
-    screen.blit(background, backRect)
+    background, back_rect = load_image('bg1.jpg')
+    screen.blit(background, back_rect)
     screen.blit(music, music_rect)
     screen.blit(sound, sound_rect)
     screen.blit(text, textpos)
@@ -192,7 +192,7 @@ def display_Options(screen, jukebox):
                         else:
                             sound = font.render("Sound Disabled", 1, RED)
 
-            screen.blit(background, backRect)
+            screen.blit(background, back_rect)
             screen.blit(music, music_rect)
             screen.blit(sound, sound_rect)
             screen.blit(text, textpos)

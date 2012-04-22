@@ -6,16 +6,78 @@ from pymunk import Vec2d
 import Physics
 import collisions
 
+from gameobjects import Player
 from gameobjects.platforms import Exit, Platform, Ramp
 from gameobjects.zipline import ZiplineHandle, ZiplineWire
 from gameobjects.powerups import Powerup_Jump_Number
 
-class Level:
-	def __init__(self, screen, filename, game_clock, input_handler):
-		pygame.init()
-		
+class Level(object):
+	def __init__(self, screen, space, filename, input_handler, game_clock):
 		# Open level file
-		level_file = self.openFile(filename)
+		self.screen = screen
+		self.space = space
+		self.name = filename
+		self.input_handler = input_handler
+		self.game_clock = game_clock
+		
+		self.game_clock.reset()
+		
+		# Load level background and the objects in the level
+		# level_width, level_width, background, powerups, platforms
+		self._load(self.name)
+		
+		self.player = Player()
+		self.player.body.position.x = 0
+		self.player.body.position.y = 100
+		
+		self.gameobjects = pygame.sprite.Group()
+		
+		# Add objects to space
+		self.player.add_to(self.space)
+		for p in self.platforms:
+			p.add_to(self.space)
+		for p in self.powerups:
+			p.add_to(self.space)
+		
+		# Bind input
+		input_handler.bind_player(self.player) # Remember to unbind on level end
+	
+	def update(self):
+		self.player.update(self.level_width)
+		
+		for p in self.platforms:
+			p.update()
+		for p in self.powerups:
+			p.update
+		
+		collisions.PlayerZiplineCollision.post_collision_callback(self.space, self.player)
+		collisions.PowerupCollision.post_collision_callback()
+		
+	def draw(self, screen):
+		# Display Background
+		screen.fill([0,0,0])
+		screen.blit(self.background, (0, 0))	
+		
+		# Environment
+		for p in self.platforms:
+			p.draw(screen)
+		
+		# Powerups
+		for p in self.powerups:
+			p.draw(screen)
+		
+		# Player
+		self.player.draw(screen)
+		
+		# Draw UI
+		self.game_clock.draw(screen)
+	
+	def delete(self):
+		# Remove all objects contained in this level from the pymunk space, and mark for gc
+		pass
+	
+	def _load(self, filename):
+		level_file = self._openFile(filename)
 		
 		# Read load the background image
 		line = level_file.readline().rstrip('\n')
@@ -24,13 +86,16 @@ class Level:
 		
 		# Set level size from file
 		line = level_file.readline()
-		matches = self.findPatterns(r'\d+', line)
+		matches = self._findPatterns(r'\d+', line)
 		self.level_width = int(matches[0])
 		self.level_height = int(matches[1])
-		screen = pygame.display.set_mode((self.level_width,self.level_height))
+		#~ self.screen = pygame.display.set_mode((self.level_width,self.level_height))
 		
-		# Load platforms, ramps, and ziplines
+		
+		# Load platforms, ramps, ziplines, and powerups
 		self.platforms = pygame.sprite.Group()
+		self.powerups = pygame.sprite.Group()
+		
 		line = level_file.readline()
 		section = 0
 		while line != '':
@@ -38,14 +103,14 @@ class Level:
 				if line[0] == '#': section += 1
 				line = level_file.readline()
 			elif(section == 1):		# Load platforms
-				matches = self.findPatterns(r'\d+.\d+', line)
+				matches = self._findPatterns(r'\d+.\d+', line)
 				pos = [float(matches[0]),float(matches[1])]
 				dimensions = [float(matches[2]),float(matches[3])]
 				platform = Platform(pos,dimensions)
 				self.platforms.add(platform)
 				line = level_file.readline()
 			elif(section == 2): 	# Load ramps
-				matches = self.findPatterns(r'\d+.\d+', line)
+				matches = self._findPatterns(r'\d+.\d+', line)
 				endPoint1 = [float(matches[0]),float(matches[1])]
 				endPoint2 = [float(matches[2]),float(matches[3])]
 				rampWidth = int(float(matches[4]))
@@ -53,66 +118,47 @@ class Level:
 				self.platforms.add(platform)
 				line = level_file.readline()
 			elif(section == 3):		# Load ziplines
-				matches = self.findPatterns(r'\d+.\d+', line)
+				matches = self._findPatterns(r'\d+.\d+', line)
 				endPoint1 = [float(matches[0]),float(matches[1])]
 				endPoint2 = [float(matches[2]),float(matches[3])]
 				platform = ZiplineWire(endPoint1,endPoint2)
 				self.platforms.add(platform)			
 				line = level_file.readline()
 			elif(section == 4): 	# Load Exit platform
-				matches = self.findPatterns(r'\d+.\d+', line)
+				matches = self._findPatterns(r'\d+.\d+', line)
 				pos = [float(matches[0]),float(matches[1])]
 				dimensions = [float(matches[2]),float(matches[3])]
-				platform = Exit(pos,dimensions,game_clock,input_handler)
+				platform = Exit(pos,dimensions,self.game_clock,self.input_handler)
 				self.platforms.add(platform)				
 				line = level_file.readline()
 			elif(section == 5):		# Load Jump powerups
-				matches = self.findPatterns(r'\d+.\d+', line)
+				matches = self._findPatterns(r'\d+.\d+', line)
 				pos = [float(matches[0]),float(matches[1])]
 				dimensions = [float(matches[2]),float(matches[3])]
 				platform = Powerup_Jump_Number(pos,dimensions)
-				self.platforms.add(platform)
+				self.powerups.add(platform)
 				line = level_file.readline()
 			else:
 				print('Format error in ' + filename + '. Program terminated.')
 				sys.exit()
-			
-			
-
-		self.screen = pygame.display.set_mode((self.level_width,self.level_height))
-		self.screen.blit(self.background, (0,0))
 	
 	# Regular expression is used to find pattern within text
-	def findPatterns(self, pat, text):
+	def _findPatterns(self, pat, text):
 		match = re.findall(pat, text)
 		if match:
 			match
 			return match
 		else:
 			print(pat + ' not found')
-			
-	def update(self):
-		for p in self.platforms:
-			p.update()
-		
-	def draw(self, screen):
-		# Background
-		self.screen.fill([0,0,0])
-		
-		# Environment
-		for p in self.platforms:
-			p.draw(self.screen)
-
-	def openFile(self, filename):
+	
+	def _openFile(self, filename):
 		fullname = os.path.join('levels', filename)
 		try:
 			file = open(fullname, 'rU')
 		except pygame.error, message:
 			print 'Cannot load file:', fullname
 			raise SystemExit, message
-		return file
-			
-		
+		return file	
 		
 def main():
 	pygame.init()

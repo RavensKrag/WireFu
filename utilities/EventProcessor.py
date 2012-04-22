@@ -2,9 +2,8 @@
 import sys, pygame
 
 class EventProcessor(object):
-	def __init__(self, window, player, jukebox):
+	def __init__(self, window, jukebox):
 		self.window = window
-		self.player = player
 		
 		self.inputs = {} # Initialize new dictionary
 		
@@ -66,5 +65,8 @@ class EventProcessor(object):
 			elif event.type == pygame.QUIT:
 				self.window.running = False
 	
-	def deactivate_input(self):
-		self.active = False
+	def bind_player(self, player):
+		self.player = player
+	
+	def unbind_player(self):
+		self.player = player

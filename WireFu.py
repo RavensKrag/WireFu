@@ -47,45 +47,26 @@ class Window(object):
 		self.screen = pygame.display.set_mode(self.dimentions)
 		self.clock = pygame.time.Clock()
 		self.framerate = 60
-
+		
+		self.gameclock = GameClock(self.clock)
+		self.input_processor = EventProcessor(self, self.jukebox)
+		
 		# Initialize physics
 		self.space = pm.Space(100)
 		#~ self.space.damping = 0.12
 		self.space.gravity = (0, -10*150)
 		
-		# Initialize other systems
+		# Set physics variables
 		Physics.screen_height = self.height
-		self.gameclock = GameClock(self.clock)
-		self.player = Player()
-		self.input_processor = EventProcessor(self, self.player, self.jukebox)
-		
-		##self.player = Player()
-		##self.input_processor = EventProcessor(self, self.player)
-		
-		# Initialize game objects
-		self.gameobjects = pygame.sprite.Group()
-		
-		# Load level
-		self.loadLevel('level01.txt')
-		#self.player = Player()
-		#self.input_processor = EventProcessor(self, self.player, self.jukebox)
-		
-		#self.loadLevel('level01.txt')
-		# Initialize level background
-		#self.background
-		
-		# Add objects to space
-		self.player.add_to(self.space)
-		for p in self.platforms:
-			p.add_to(self.space)
-		
-		# Assign collision handlers
 		self._init_collision_handlers()
+		
+		# Create gamestate stack
+		self.states = []
 		
 		# Set running to True so main game loop will execute
 		self.running = True
 		
-		#~ # Create killscreen
+		# Create killscreen
 		self.killscreen = KillScreen(self)
 		
 	def loadLevel(self, levelFName):
@@ -100,43 +81,29 @@ class Window(object):
 		level = Level(self.screen, levelFName, self.gameclock, self.input_processor)
 		self.platforms = level.platforms
 		self.background = level.background
+		
+		return level
 	
 	def update(self):
 		self.input_processor.update()
 		self.space.step(1.0/self.framerate)
 		self.gameclock.update()
-
-		for p in self.platforms:
-			p.update()
-
-		self.player.update(self.width)
 		
-		collisions.PlayerZiplineCollision.post_collision_callback(self.space, self.player)
-		collisions.PowerupCollision.post_collision_callback()
+		#~ self.level.update()
+		for state in self.states:
+			state.update()
 		
 		pygame.display.set_caption("fps: " + str(self.clock.get_fps()))
 	
 	def draw(self):
-		# Display Background
-		self.screen.fill([0,0,0])
-		self.screen.blit(self.background, (0, 0))	
+		#~ self.level.draw(self.screen)
+		for state in self.states:
+			state.draw(self.screen)
 		
-		# Environment
-		for p in self.platforms:
-			p.draw(self.screen)
-		
-		# Player
-		self.player.draw(self.screen)
-		
-		# Draw UI
-		self.gameclock.draw(self.screen)
-		
-		# Draw killscreen if level over
-		if((not self.gameclock.is_active()) and (self.gameclock.get_time() != (0,0,0))):
-			self.killscreen.update()
-			self.killscreen.draw(self.screen)
 	
 	def main(self):
+		self.state = 'menu'
+		
 		firstTime = True
 		choice = menu.display_Menu(self.screen)
 		while self.running:
@@ -146,6 +113,11 @@ class Window(object):
 					self.jukebox.set_bgm('elec_Spin.wav')
 					self.jukebox.play_bgm()
 					firstTime = False
+					
+					self.state = 'gameplay'
+					self.states.append(Level(self, self.space, 'level01.txt', 
+										self.input_processor, self.gameclock))
+					
 				self.update()
 				self.draw()
 				pygame.display.flip()
@@ -184,4 +156,4 @@ class Window(object):
 			collision_class.begin, collision_class.pre_solve, 
 			collision_class.post_solve, collision_class.separate, jukebox)
 	
-Window(2100, 768).main()
+Window(1020,600).main()

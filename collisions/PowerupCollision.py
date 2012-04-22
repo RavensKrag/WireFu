@@ -45,8 +45,6 @@ class PowerupCollision(object):
 	def separate(space, arbiter, jukebox):
 		#~ player_shape, env_shape = arbiter.shapes
 		
-		arbiter.shapes[0].body.angle = 0
-		
 		return False
 	
 	@staticmethod

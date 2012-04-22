@@ -18,7 +18,7 @@ class Jukebox:
 		#default
 		self.victory = self.load_sound('victory.wav')
 	
-	def ToggleMusic(self):
+	def toggle_Music(self):
 		if self.music_on == False:
 			self.music_on = True
 			self.bgm.play()
@@ -26,7 +26,7 @@ class Jukebox:
 			self.music_on = False
 			self.bgm.stop()
 	
-	def ToggleSound(self):
+	def toggle_Sound(self):
 		if self.sound_on == False:
 			self.sound_on = True
 			self.powerup_sound.play()
@@ -61,19 +61,22 @@ class Jukebox:
 
 	#play or stop audio manually
 	def play_bgm(self):
-		self.bgm.play(-1)
+                if self.music_on:
+                        self.bgm.play(-1)
 		
 	def stop_bgm(self):
 		self.bgm.stop()
 	
 	def play_powerup(self):
-		self.powerup_sound.play()
+                if self.sound_on:
+                        self.powerup_sound.play()
 
 	def stop_powerup(self):
 		self.powerup_sound.stop()
 
 	def play_victory(self):
-		self.victory.play()
+                if self.sound_on:
+                        self.victory.play()
 
 	def stop_victory(self):
 		self.victory.stop()
@@ -88,9 +91,13 @@ class Jukebox:
 	def lower_volume(self):
 		vol = self.bgm.get_volume() - 0.01
 		self.bgm.set_volume(vol)
-
+		self.powerup_sound.set_volume(vol)
+		self.victory.set_volume(vol)
+		
 	def higher_volume(self):
 		vol = self.bgm.get_volume() + 0.01
 		self.bgm.set_volume(vol)
+		self.powerup_sound.set_volume(vol)
+		self.victory.set_volume(vol)
                 
 	

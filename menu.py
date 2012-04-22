@@ -160,7 +160,7 @@ def display_Options(screen, jukebox):
     textpos = text.get_rect(centerx = 500, centery = 500) 
     
     background, back_rect = load_image('bg1.jpg')
-    screen.blit(background, back_rect)
+    screen.blit(background, back_rect)
     screen.blit(music, music_rect)
     screen.blit(sound, sound_rect)
     screen.blit(text, textpos)
@@ -179,14 +179,14 @@ def display_Options(screen, jukebox):
             elif event.type == MOUSEBUTTONDOWN:
                 if pygame.mouse.get_pressed()[0] == 1:
                     if music_rect.collidepoint(pygame.mouse.get_pos()):
-                        jukebox.ToggleMusic()
+                        jukebox.toggle_Music()
                         if jukebox.music_on:
                             music = font.render("Music Enabled", 1, WHITE)
                         else:
                             music = font.render("Music Disabled", 1, RED)
 
                     if sound_rect.collidepoint(pygame.mouse.get_pos()):
-                        jukebox.ToggleSound()
+                        jukebox.toggle_Sound()
                         if jukebox.sound_on:
                             sound = font.render("Sound Enabled", 1, WHITE)
                         else:

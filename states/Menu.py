@@ -41,6 +41,9 @@ class Menu(object):
 			
 			pos_y = pos_y + self.font_size
 	
+	def delete(self):
+		pass
+	
 	def cursor_up(self):
 		self.selected = (self.selected - 1) % 4
 	
@@ -55,13 +58,16 @@ class Menu(object):
 			state = Level.Level(self.window.screen, self.window.space, 'level01.txt', 
 							self.window.input_processor, self.window.gameclock)
 		elif self.menu_list[self.selected] == "Options":
-			pass
+			print "Options screen not yet implemented"
 		elif self.menu_list[self.selected] == "Credits":
 			state = CreditsScreen.CreditsScreen(self.window.screen)
 		elif self.menu_list[self.selected] == "Exit":
 			pass
 		
-		self.window.push_state(state)
+		if state:
+			self.window.push_state(state)
+		else:
+			self.window.running = False
 	
 	def _load_image(self, name, colorkey=None):
 		fullname = os.path.join('data', name)

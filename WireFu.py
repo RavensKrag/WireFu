@@ -117,7 +117,7 @@ class Window(object):
 		
 	def pop_state(self):
 		self.jukebox.stop_bgm()
-		self.states.pop()
+		self.states.pop().delete()
 		
 		top_state = self.states[-1]
 		if top_state:

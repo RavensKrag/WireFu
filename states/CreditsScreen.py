@@ -18,6 +18,9 @@ class CreditsScreen(object):
 		screen.blit(self.background, self.backRect)
 		screen.blit(self.text_surface, self.text_surface_rect)
 	
+	def delete(self):
+		pass
+	
 	def render_credits_text(self, screen, font_size=32):
 		pos_x = screen.get_width()/2
 		pos_y = screen.get_width()/2

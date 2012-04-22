@@ -105,7 +105,7 @@ class Window(object):
 		self.state = 'menu'
 		
 		firstTime = True
-		choice = menu.display_Menu(self.screen)
+		choice = menu.display_Menu(self.screen, self.jukebox)
 		while self.running:
 			if choice == "New Game":
 				if firstTime:
@@ -125,11 +125,11 @@ class Window(object):
 
 			elif choice == "Options":
 				menu.display_Options(self.screen, self.jukebox)
-				choice = menu.display_Menu(self.screen)
+				choice = menu.display_Menu(self.screen, self.jukebox)
 
 			elif choice == "Credits":
 				menu.display_Credits(self.screen)
-				choice = menu.display_Menu(self.screen)
+				choice = menu.display_Menu(self.screen, self.jukebox)
 
 			elif choice == "Exit":
 				self.running = False

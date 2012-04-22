@@ -18,7 +18,7 @@ def load_image(name, colorkey=None):
         image.set_colorkey(colorkey, RLEACCEL) # accelerate 
     return image, image.get_rect()
 
-def display_Menu(screen):
+def display_Menu(screen, jukebox):
     background, backRect = load_image('bg2.png')
     screen.blit(background, (0,0))
         
@@ -44,9 +44,17 @@ def display_Menu(screen):
 
     pygame.display.flip()
 
-    while True:
+    inputs = {}
+
+    running = True
+    while running:
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    running = False
+                else:
+                    inputs[event.key] = True
+
                 if event.key == pygame.K_DOWN:
                     #make the previous selection in red
                     text = font.render(menu_list[selected], 1, RED)
@@ -68,9 +76,17 @@ def display_Menu(screen):
                     text = font.render(menu_list[selected], 1, WHITE)
                     screen.blit(text, menu_list_pos[selected])
                     pygame.display.flip()
-
+                    
                 elif event.key == pygame.K_RETURN:
                     return menu_list[selected]
+                
+            elif event.type == pygame.KEYUP:
+                    inputs[event.key] = False
+
+        if inputs.get(pygame.K_1, False):
+	    jukebox.higher_volume()
+	if inputs.get(pygame.K_2, False):
+	    jukebox.lower_volume()
 
 
 def display_Credits(screen):
@@ -180,5 +196,5 @@ def display_Options(screen, jukebox):
             screen.blit(music, music_rect)
             screen.blit(sound, sound_rect)
             screen.blit(text, textpos)
-            pygame.display.flip()            
+            pygame.display.flip()
 

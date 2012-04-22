@@ -37,7 +37,6 @@ class Window(object):
 
 		#background music plays endlessly
 		self.jukebox = Jukebox()
-		self.jukebox.play_bgm()
 		
 		self.width = width
 		self.height = height
@@ -100,7 +99,7 @@ class Window(object):
 		
 	
 	def main(self):
-		self.states.append(Menu(self))
+		self.push_state(Menu(self))
 		
 		while self.running:
 			self.update()
@@ -110,11 +109,20 @@ class Window(object):
 	
 	def push_state(self, state):
 		self.jukebox.stop_bgm()
+		
 		self.states.append(state)
 		
-	
+		self.jukebox.set_bgm(state.music)
+		self.jukebox.play_bgm()
+		
 	def pop_state(self):
+		self.jukebox.stop_bgm()
 		self.states.pop()
+		
+		top_state = self.states[-1]
+		if top_state:
+			self.jukebox.set_bgm(top_state.music)
+		self.jukebox.play_bgm()
 		
 	def _init_collision_handlers(self):
 		self._add_collision_handler(collisions.PLAYER, collisions.PLATFORM, 

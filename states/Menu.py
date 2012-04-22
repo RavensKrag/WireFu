@@ -11,6 +11,8 @@ class Menu(object):
 		self.window = window
 		self.font_size = font_size
 		
+		self.music = 'elec_Run_The_Blockade.wav'
+		
 		self.background, self.backRect = self._load_image('bg2.png')
 		
 		self.menu_list = ["New Game", "Options", "Credits", "Exit"]

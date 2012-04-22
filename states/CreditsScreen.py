@@ -5,6 +5,8 @@ RED = (255, 0, 0)
 
 class CreditsScreen(object):
 	def __init__(self, screen):
+		self.music = 'elec_Follow_Me.wav'
+		
 		self.background, self.backRect = self._load_image('bg1.jpg')
 		
 		self.text_surface, self.text_surface_rect = self.render_credits_text(screen)

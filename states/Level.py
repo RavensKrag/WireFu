@@ -13,6 +13,8 @@ from gameobjects.powerups import Powerup_Jump_Number
 
 class Level(object):
 	def __init__(self, screen, space, filename, input_handler, game_clock):
+		self.music = 'elec_Spin.wav'
+		
 		# Open level file
 		self.screen = screen
 		self.space = space

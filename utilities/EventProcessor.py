@@ -50,7 +50,7 @@ class EventProcessor(object):
 					elif isinstance(self.window.states[-1], CreditsScreen):
 						if event.key == pygame.K_SPACE:
 							#go back to the menu screen when space is pressed
-							self.window.states.pop()
+							self.window.pop_state()
 					elif isinstance(self.window.states[-1], Level):
 						if event.key == self.jump_key:
 							if(self.player.handhold != None):

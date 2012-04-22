@@ -16,8 +16,8 @@ class Player(NonstaticObject):
 		self.rect = self.image.get_rect()
 		self.rect.topleft = [0,0]
 		
-		#~ self.body.velocity_limit = 
-		self.jump_velocity = 4*150
+		self.body.velocity_limit = 1100
+		self.jump_velocity = 600
 		
 		self.body.position.x = 0
 		self.body.position.y = 100

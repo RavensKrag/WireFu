@@ -8,9 +8,9 @@ from pymunk import Vec2d
 import math, sys, random, os
 
 # Change to the directory where this file resides
-abspath = os.path.abspath(__file__)
-dname = os.path.dirname(abspath)
-os.chdir(dname)
+#abspath = os.path.abspath(__file__)
+#dname = os.path.dirname(abspath)
+#os.chdir(dname)
 
 
 # Import files
@@ -124,7 +124,7 @@ class Window(object):
 				self.clock.tick(self.framerate)
 
 			elif choice == "Options":
-				print 'not implemented'
+				menu.display_Options(self.screen, self.jukebox)
 				choice = menu.display_Menu(self.screen)
 
 			elif choice == "Credits":

@@ -1,4 +1,5 @@
 import pygame, os
+from pygame.locals import *
 
 WHITE = (255, 255, 255)
 RED = (255, 0, 0)
@@ -116,3 +117,68 @@ def display_Credits(screen):
                 if event.key == pygame.K_SPACE:
                     #go back to the menu screen when space is pressed
                     running = False
+
+def display_Options(screen, jukebox):
+    font = pygame.font.Font(None, 32)
+
+    #pos_x = screen.get_width()/2
+    #pos_y = screen.get_width()/2
+    pos_x = 100
+    pos_y = 100
+
+    if jukebox.music_on:
+        music = font.render("Music Enabled", 1, WHITE)
+    else:
+        music = font.render("Music Disabled", 1, RED)
+    music_rect = music.get_rect(centerx = pos_x, centery = pos_y)
+    pos_y = pos_y + 40
+
+
+    if jukebox.sound_on:
+        sound = font.render("Sound Enabled", 1, WHITE)
+    else:
+        sound = font.render("Sound Disabled", 1, RED)
+    sound_rect = sound.get_rect(centerx=pos_x, centery=pos_y)
+
+    text = font.render("PRESS SPACE BAR TO GO BACK....", 1, WHITE)
+    textpos = text.get_rect(centerx = 500, centery = 500) 
+    
+    background, backRect = load_image('bg1.jpg')
+    screen.blit(background, backRect)
+    screen.blit(music, music_rect)
+    screen.blit(sound, sound_rect)
+    screen.blit(text, textpos)
+    pygame.display.flip()
+
+    running = True
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    running = False
+            
+            elif event.type == MOUSEBUTTONDOWN:
+                if pygame.mouse.get_pressed()[0] == 1:
+                    if music_rect.collidepoint(pygame.mouse.get_pos()):
+                        jukebox.ToggleMusic()
+                        if jukebox.music_on:
+                            music = font.render("Music Enabled", 1, WHITE)
+                        else:
+                            music = font.render("Music Disabled", 1, RED)
+
+                    if sound_rect.collidepoint(pygame.mouse.get_pos()):
+                        jukebox.ToggleSound()
+                        if jukebox.sound_on:
+                            sound = font.render("Sound Enabled", 1, WHITE)
+                        else:
+                            sound = font.render("Sound Disabled", 1, RED)
+
+            screen.blit(background, backRect)
+            screen.blit(music, music_rect)
+            screen.blit(sound, sound_rect)
+            screen.blit(text, textpos)
+            pygame.display.flip()            
+

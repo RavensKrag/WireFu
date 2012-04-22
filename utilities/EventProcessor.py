@@ -2,7 +2,7 @@
 import sys, pygame
 
 from states import Menu, Killscreen, CreditsScreen
-from Level import Level;
+from states import Level;
 
 class EventProcessor(object):
 	def __init__(self, window, jukebox):
@@ -37,13 +37,20 @@ class EventProcessor(object):
 						self.inputs[event.key] = True
 					
 					if isinstance(self.window.states[-1], Menu):
-						pass
+						if event.key == pygame.K_UP:
+							self.window.states[-1].cursor_up()
+						elif event.key == pygame.K_DOWN:
+							self.window.states[-1].cursor_down()
+						elif event.key == pygame.K_RETURN:
+							self.window.states[-1].select()
 					#~ elif self.window.state == 'options':
 						#~ pass
 					elif isinstance(self.window.states[-1], Killscreen):
 						pass
 					elif isinstance(self.window.states[-1], CreditsScreen):
-						pass
+						if event.key == pygame.K_SPACE:
+							#go back to the menu screen when space is pressed
+							self.window.states.pop()
 					elif isinstance(self.window.states[-1], Level):
 						if event.key == self.jump_key:
 							if(self.player.handhold != None):

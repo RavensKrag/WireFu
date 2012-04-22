@@ -16,7 +16,6 @@ os.chdir(dname)
 # Import files
 import Physics
 import collisions
-from Level import Level
 
 from utilities import EventProcessor
 from user_interface import GameClock, KillScreen
@@ -29,7 +28,7 @@ from gameobjects import Player
 
 from utilities import Jukebox
 
-import menu
+from states import Menu
 
 class Window(object):
 	def __init__(self, width, height):
@@ -89,49 +88,26 @@ class Window(object):
 		self.space.step(1.0/self.framerate)
 		self.gameclock.update()
 		
-		#~ self.level.update()
-		for state in self.states:
-			state.update()
+		self.states[-1].update()
 		
 		pygame.display.set_caption("fps: " + str(self.clock.get_fps()))
 	
 	def draw(self):
 		#~ self.level.draw(self.screen)
-		for state in self.states:
-			state.draw(self.screen)
+		#~ for state in self.states:
+			#~ state.draw(self.screen)
+		self.states[-1].draw(self.screen)
 		
 	
 	def main(self):
-		firstTime = True
-		choice = menu.display_Menu(self.screen)
+		self.states.append(Menu(self))
+		
 		while self.running:
-			if choice == "New Game":
-				if firstTime:
-					self.jukebox.stop_bgm()
-					self.jukebox.set_bgm('elec_Spin.wav')
-					self.jukebox.play_bgm()
-					firstTime = False
-					
-					self.states.append(Level(self, self.space, 'level01.txt', 
-										self.input_processor, self.gameclock))
-					
-				self.update()
-				self.draw()
-				pygame.display.flip()
-				self.clock.tick(self.framerate)
-
-			elif choice == "Options":
-				print 'not implemented'
-				choice = menu.display_Menu(self.screen)
-
-			elif choice == "Credits":
-				menu.display_Credits(self.screen)
-				choice = menu.display_Menu(self.screen)
-
-			elif choice == "Exit":
-				self.running = False
-
-	
+			self.update()
+			self.draw()
+			pygame.display.flip()
+			self.clock.tick(self.framerate)
+		
 	def _init_collision_handlers(self):
 		self._add_collision_handler(collisions.PLAYER, collisions.PLATFORM, 
 									collisions.PlayerEnvCollision, self.jukebox)

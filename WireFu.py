@@ -56,19 +56,23 @@ class Window(object):
 		# Initialize other systems
 		Physics.screen_height = self.height
 		self.gameclock = GameClock(self.clock)
-		
 		self.player = Player()
 		self.input_processor = EventProcessor(self, self.player, self.jukebox)
+		
+		##self.player = Player()
+		##self.input_processor = EventProcessor(self, self.player)
 		
 		# Initialize game objects
 		self.gameobjects = pygame.sprite.Group()
 		
+		# Load level
 		self.loadLevel('level01.txt')
+		#self.player = Player()
+		#self.input_processor = EventProcessor(self, self.player, self.jukebox)
+		
+		#self.loadLevel('level01.txt')
 		# Initialize level background
 		#self.background
-
-		level1 = Level(self.screen, 'level01.txt', self.gameclock, self.input_processor)
-		self.platforms = level1.platforms
 		
 		# Add objects to space
 		self.player.add_to(self.space)
@@ -85,6 +89,14 @@ class Window(object):
 		self.killscreen = KillScreen(self)
 		
 	def loadLevel(self, levelFName):
+		self.currentLevel = levelFName
+		
+		self.gameclock.reset()
+		
+		self.player.body.position.x = 0
+		self.player.body.position.y = 100
+		
+		# TODO: Free old gameobjects from pymunk space
 		level = Level(self.screen, levelFName, self.gameclock, self.input_processor)
 		self.platforms = level.platforms
 		self.background = level.background

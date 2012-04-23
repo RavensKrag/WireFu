@@ -12,11 +12,10 @@ from gameobjects.zipline import ZiplineHandle, ZiplineWire
 from gameobjects.powerups import Powerup_Jump_Number
 
 class Level(object):
-	def __init__(self, screen, space, filename, input_handler, game_clock):
+	def __init__(self, space, filename, input_handler, game_clock):
 		self.music = 'elec_Spin.wav'
 		
 		# Open level file
-		self.screen = screen
 		self.space = space
 		self.name = filename
 		self.input_handler = input_handler
@@ -45,6 +44,9 @@ class Level(object):
 		input_handler.bind_player(self.player) # Remember to unbind on level end
 	
 	def update(self):
+		if not self.player.alive:
+			pass
+		
 		self.player.update(self.level_width)
 		
 		for p in self.platforms:
@@ -76,7 +78,14 @@ class Level(object):
 	
 	def delete(self):
 		# Remove all objects contained in this level from the pymunk space, and mark for gc
-		pass
+		for p in self.platforms:
+			p.delete()
+		
+		# Powerups
+		for p in self.powerups:
+			p.delete()
+		
+		self.player.delete()
 	
 	def _load(self, filename):
 		level_file = self._openFile(filename)
@@ -161,24 +170,11 @@ class Level(object):
 			print 'Cannot load file:', fullname
 			raise SystemExit, message
 		return file	
+	
+	def reload(self, state_manager):
+		# Pop current state off the stack and replace with an identical one
+		old_state = state_manager.pop_state()
 		
-def main():
-	pygame.init()
-	screen = pygame.display.set_mode()
-	pygame.display.set_caption('Level Tester')
-	pygame.mouse.set_visible(0)
-	
-	clock = pygame.time.Clock()
-	gameclock = GameClock(clock)
-	
-	player = Player()
-	input_processor = EventProcessor(player)
-
-	level01 = Level(screen, 'level01.txt', gameclock, input_processor)
-	level01.draw(screen)
-
-	pygame.quit()
-	
-#this calls the 'main' function when this script is executed
-#if __name__ == '__main__': main()
-	
+		state = Level(old_state.space, old_state.name, old_state.input_handler, old_state.game_clock)
+		
+		state_manager.push_state(state)

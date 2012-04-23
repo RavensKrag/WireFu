@@ -84,7 +84,7 @@ class Window(object):
 		
 	
 	def main(self):
-		self.push_state(Menu(self))
+		self.push_state(Menu(self, self.jukebox))
 		
 		while self.running:
 			self.update()
@@ -102,12 +102,15 @@ class Window(object):
 		
 	def pop_state(self):
 		self.jukebox.stop_bgm()
-		self.states.pop().delete()
+		old_state = self.states.pop()
+		old_state.delete()
 		
 		top_state = self.states[-1]
 		if top_state:
 			self.jukebox.set_bgm(top_state.music)
 		self.jukebox.play_bgm()
+		
+		return old_state
 		
 	def _init_collision_handlers(self):
 		self._add_collision_handler(collisions.PLAYER, collisions.PLATFORM, 

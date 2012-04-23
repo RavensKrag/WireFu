@@ -4,10 +4,10 @@ WHITE = (255, 255, 255)
 RED = (255, 0, 0)
 BLUE = (0, 0, 255)
 
-from states import Level, CreditsScreen
+from states import Level, CreditsScreen, OptionsScreen
 
 class Menu(object):
-	def __init__(self, window, font_size=32):
+	def __init__(self, window, jukebox, font_size=32):
 		self.window = window
 		self.font_size = font_size
 		
@@ -19,6 +19,8 @@ class Menu(object):
 		self.selected = 0
 		
 		self.font = pygame.font.Font(None, font_size)
+
+		self.jukebox = jukebox
 		
 	def update(self):
 		pass
@@ -55,10 +57,10 @@ class Menu(object):
 		
 		state = None
 		if self.menu_list[self.selected] == "New Game":
-			state = Level.Level(self.window.screen, self.window.space, 'level01.txt', 
+			state = Level.Level(self.window.space, 'level01.txt', 
 							self.window.input_processor, self.window.gameclock)
 		elif self.menu_list[self.selected] == "Options":
-			print "Options screen not yet implemented"
+			state = OptionsScreen.OptionsScreen(self.window.screen, self.jukebox)
 		elif self.menu_list[self.selected] == "Credits":
 			state = CreditsScreen.CreditsScreen(self.window.screen)
 		elif self.menu_list[self.selected] == "Exit":

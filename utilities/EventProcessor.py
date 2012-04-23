@@ -1,7 +1,8 @@
 # Module for processing pygame events
 import sys, pygame
+from pygame.locals import *
 
-from states import Menu, Killscreen, CreditsScreen
+from states import Menu, Killscreen, CreditsScreen, OptionsScreen
 from states import Level;
 
 class EventProcessor(object):
@@ -51,6 +52,10 @@ class EventProcessor(object):
 						if event.key == pygame.K_SPACE:
 							#go back to the menu screen when space is pressed
 							self.window.pop_state()
+					elif isinstance(self.window.states[-1], OptionsScreen):
+						if event.key == pygame.K_SPACE:
+							#go back to the menu screen when space is pressed
+							self.window.pop_state()						
 					elif isinstance(self.window.states[-1], Level):
 						if event.key == self.jump_key:
 							if(self.player.handhold != None):
@@ -58,8 +63,9 @@ class EventProcessor(object):
 							else:
 								self.player.jump()
 						if event.key == self.restart_key:
+							print "restart"
 							# Restart level
-							self.window.loadLevel(self.window.currentLevel)
+							self.window.states[-1].reload(self.window)
 					#~ elif self.window.state == 'pause':
 						#~ pass
 					
@@ -67,8 +73,14 @@ class EventProcessor(object):
 					self.inputs[event.key] = False
 				elif event.type == pygame.QUIT:
 					self.window.running = False
-	
-			
+				elif event.type == MOUSEBUTTONDOWN:
+                                        if isinstance(self.window.states[-1], OptionsScreen):
+                                                if pygame.mouse.get_pressed()[0] == 1:
+                                                        if self.window.states[-1].music_rect.collidepoint(pygame.mouse.get_pos()):
+                                                                self.jukebox.toggle_Music()
+                                                        elif self.window.states[-1].sound_rect.collidepoint(pygame.mouse.get_pos()):
+                                                                self.jukebox.toggle_Sound()
+				
 			# ===== Process held buttons
 			# State specific hold events
 			if isinstance(self.window.states[-1], Menu):

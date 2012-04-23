@@ -76,7 +76,14 @@ class Level(object):
 	
 	def delete(self):
 		# Remove all objects contained in this level from the pymunk space, and mark for gc
-		pass
+		for p in self.platforms:
+			p.delete()
+		
+		# Powerups
+		for p in self.powerups:
+			p.delete()
+		
+		self.player.delete()
 	
 	def _load(self, filename):
 		level_file = self._openFile(filename)

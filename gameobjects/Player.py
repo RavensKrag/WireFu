@@ -35,6 +35,8 @@ class Player(NonstaticObject):
 		
 		# Normal vector of the surface the player is currently on
 		self.normal = Vec2d(0.0, 1.0)
+		
+		self.alive = True
 	
 	def draw(self, screen):
 		#~ print('TESTING -- Entering Player.draw()')
@@ -50,7 +52,7 @@ class Player(NonstaticObject):
 		#~ print "====="
 		
 		image, rect = self._animation.update()
-		self.image = pygame.transform.rotate(image, self.body.angle/math.pi*180)
+		#~ self.image = pygame.transform.rotate(image, self.body.angle/math.pi*180)
 		#~ print "{:03.5f}".format(self.body.angle/math.pi*180)
 		
 		#~ if(self.body.position.y < 0):
@@ -62,16 +64,23 @@ class Player(NonstaticObject):
 		#~ width = Physics.to_meters(self._animation.get_width())
 		
 		width = self._animation.get_width()
+		height = self._animation.get_height()
+		print 
+		#~ print height
 		#~ print self.body.force
 		if(self.x < width/2):
 			self.x = width/2
 			self.body.force.x = 0
 			self.body.velocity.x = 0
-		elif(self.x + width/2 > window_width):
-			self.x = window_width - width/2
-			self.body.force.x = 0
-			self.body.velocity.x = 0
+		#~ elif(self.x + width/2 > window_width):
+			#~ self.x = window_width - width/2
+			#~ self.body.force.x = 0
+			#~ self.body.velocity.x = 0
 		
+		if(self.y - height < 0):
+			self.alive = False
+		
+		#~ print self.alive
 		self.body.reset_forces()
 	
 	def add_to(self, space):

@@ -1,6 +1,9 @@
 # Module for processing pygame events
 import sys, pygame
 
+from states import Menu, Killscreen, CreditsScreen
+from states import Level;
+
 class EventProcessor(object):
 	def __init__(self, window, jukebox):
 		self.window = window
@@ -26,34 +29,65 @@ class EventProcessor(object):
 				if event.type == pygame.KEYDOWN:
 					self.window.gameclock.start()
 					
-					# Get button press events
+					
+					# Get general button press events
 					if event.key == pygame.K_ESCAPE:
 						self.window.running = False
-					elif event.key == self.jump_key:
-						if(self.player.handhold != None):
-							self.player.let_go(self.window.space)
-						else:
-							self.player.jump()
-					elif event.key == self.restart_key:
-						# Restart level
-						self.window.loadLevel(self.window.currentLevel)
 					else:	# Get button hold keydowns
 						self.inputs[event.key] = True
+					
+					if isinstance(self.window.states[-1], Menu):
+						if event.key == pygame.K_UP:
+							self.window.states[-1].cursor_up()
+						elif event.key == pygame.K_DOWN:
+							self.window.states[-1].cursor_down()
+						elif event.key == pygame.K_RETURN:
+							self.window.states[-1].select()
+					#~ elif self.window.state == 'options':
+						#~ pass
+					elif isinstance(self.window.states[-1], Killscreen):
+						pass
+					elif isinstance(self.window.states[-1], CreditsScreen):
+						if event.key == pygame.K_SPACE:
+							#go back to the menu screen when space is pressed
+							self.window.pop_state()
+					elif isinstance(self.window.states[-1], Level):
+						if event.key == self.jump_key:
+							if(self.player.handhold != None):
+								self.player.let_go(self.window.space)
+							else:
+								self.player.jump()
+						if event.key == self.restart_key:
+							# Restart level
+							self.window.loadLevel(self.window.currentLevel)
+					#~ elif self.window.state == 'pause':
+						#~ pass
+					
 				elif event.type == pygame.KEYUP:
 					self.inputs[event.key] = False
 				elif event.type == pygame.QUIT:
 					self.window.running = False
-				#~ elif event.type == pygame.MOUSEBUTTONDOWN:
-					#~ if event.button == 1: # Left Click
-						#~ pos = (event.pos[0]-self.window.offset_x, event.pos[1])
 	
 			
-			# Process held buttons
-			if self.inputs.get(self.right_key, False):
-				self.player.move_right()
-			if self.inputs.get(self.left_key, False):
-				self.player.move_left()
+			# ===== Process held buttons
+			# State specific hold events
+			if isinstance(self.window.states[-1], Menu):
+				pass
+			#~ elif self.window.state == 'options':
+				#~ pass
+			elif isinstance(self.window.states[-1], Killscreen):
+				pass
+			elif isinstance(self.window.states[-1], CreditsScreen):
+				pass
+			elif isinstance(self.window.states[-1], Level):
+				if self.inputs.get(self.right_key, False):
+					self.player.move_right()
+				if self.inputs.get(self.left_key, False):
+					self.player.move_left()
+			#~ elif self.window.state == 'pause':
+				#~ pass
 			
+			# Universal button hold events
 			if self.inputs.get(self.volume_up_key, False):
 				self.jukebox.higher_volume()
 			if self.inputs.get(self.volume_down_key, False):

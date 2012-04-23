@@ -67,21 +67,6 @@ class Window(object):
 		# Create killscreen
 		self.killscreen = KillScreen(self)
 		
-	def loadLevel(self, levelFName):
-		self.currentLevel = levelFName
-		
-		self.gameclock.reset()
-		
-		self.player.body.position.x = 0
-		self.player.body.position.y = 100
-		
-		# TODO: Free old gameobjects from pymunk space
-		level = Level(self.screen, levelFName, self.gameclock, self.input_processor)
-		self.platforms = level.platforms
-		self.background = level.background
-		
-		return level
-	
 	def update(self):
 		self.input_processor.update()
 		self.space.step(1.0/self.framerate)

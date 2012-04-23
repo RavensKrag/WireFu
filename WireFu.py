@@ -18,7 +18,7 @@ import Physics
 import collisions
 
 from utilities import EventProcessor
-from user_interface import GameClock, KillScreen
+from user_interface import GameClock
 
 from gameobjects.platforms import Exit, Platform, Ramp
 from gameobjects.zipline import ZiplineHandle, ZiplineWire
@@ -64,9 +64,6 @@ class Window(object):
 		# Set running to True so main game loop will execute
 		self.running = True
 		
-		# Create killscreen
-		self.killscreen = KillScreen(self)
-		
 	def update(self):
 		self.input_processor.update()
 		self.space.step(1.0/self.framerate)
@@ -78,9 +75,9 @@ class Window(object):
 	
 	def draw(self):
 		#~ self.level.draw(self.screen)
-		#~ for state in self.states:
-			#~ state.draw(self.screen)
-		self.states[-1].draw(self.screen)
+		for state in self.states:
+			state.draw(self.screen)
+		#~ self.states[-1].draw(self.screen)
 		
 	
 	def main(self):
@@ -124,7 +121,12 @@ class Window(object):
 		
 		self._add_collision_handler(collisions.PLAYER, collisions.EXIT_ZONE,
 									collisions.PlayerExitCollision, self.jukebox)
-
+		
+		collision_class = collisions.PlayerExitCollision
+		self.space.add_collision_handler(collisions.PLAYER, collisions.EXIT_ZONE, 
+			collision_class.begin, collision_class.pre_solve, 
+			collision_class.post_solve, collision_class.separate, self, self.jukebox)
+		
 		self._add_collision_handler(collisions.PLAYER, collisions.POWERUP,
 									collisions.PowerupCollision, self.jukebox)
 		

@@ -8,7 +8,6 @@ class PhysicsInterface(object):
 		self.body = shape.body
 	
 	def add_to(self, space):
-		print "adding"
 		self.space = space	# Store reference to space, so that the object can remove itself
 		space.add(self.body, self.shape)
 	

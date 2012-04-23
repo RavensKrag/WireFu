@@ -28,9 +28,6 @@ class EventProcessor(object):
 		if self.active:
 			for event in pygame.event.get():
 				if event.type == pygame.KEYDOWN:
-					self.window.gameclock.start()
-					
-					
 					# Get general button press events
 					if event.key == pygame.K_ESCAPE:
 						self.window.running = False
@@ -47,7 +44,8 @@ class EventProcessor(object):
 					#~ elif self.window.state == 'options':
 						#~ pass
 					elif isinstance(self.window.states[-1], Killscreen):
-						pass
+						# When killscreen is reached, unbind the player
+						self.unbind_player()
 					elif isinstance(self.window.states[-1], CreditsScreen):
 						if event.key == pygame.K_SPACE:
 							#go back to the menu screen when space is pressed
@@ -57,13 +55,14 @@ class EventProcessor(object):
 							#go back to the menu screen when space is pressed
 							self.window.pop_state()						
 					elif isinstance(self.window.states[-1], Level):
+						self.window.gameclock.start()
+						
 						if event.key == self.jump_key:
 							if(self.player.handhold != None):
 								self.player.let_go(self.window.space)
 							else:
 								self.player.jump()
 						if event.key == self.restart_key:
-							print "restart"
 							# Restart level
 							self.window.states[-1].reload(self.window)
 					#~ elif self.window.state == 'pause':
@@ -74,12 +73,12 @@ class EventProcessor(object):
 				elif event.type == pygame.QUIT:
 					self.window.running = False
 				elif event.type == MOUSEBUTTONDOWN:
-                                        if isinstance(self.window.states[-1], OptionsScreen):
-                                                if pygame.mouse.get_pressed()[0] == 1:
-                                                        if self.window.states[-1].music_rect.collidepoint(pygame.mouse.get_pos()):
-                                                                self.jukebox.toggle_Music()
-                                                        elif self.window.states[-1].sound_rect.collidepoint(pygame.mouse.get_pos()):
-                                                                self.jukebox.toggle_Sound()
+					if isinstance(self.window.states[-1], OptionsScreen):
+						if pygame.mouse.get_pressed()[0] == 1:
+							if self.window.states[-1].music_rect.collidepoint(pygame.mouse.get_pos()):
+								self.jukebox.toggle_Music()
+							elif self.window.states[-1].sound_rect.collidepoint(pygame.mouse.get_pos()):
+								self.jukebox.toggle_Sound()
 				
 			# ===== Process held buttons
 			# State specific hold events
@@ -115,4 +114,4 @@ class EventProcessor(object):
 		self.player = player
 	
 	def unbind_player(self):
-		self.player = player
+		self.player = None

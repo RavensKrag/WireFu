@@ -1,4 +1,3 @@
-__all__ = ["KillScreen", "GameClock"]
+__all__ = ["GameClock"]
 
 from GameClock import *
-from KillScreen import *

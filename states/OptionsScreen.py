@@ -16,6 +16,8 @@ class OptionsScreen(object):
 		self.background, self.backRect = self._load_image('bg1.jpg')
 		self.music_on = self.font.render("Music Enabled", 1, WHITE)
 		self.music_rect = self.music_on.get_rect(centerx = pos_x, centery = pos_y)
+		self.music_level_pos_x = pos_x + 100
+		self.music_level_pos_y = pos_y
 		pos_y = pos_y + 40
 		
 		self.sound = self.sound = self.font.render("Sound Enabled", 1, WHITE)
@@ -44,6 +46,10 @@ class OptionsScreen(object):
 		screen.blit(self.music_on, self.music_rect)
 		screen.blit(self.sound, self.sound_rect)
 		screen.blit(text, textpos)
+		#volume level
+		pygame.draw.line(screen, WHITE, (self.music_level_pos_x, self.music_level_pos_y),(self.music_level_pos_x+100, self.music_level_pos_y))
+                pygame.draw.rect(screen, RED, (self.music_level_pos_x+(self.jukebox.get_volume()*100), self.music_level_pos_y, 10, 10))
+		pygame.display.flip()
 	
 	def delete(self):
 		pass

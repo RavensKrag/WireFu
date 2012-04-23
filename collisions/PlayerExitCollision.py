@@ -5,13 +5,16 @@ import pymunk as pm
 from pymunk import Vec2d
 import math, sys, random
 
+import time
+
 from utilities import ExitTimer
+from states import Killscreen
 
 class PlayerExitCollision(object):
 	timer = ExitTimer(500)
 	
 	@staticmethod
-	def begin(space, arbiter, jukebox):
+	def begin(space, arbiter, window, jukebox):
 		player_shape, env_shape = arbiter.shapes
 		
 		# When the collision occurs, start the level exit timer.
@@ -25,7 +28,7 @@ class PlayerExitCollision(object):
 		return True
 	
 	@staticmethod
-	def pre_solve(space, arbiter, jukebox):
+	def pre_solve(space, arbiter, window, jukebox):
 		player_shape, env_shape = arbiter.shapes
 		
 		PlayerExitCollision.timer.update(20) # 50 FPS
@@ -35,22 +38,26 @@ class PlayerExitCollision(object):
 			PlayerExitCollision.timer.kill()
 			
 			env_shape.gameobject.gameclock.stop()
-			env_shape.gameobject.input_handler.deactivate_input()
 			print "level complete"
 
 			jukebox.stop_bgm()
 			jukebox.play_victory()
 			
+			window.gameclock.stop()
+			time.sleep(jukebox.victory.get_length())
+			
+			window.push_state(Killscreen(window))
+			
 		return True
 	
 	@staticmethod
-	def post_solve(space, arbiter, jukebox):
+	def post_solve(space, arbiter, window, jukebox):
 		#~ player_shape, env_shape = arbiter.shapes
 		
 		return True
 	
 	@staticmethod
-	def separate(space, arbiter, jukebox):
+	def separate(space, arbiter, window, jukebox):
 		#~ player_shape, env_shape = arbiter.shapes
 		print "Exit interrupted"
 		

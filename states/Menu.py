@@ -57,7 +57,7 @@ class Menu(object):
 		
 		state = None
 		if self.menu_list[self.selected] == "New Game":
-			state = Level.Level(self.window.screen, self.window.space, 'level01.txt', 
+			state = Level.Level(self.window.space, 'level01.txt', 
 							self.window.input_processor, self.window.gameclock)
 		elif self.menu_list[self.selected] == "Options":
 			state = OptionsScreen.OptionsScreen(self.window.screen, self.jukebox)

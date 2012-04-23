@@ -84,7 +84,7 @@ class Window(object):
 		
 	
 	def main(self):
-		self.push_state(Menu(self))
+		self.push_state(Menu(self, self.jukebox))
 		
 		while self.running:
 			self.update()

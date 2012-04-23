@@ -87,6 +87,10 @@ class Jukebox:
 		self.victory.stop()
 
 	def get_volume(self):
+                if self.volume <= 0:
+                        self.volume = 0
+                elif self.volume >= 1:
+                        self.volume = 1
 		return self.volume
 
 	def lower_volume(self):

@@ -1,4 +1,4 @@
-level01.jpg
+test.jpg
 2100 768
 
 # Section 1 - Platforms

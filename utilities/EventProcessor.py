@@ -60,12 +60,7 @@ class EventProcessor(object):
 						if event.key == self.restart_key:
 							print "restart"
 							# Restart level
-							old_state = self.window.pop_state()
-							
-							state = Level(old_state.screen, old_state.space, old_state.name, 
-											self.window.input_processor, self.window.gameclock)
-							
-							self.window.push_state(state)
+							self.window.states[-1].reload(self.window)
 					#~ elif self.window.state == 'pause':
 						#~ pass
 					

@@ -23,7 +23,6 @@ class OptionsScreen(object):
 
 		self.jukebox = jukebox
 		
-		
 	def update(self):
 		pass
 	

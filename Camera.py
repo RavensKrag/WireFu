@@ -30,12 +30,12 @@ class Camera(object):
 			#~ else:
 				Camera.offset_x += Camera.dx
 		elif self.player.x < self.offset_x + (self.screen_width - self.bb_width)/2:
-			print "left side"
+			#~ print "left side"
 			if self.player.x < (self.screen_width - self.bb_width)/2:
-				print "left border"
+				#~ print "left border"
 				Camera.offset_x = 0
 			else:
-				print "left standard"
+				#~ print "left standard"
 				Camera.offset_x -= Camera.dx
 		
 		
@@ -46,12 +46,12 @@ class Camera(object):
 			#~ else:
 				Camera.offset_y += Camera.dy
 		elif self.player.y < self.offset_y + (self.screen_height - self.bb_height)/2:
-			print "bottom side"
+			#~ print "bottom side"
 			if self.player.y < (self.screen_height - self.bb_height)/2:
-				print "bottom border"
+				#~ print "bottom border"
 				Camera.offset_y = 0
 			else:
-				print "bottom standard"
+				#~ print "bottom standard"
 				Camera.offset_y -= Camera.dx
 		
 	def draw(self):

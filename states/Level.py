@@ -6,17 +6,19 @@ from pymunk import Vec2d
 import Physics
 import collisions
 
+from Camera import Camera
+
 from gameobjects import Player
 from gameobjects.platforms import Exit, Platform, Ramp
 from gameobjects.zipline import ZiplineHandle, ZiplineWire
 from gameobjects.powerups import Powerup_Jump_Number
 
 class Level(object):
-	def __init__(self, state_manager, space, filename, input_handler, game_clock):
+	def __init__(self, window, space, filename, input_handler, game_clock):
 		self.music = 'elec_Spin.wav'
 		
 		# Open level file
-		self.state_manager = state_manager
+		self.window = window
 		self.space = space
 		self.name = filename
 		self.input_handler = input_handler
@@ -43,13 +45,20 @@ class Level(object):
 		
 		# Bind input
 		input_handler.bind_player(self.player) # Remember to unbind on level end
+		
+		# Create camera
+		self.camera = Camera(self.window, self.level_width, self.level_height, self.player)
 	
 	def update(self):
+		self.camera.update()
+		
 		if not self.player.alive:
-			#~ pass
 			self.reload()
 		
 		self.player.update(self.level_width)
+		
+		# Keep the player within the level
+		self._constrain_to_level(self.player)
 		
 		for p in self.platforms:
 			p.update()
@@ -88,6 +97,28 @@ class Level(object):
 			p.delete()
 		
 		self.player.delete()
+	
+	def reload(self):
+		# Pop current state off the stack and replace with an identical one
+		old_state = self.window.pop_state()
+		
+		state = Level(self.window, old_state.space, old_state.name, old_state.input_handler, old_state.game_clock)
+		
+		self.window.push_state(state)
+	
+	def _constrain_to_level(self, gameobject):
+		# Keep the gameobject within the confines of the level
+		if(gameobject.x - gameobject.get_width()/2) < 0:
+			# Player went off the left side
+			gameobject.x = gameobject.get_width()/2
+			gameobject.body.force.x = 0
+			gameobject.body.velocity.x = 0
+
+		elif(gameobject.x + gameobject.get_width()/2 > self.level_width):
+			# Player went off the right side
+			gameobject.x = self.level_width - gameobject.get_width()/2
+			gameobject.body.force.x = 0
+			gameobject.body.velocity.x = 0
 	
 	def _load(self, filename):
 		level_file = self._openFile(filename)
@@ -172,11 +203,3 @@ class Level(object):
 			print 'Cannot load file:', fullname
 			raise SystemExit, message
 		return file	
-	
-	def reload(self):
-		# Pop current state off the stack and replace with an identical one
-		old_state = self.state_manager.pop_state()
-		
-		state = Level(self.state_manager, old_state.space, old_state.name, old_state.input_handler, old_state.game_clock)
-		
-		self.state_manager.push_state(state)

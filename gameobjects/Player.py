@@ -67,7 +67,7 @@ class Player(NonstaticObject):
 			#~ self.body.force.x = 0
 			#~ self.body.velocity.x = 0
 		
-		if(self.y - height < 0):
+		if(self.y + height < 0):
 			self.alive = False
 		
 		#~ print self.alive

@@ -63,7 +63,16 @@ class Window(object):
 		
 		# Set running to True so main game loop will execute
 		self.running = True
+	
+	def main(self):
+		self.push_state(Menu(self, self.jukebox))
 		
+		while self.running:
+			self.update()
+			self.draw()
+			pygame.display.flip()
+			self.clock.tick(self.framerate)
+	
 	def update(self):
 		self.input_processor.update()
 		self.space.step(1.0/self.framerate)
@@ -74,20 +83,8 @@ class Window(object):
 		pygame.display.set_caption("fps: " + str(self.clock.get_fps()))
 	
 	def draw(self):
-		#~ self.level.draw(self.screen)
 		for state in self.states:
 			state.draw(self.screen)
-		#~ self.states[-1].draw(self.screen)
-		
-	
-	def main(self):
-		self.push_state(Menu(self, self.jukebox))
-		
-		while self.running:
-			self.update()
-			self.draw()
-			pygame.display.flip()
-			self.clock.tick(self.framerate)
 	
 	def push_state(self, state):
 		self.jukebox.stop_bgm()

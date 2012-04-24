@@ -64,7 +64,7 @@ class EventProcessor(object):
 								self.player.jump()
 						if event.key == self.restart_key:
 							# Restart level
-							self.window.states[-1].reload(self.window)
+							self.window.states[-1].reload()
 					#~ elif self.window.state == 'pause':
 						#~ pass
 					

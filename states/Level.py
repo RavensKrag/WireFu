@@ -14,10 +14,11 @@ from gameobjects.zipline import ZiplineHandle, ZiplineWire
 from gameobjects.powerups import Powerup_Jump_Number
 
 class Level(object):
-	def __init__(self, space, filename, input_handler, game_clock):
+	def __init__(self, state_manager, space, filename, input_handler, game_clock):
 		self.music = 'elec_Spin.wav'
 		
 		# Open level file
+		self.state_manager = state_manager
 		self.space = space
 		self.name = filename
 		self.input_handler = input_handler
@@ -47,7 +48,8 @@ class Level(object):
 	
 	def update(self):
 		if not self.player.alive:
-			pass
+			#~ pass
+			self.reload()
 		
 		self.player.update(self.level_width)
 		
@@ -178,10 +180,10 @@ class Level(object):
 			raise SystemExit, message
 		return file	
 	
-	def reload(self, state_manager):
+	def reload(self):
 		# Pop current state off the stack and replace with an identical one
-		old_state = state_manager.pop_state()
+		old_state = self.state_manager.pop_state()
 		
-		state = Level(old_state.space, old_state.name, old_state.input_handler, old_state.game_clock)
+		state = Level(self.state_manager, old_state.space, old_state.name, old_state.input_handler, old_state.game_clock)
 		
-		state_manager.push_state(state)
+		self.state_manager.push_state(state)

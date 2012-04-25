@@ -1,6 +1,7 @@
 import os, pygame, re, sys
 import pymunk as pm
 from pymunk import Vec2d
+from Camera import Camera
 
 # Import files
 import Physics
@@ -9,6 +10,7 @@ import collisions
 from Camera import Camera
 
 from gameobjects import Player
+from gameobjects import BackgroundObject
 from gameobjects.platforms import Exit, Platform, Ramp
 from gameobjects.zipline import ZiplineHandle, ZiplineWire
 from gameobjects.powerups import Powerup_Jump_Number
@@ -77,7 +79,9 @@ class Level(object):
 	def draw(self, screen):
 		# Display Background
 		screen.fill([0,0,0])
-		screen.blit(self.background, (0, 0))	
+		screen.blit(self.background, (0-Camera.offset_x, 600-self.background.get_height()+Camera.offset_y))	
+		
+		#self.background.draw(screen)
 		
 		# Environment
 		for p in self.platforms:
@@ -136,6 +140,9 @@ class Level(object):
 		line = level_file.readline().rstrip('\n')
 		fullname = os.path.join('levels', line)
 		self.background = pygame.image.load(fullname).convert()
+		#bg_image = pygame.image.load(fullname).convert()
+		
+		#self.background = BackgroundObject.BackgroundObject(fullname,(0,0))
 		
 		# Set level size from file
 		line = level_file.readline()

@@ -22,6 +22,8 @@ class EventProcessor(object):
 		self.volume_up_key = pygame.K_1
 		self.volume_down_key = pygame.K_2
 		
+		self.pause_key = pygame.K_p
+		
 		self.active = True;
 	
 	def update(self):
@@ -59,24 +61,21 @@ class EventProcessor(object):
 					elif isinstance(self.window.states[-1], Level):
 						self.window.gameclock.start()
 						
-						if event.key == self.jump_key:
+						if event.key == self.pause_key:
+							self.window.gameclock.stop()
+							self.window.push_state(PauseScreen(self.window))
+						elif event.key == self.jump_key:
 							if(self.player.handhold != None):
 								self.player.let_go(self.window.space)
 							else:
 								self.player.jump()
-						if event.key == self.restart_key:
+						elif event.key == self.restart_key:
 							# Restart level
 							self.window.states[-1].reload()
-
-						if event.key == pygame.K_p:
-                                                        self.window.push_state(PauseScreen(self.window))
-
-                                        elif isinstance(self.window.states[-1], PauseScreen):
-                                                self.window.gameclock.stop()
-
-                                                if event.key == pygame.K_p:
-                                                        self.window.pop_state()
-                                                        self.window.gameclock.start()
+					elif isinstance(self.window.states[-1], PauseScreen):
+						if event.key == self.pause_key:
+							self.window.pop_state()
+							self.window.gameclock.start()
 
 
 					#~elif self.window.state == 'pause':
@@ -86,6 +85,8 @@ class EventProcessor(object):
 					self.inputs[event.key] = False
 				elif event.type == pygame.QUIT:
 					self.window.running = False
+					
+				# ===== Process mouse events
 				elif event.type == MOUSEBUTTONDOWN:
 					if isinstance(self.window.states[-1], OptionsScreen):
 						if pygame.mouse.get_pressed()[0] == 1:

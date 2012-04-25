@@ -25,6 +25,9 @@ class Level(object):
 		self.game_clock = game_clock
 		
 		self.game_clock.reset()
+
+		#next level default is none
+		self.next_level = "none"
 		
 		# Load level background and the objects in the level
 		# level_width, level_width, background, powerups, platforms
@@ -48,6 +51,9 @@ class Level(object):
 		
 		# Create camera
 		self.camera = Camera(self.window, self.level_width, self.level_height, self.player)
+
+		print 'current level: ', self.name
+		print 'next level: ', self.next_level
 	
 	def update(self):
 		self.camera.update()
@@ -122,6 +128,9 @@ class Level(object):
 	
 	def _load(self, filename):
 		level_file = self._openFile(filename)
+                #get the name of the next level file
+		line = level_file.readline().rstrip('\n')
+		self.next_level = line
 		
 		# Read load the background image
 		line = level_file.readline().rstrip('\n')

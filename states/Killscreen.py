@@ -5,6 +5,8 @@ from pymunk import Vec2d
 
 from states import Level
 
+BLACK = (0, 0, 0)
+
 class Killscreen(object):
 	def __init__(self, window, color=pygame.Color("red")):
 		self.music = 'jazz_Goin_Up.wav'
@@ -16,6 +18,10 @@ class Killscreen(object):
 		self.time_score = None
 		
 		self.time_score = self._time_score()
+
+                self.font2 = pygame.font.Font(None, 50)
+		self.prompt = self.font2.render("Press space bar to continue...", 1, BLACK)
+		self.promptpos = self.prompt.get_rect(centerx = self.window.width/2, centery = self.window.height/3)
 	
 	def update(self):
                 pass
@@ -34,6 +40,7 @@ class Killscreen(object):
 	def draw(self, screen):
 		time_score_image = self.font.render("time score: {}/5".format(self.time_score), True, self.color)
 		screen.blit(time_score_image, (self.window.width/2, 0))
+		screen.blit(self.prompt, self.promptpos)
 	
 	def delete(self):
 		pass

@@ -47,7 +47,7 @@ class EventProcessor(object):
 						# When killscreen is reached, unbind the player
 						self.unbind_player()
 						if event.key == pygame.K_SPACE:
-                                                        self.window.states[-1].next_level()
+							self.window.states[-1].next_level()
 					elif isinstance(self.window.states[-1], CreditsScreen):
 						if event.key == pygame.K_SPACE:
 							#go back to the menu screen when space is pressed

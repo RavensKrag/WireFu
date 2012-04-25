@@ -46,6 +46,8 @@ class PlayerExitCollision(object):
 			window.gameclock.stop()
 			time.sleep(jukebox.victory.get_length())
 			
+			for event in pygame.event.get():
+				pass # Simply clear out the queue
 			window.push_state(Killscreen(window))
 			
 		return True

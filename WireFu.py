@@ -76,7 +76,6 @@ class Window(object):
 	
 	def update(self):
 		self.input_processor.update()
-		self.space.step(1.0/self.framerate)
 		self.gameclock.update()
 		
 		self.states[-1].update()

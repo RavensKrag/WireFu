@@ -10,7 +10,7 @@ import collisions
 from Camera import Camera
 
 from gameobjects import Player
-from gameobjects import BackgroundObject
+#~ from gameobjects import BackgroundObject
 from gameobjects.platforms import Exit, Platform, Ramp
 from gameobjects.zipline import ZiplineHandle, ZiplineWire
 from gameobjects.powerups import Powerup_Jump_Number

@@ -3,7 +3,7 @@ import sys, pygame
 from pygame.locals import *
 
 from states import Menu, Killscreen, CreditsScreen, OptionsScreen
-from states import Level;
+from states import Level, PauseScreen
 
 class EventProcessor(object):
 	def __init__(self, window, jukebox):
@@ -67,7 +67,19 @@ class EventProcessor(object):
 						if event.key == self.restart_key:
 							# Restart level
 							self.window.states[-1].reload()
-					#~ elif self.window.state == 'pause':
+
+						if event.key == pygame.K_p:
+                                                        self.window.push_state(PauseScreen(self.window))
+
+                                        elif isinstance(self.window.states[-1], PauseScreen):
+                                                self.window.gameclock.stop()
+
+                                                if event.key == pygame.K_p:
+                                                        self.window.pop_state()
+                                                        self.window.gameclock.start()
+
+
+					#~elif self.window.state == 'pause':
 						#~ pass
 					
 				elif event.type == pygame.KEYUP:

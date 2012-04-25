@@ -56,23 +56,23 @@ class Level(object):
 		print 'next level: ', self.next_level
 	
 	def update(self):
-		self.camera.update()
-		
-		if not self.player.alive:
-			self.reload()
-		
-		self.player.update(self.level_width)
-		
-		# Keep the player within the level
-		self._constrain_to_level(self.player)
-		
-		for p in self.platforms:
-			p.update()
-		for p in self.powerups:
-			p.update
-		
-		collisions.PlayerZiplineCollision.post_collision_callback(self.space, self.player)
-		collisions.PowerupCollision.post_collision_callback()
+                self.camera.update()
+                
+                if not self.player.alive:
+                        self.reload()
+                
+                self.player.update(self.level_width)
+                
+                # Keep the player within the level
+                self._constrain_to_level(self.player)
+                
+                for p in self.platforms:
+                        p.update()
+                for p in self.powerups:
+                        p.update
+                
+                collisions.PlayerZiplineCollision.post_collision_callback(self.space, self.player)
+                collisions.PowerupCollision.post_collision_callback()
 		
 	def draw(self, screen):
 		# Display Background

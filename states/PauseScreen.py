@@ -15,13 +15,12 @@ class PauseScreen(object):
 		self.font = pygame.font.Font(None, font_size)
 		self.prompt = self.font.render("Press P to resume", 1, BLACK)
 		self.promptpos = self.prompt.get_rect(centerx = self.window.width/2, centery = self.window.height/3)
-                self.window.gameclock.stop()
 		
 	def update(self):
 		pass
 	
 	def draw(self, screen):
-                pygame.draw.rect(screen, BLUE, (self.window.width/2-300, self.window.height/3-50, 650, 100))
+		pygame.draw.rect(screen, BLUE, (self.window.width/2-300, self.window.height/3-50, 650, 100))
 		screen.blit(self.prompt, self.promptpos)
 	
 	def delete(self):

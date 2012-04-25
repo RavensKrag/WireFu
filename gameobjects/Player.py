@@ -4,7 +4,6 @@ from pymunk import Vec2d
 import math, sys, random
 
 from gameobjects import NonstaticObject
-from Camera import Camera
 import Physics
 
 class Player(NonstaticObject):
@@ -37,8 +36,6 @@ class Player(NonstaticObject):
 		# Normal vector of the surface the player is currently on
 		self.normal = Vec2d(0.0, 1.0)
 		
-		self.camera = Camera(self)
-		
 		self.alive = True
 	
 	def update(self, window_width):
@@ -46,26 +43,13 @@ class Player(NonstaticObject):
 		#~ print "=== Player ==="
 		#~ print self.body.position
 		#~ print "====="
-		self.camera.update()
-		
 		image, rect = self._animation.update()
 			
 		# Constrain movement of player to screen
-		
-		# Define bounding box for camera movement
 		width = self._animation.get_width()
 		height = self._animation.get_height()
 		#~ print height
 		#~ print self.body.force
-		if(self.x < width/2):
-			self.x = width/2
-			self.body.force.x = 0
-			self.body.velocity.x = 0
-			Camera.offset_x = 0
-		#~ elif(self.x + width/2 > window_width):
-			#~ self.x = window_width - width/2
-			#~ self.body.force.x = 0
-			#~ self.body.velocity.x = 0
 		
 		if(self.y + height < 0):
 			self.alive = False
@@ -123,3 +107,10 @@ class Player(NonstaticObject):
 	def rotate(self, angle):
 		image = self._animation.update()[0]
 		self.image = pygame.transform.rotate(image, angle)
+	
+	def get_width(self):
+		return self._animation.get_width()
+	
+	def get_height(self):
+		return self._animation.get_height()
+		

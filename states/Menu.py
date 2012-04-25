@@ -3,6 +3,7 @@ import pygame, os
 WHITE = (255, 255, 255)
 RED = (255, 0, 0)
 BLUE = (0, 0, 255)
+BLACK = (0,0,0)
 
 from states import Level, CreditsScreen, OptionsScreen
 
@@ -42,6 +43,11 @@ class Menu(object):
 			screen.blit(text, textpos)
 			
 			pos_y = pos_y + self.font_size
+
+                pos_y = pos_y + self.font_size
+		prompt = self.font.render("Press enter to select", 1, BLACK)
+		promptpos = prompt.get_rect(centerx=pos_x, centery = pos_y)
+		screen.blit(prompt, promptpos)
 	
 	def delete(self):
 		pass

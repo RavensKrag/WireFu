@@ -3,6 +3,8 @@ import pygame
 import pymunk as pm
 from pymunk import Vec2d
 
+from states import Level
+
 class Killscreen(object):
 	def __init__(self, window, color=pygame.Color("red")):
 		self.music = 'jazz_Goin_Up.wav'
@@ -16,12 +18,18 @@ class Killscreen(object):
 		self.time_score = self._time_score()
 	
 	def update(self):
-		pass
+                pass
 		# The killscreen should probably control the loading of the next level
 		# Get an input to signal that the user is done looking at the score screen
 		# Take the name of the next level to load from the "next" field of the previous level
 		# Pop the stack twice (killscreen and old level)
 		# Push the new level
+
+        def next_level(self):
+                self.window.pop_state()
+		old = self.window.pop_state()
+		if old.next_level != "none":
+                        self.window.push_state(Level(self.window, self.window.space, old.next_level, self.window.input_processor, self.window.gameclock))
 	
 	def draw(self, screen):
 		time_score_image = self.font.render("time score: {}/5".format(self.time_score), True, self.color)

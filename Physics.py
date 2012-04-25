@@ -7,7 +7,6 @@ from pymunk import Vec2d
 from Camera import Camera
 
 screen_height = 600  # This will need to be set by the Level being used
-scale = 50*3	# Number of pixels per meter
 
 def to_pygame(vec):
 	# Convert from pymunk coordinates to pygame coordinates
@@ -20,6 +19,8 @@ def to_pygame(vec):
 	
 	return vec.x-Camera.offset_x, screen_height-vec.y+Camera.offset_y
 
-def to_pymunk(point):
-	# Only implement if necessary
-	return Vec2d(to_meters(point[0]), to_meters(point[1]))
+def x_to_pygame(x):
+	return x-Camera.offset_x
+	
+def y_to_pygame(y):
+	return screen_height-y+Camera.offset_y

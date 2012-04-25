@@ -7,67 +7,52 @@ import collisions
 from gameobjects import StaticObject
 
 class Ramp(StaticObject):
-	# Should probably get rid of skew.  It would make more sense not to have it.
-	
 	def __init__(self, p1, p2, width=2):
-		self.line_width = width
-		
-		# Sort by y
-		if(p1[1] > p2[1]):
-			swap = p2
-			p2 = p1
-			p1 = swap
-			self.height = p2[1] - p1[1]
-			swap = p2
-			p2 = p1
-			p1 = swap
-		else:
-			self.height = p2[1] - p1[1]
-		
-		# Sort by x
-		if(p1[0] > p2[0]):
-			swap = p2
-			p2 = p1
-			p1 = swap
-			self.width = p2[0] - p1[0]
-			swap = p2
-			p2 = p1
-			p1 = swap
-		else:
-			self.width = p2[0] - p1[0]
-		
-		# Counterclockwise winding
-		# Start from bottom left
-		# Pos x: right		Pos y: up
-		half_width = self.width/2.0
-		half_height = self.height/2.0
-		
-		
-		verts = [(0,0),
-				(self.line_width, 0),
-				(self.width+self.line_width, self.height),
-				(self.width, self.height)]
-			
-		
-		self.width += self.line_width
+		# CCW winding
+		self.width = 5
+		self.height = 5
+		verts = [(p1[0] + width/2, p1[1]),
+				(p1[0] - width/2, p1[1]),
+				(p2[0] - width/2, p2[1]),
+				(p2[0] + width/2, p2[1])]
 		super(Ramp, self).__init__(verts)
 		
-		self.body.position.x = p1[0]
-		self.body.position.y = p1[1]
+		# Sort points by x
+		if p2[0] < p1[0]:
+			swap = p1
+			p2 = p2
+			p2 = swap
 		
-		line_width = self.line_width
-		width = self.width
-		points = [(0, self.image.get_height()),
-				(0 + line_width, self.image.get_height()),
-				(0 + width + line_width, 0),
-				(0 + width, 0)]
+		# Calculate dimensions of bounding box around the slant image
+		self.width = p2[0] - p1[0]
+		y_offset = 0
+		if p1[1] > p2[1]:
+			self.height = p1[1] - p2[1]
+			y_offset = p2[1]
+		else:
+			self.height = p2[1] - p1[1]
+			y_offset = p1[1]
+		x_offset = p1[0]
 		
-		#~ color = pygame.Color("white")
-		#~ self.image.fill(color)
+		self.width += width
+		self.p1 = p1
+		self.p2 = p2
+		
+		
+		
+		self.shape = pm.Segment(pm.Body(), Vec2d(p1[0], p1[1]), Vec2d(p2[0], p2[1]), width)
+		self.shape.gameobject = self
+		
 		color = pygame.Color("red")
-		pygame.draw.polygon(self.image, color, points)
 		
-		# TODO: Trim image size
+		#~ p1[0] -= x_offset
+		#~ p1[1] -= y_offset
+		#~ 
+		#~ p2[0] -= x_offset
+		#~ p2[1] -= y_offset
+		
+		#~ pygame.draw.line(self.image, color, p1, p2, width) # SOMETHING LIKE THAT
+		
 		
 		self.shape.collision_type = collisions.PLATFORM
 		
@@ -75,33 +60,11 @@ class Ramp(StaticObject):
 		pass
 	
 	def draw(self, screen):
-		pos = Physics.to_pygame(self.body.position)
-		screen.blit(self.image, (pos[0], pos[1]-self.height))
+		#~ pos = Physics.to_pygame(self.body.position)
+		#~ screen.blit(self.image, (pos[0], pos[1]-self.height)) # Draw at bottom left
 		
-		# Debug outline
-		#~ x_px = Physics.to_px(self.body.position.x)
-		#~ y_px = Physics.screen_height - Physics.to_px(self.body.position.y)
-		#~ width_px = Physics.to_px(self.width)
-		#~ height_px = Physics.to_px(self.height)
-		#~ 
-		#~ line_width = Physics.to_px(self.line_width)
-		#~ skew = Physics.to_px(self.skew)
-		#~ 
-		#~ color = pygame.Color("green")
-		#~ 
-		#~ height = self.p2[1]-self.p1[1]
-		#~ 
-		#~ verts = [(x_px, y_px),
-				#~ (x_px + line_width, y_px),
-				#~ (x_px + skew + line_width, y_px - height_px),
-				#~ (x_px + skew, y_px - height_px)]
-		#~ 
-		#~ pygame.draw.circle(screen, color, (x_px, y_px), 3)
+		color = pygame.Color("red")
 		
-		#~ print "==="
-		#~ for v in verts:
-			#~ print v
-		#~ 
-		#~ pygame.draw.polygon(screen, color, verts, 2)
-			
-
+		self.v1 = Physics.to_pygame(Vec2d(self.p1[0], self.p1[1]))
+		self.v2 = Physics.to_pygame(Vec2d(self.p2[0], self.p2[1]))
+		pygame.draw.line(screen, color, self.v1, self.v2, 20)

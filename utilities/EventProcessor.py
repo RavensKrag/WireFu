@@ -3,7 +3,7 @@ import sys, pygame
 from pygame.locals import *
 
 from states import Menu, Killscreen, CreditsScreen, OptionsScreen
-from states import Level;
+from states import Level, PauseScreen
 
 class EventProcessor(object):
 	def __init__(self, window, jukebox):
@@ -21,6 +21,8 @@ class EventProcessor(object):
 		
 		self.volume_up_key = pygame.K_1
 		self.volume_down_key = pygame.K_2
+		
+		self.pause_key = pygame.K_p
 		
 		self.active = True;
 	
@@ -47,7 +49,7 @@ class EventProcessor(object):
 						# When killscreen is reached, unbind the player
 						self.unbind_player()
 						if event.key == pygame.K_SPACE:
-                                                        self.window.states[-1].next_level()
+							self.window.states[-1].next_level()
 					elif isinstance(self.window.states[-1], CreditsScreen):
 						if event.key == pygame.K_SPACE:
 							#go back to the menu screen when space is pressed
@@ -59,21 +61,32 @@ class EventProcessor(object):
 					elif isinstance(self.window.states[-1], Level):
 						self.window.gameclock.start()
 						
-						if event.key == self.jump_key:
+						if event.key == self.pause_key:
+							self.window.gameclock.stop()
+							self.window.push_state(PauseScreen(self.window))
+						elif event.key == self.jump_key:
 							if(self.player.handhold != None):
 								self.player.let_go(self.window.space)
 							else:
 								self.player.jump()
-						if event.key == self.restart_key:
+						elif event.key == self.restart_key:
 							# Restart level
 							self.window.states[-1].reload()
-					#~ elif self.window.state == 'pause':
+					elif isinstance(self.window.states[-1], PauseScreen):
+						if event.key == self.pause_key:
+							self.window.pop_state()
+							self.window.gameclock.start()
+
+
+					#~elif self.window.state == 'pause':
 						#~ pass
 					
 				elif event.type == pygame.KEYUP:
 					self.inputs[event.key] = False
 				elif event.type == pygame.QUIT:
 					self.window.running = False
+					
+				# ===== Process mouse events
 				elif event.type == MOUSEBUTTONDOWN:
 					if isinstance(self.window.states[-1], OptionsScreen):
 						if pygame.mouse.get_pressed()[0] == 1:

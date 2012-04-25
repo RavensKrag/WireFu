@@ -11,7 +11,8 @@ class ZiplineWire(Ramp):
 	# Inherit from the Ramp class to enable the
 	# creation of angled ziplines.
 	def __init__(self, p1, p2):
-		super(ZiplineWire, self).__init__(p1, p2, 10)
+
+		super(ZiplineWire, self).__init__(p1, p2, 2)
 		#~ self.handle = ZiplineHandle()
 		#~ self.handle.body.position = Vec2d(p1)
 		
@@ -20,7 +21,7 @@ class ZiplineWire(Ramp):
 									#~ (0,0))
 		
 		self.shape.collision_type = collisions.ZIPLINE
-		self.shape.friction = 0.1
+		#~ self.shape.friction = 0.1
 	
 	def update(self):
 		pass

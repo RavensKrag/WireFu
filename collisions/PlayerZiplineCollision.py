@@ -20,10 +20,11 @@ class PlayerZiplineCollision(object):
 		
 		player_shape, zipline_shape = arbiter.shapes
 		
+		a = zipline_shape.body.world_to_local(zipline_shape.a)
+		b = zipline_shape.body.world_to_local(zipline_shape.b)
+		
 		PlayerZiplineCollision.new_handhold = pm.GrooveJoint(zipline_shape.body, player_shape.body,
-									(-zipline_shape.gameobject.width, -zipline_shape.gameobject.height), 
-									(zipline_shape.gameobject.width, zipline_shape.gameobject.height),
-									(0, 100))
+									a, b, (0, 100))
 		
 		return True
 	

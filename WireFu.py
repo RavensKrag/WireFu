@@ -19,6 +19,7 @@ import collisions
 
 from utilities import EventProcessor
 from user_interface import GameClock
+from Camera import Camera
 
 from gameobjects.platforms import Exit, Platform, Ramp
 from gameobjects.zipline import ZiplineHandle, ZiplineWire
@@ -95,6 +96,8 @@ class Window(object):
 		self.jukebox.play_bgm()
 		
 	def pop_state(self):
+		Camera.offset_x = 0
+		Camera.offset_y = 0
 		self.jukebox.stop_bgm()
 		old_state = self.states.pop()
 		old_state.delete()

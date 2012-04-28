@@ -50,21 +50,7 @@ class Animation(object):
 	def update(self, velocity=None):
 		# Set the image to the next frame, and update the rect as well
 		if self.next_state != self.state:
-			self.state = self.next_state
-			print "new state: {}".format(self.state)
-			self._frame_count = 0
-			
-			# Transition to spritesheet for new state
-			self.spritesheet = self.animations[self.state][0]
-			self.frame_rects = self.animations[self.state][1]
-			
-			# Create new frame surface
-			current_frame_rect = self.frame_rects[self._frame_count]
-			
-			self.current_frame = pygame.Surface((current_frame_rect[2], current_frame_rect[3]),
-												pygame.SRCALPHA)
-			
-			self.current_frame.blit(self.spritesheet, (0,0), current_frame_rect)
+			self._transition_to_new_state()
 		else:
 			#~ print "update"
 			#~ self._frame_count += 1
@@ -97,7 +83,7 @@ class Animation(object):
 					self.tick = 0
 					self._frame_count = 0
 			elif self.state == 'jump':
-				if self.tick >= 1:
+				if self.tick >= 2:
 					self.tick = 0
 					self._frame_count += 1
 			
@@ -141,17 +127,15 @@ class Animation(object):
 		
 		frame_rects = []
 		
-		i = 0
+		frame_count = 0
 		x = 0
 		y = 0
 		#~ print "width: {}   height: {}".format(image.get_width(), image.get_height())
 		#~ print "frame size: {}x{}".format(frame_size[0], frame_size[1])
 		while y < image.get_height():
-			#~ print "y cut"
 			x = 0
 			while x < image.get_width():
-				i += 1
-				#~ print "x cut"
+				frame_count += 1
 				#~ print "new frame {}".format(name)
 				# Cut out sprite
 				frame_rects.append(pygame.Rect((x, y), frame_size))
@@ -159,6 +143,23 @@ class Animation(object):
 				x += frame_size[0]
 			y += frame_size[1]
 		
-		return image, frame_rects, i
+		return image, frame_rects, frame_count
+	
+	def _transition_to_new_state(self):
+		self.state = self.next_state
+		print "new state: {}".format(self.state)
+		self._frame_count = 0
+		
+		# Transition to spritesheet for new state
+		self.spritesheet = self.animations[self.state][0]
+		self.frame_rects = self.animations[self.state][1]
+		
+		# Create new frame surface
+		current_frame_rect = self.frame_rects[self._frame_count]
+		
+		self.current_frame = pygame.Surface((current_frame_rect[2], current_frame_rect[3]),
+											pygame.SRCALPHA)
+		
+		self.current_frame.blit(self.spritesheet, (0,0), current_frame_rect)
 	
 	

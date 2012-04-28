@@ -100,9 +100,11 @@ class Player(NonstaticObject):
 	
 	def ground_collision(self):
 		#~ print "ground"
-		self._animation.transition_to('walk_loop')
 		
-		self.in_air = False
+		
+		if self.in_air:
+			self.in_air = False
+			self._animation.transition_to('stand')
 		
 		self.jump_count = 0
 		

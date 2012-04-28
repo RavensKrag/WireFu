@@ -52,6 +52,9 @@ class Animation(object):
 		if self.next_state != self.state:
 			self._transition_to_new_state()
 		else:
+			movement_threshold = 2
+			run_velocity = 350
+			
 			#~ print "update"
 			#~ self._frame_count += 1
 			
@@ -60,16 +63,32 @@ class Animation(object):
 			if velocity:
 				vx = velocity.x
 			
-			if vx < 0:
+			if vx > movement_threshold:
+				self.direction = 'right'
+			else:
 				vx *= -1
 				self.direction = 'left'
-			else:
-				self.direction = 'right'
+				
 				
 			self.tick += 1
 			
-			if self.state == 'walk_loop':
-				if vx > 100:
+			
+			
+			if self.state == 'stand':
+				if vx > movement_threshold:
+					self.transition_to('walk_start')
+			elif self.state == 'walk_start':
+				# NOTE: This animation is a frame short of a full set
+				if self.tick >= 2:
+					self.tick = 0
+					self._frame_count += 1
+				
+				if self._frame_count > 4:
+					self.transition_to('walk_loop')
+			elif self.state == 'walk_loop':
+				if vx > run_velocity:
+					self.transition_to('run')
+				elif vx > 100:
 					#~ print "high speed walking!!"
 					if self.tick >= 2:
 						self.tick = 0
@@ -80,20 +99,50 @@ class Animation(object):
 						self.tick = 0
 						self._frame_count += 1
 				else:
+					self.transition_to('stand')
+			elif self.state == 'walk_to_run':
+				if self.tick >= 1:
 					self.tick = 0
-					self._frame_count = 0
+					self._frame_count += 1
+				
+				if self.is_last_frame():
+					print "RUN!"
+					self.transition_to('run')
+					
+			elif self.state == 'run':
+				if self.tick >= 3:
+					self.tick = 0
+					self._frame_count += 1
+				
+				if vx < run_velocity:
+					self.transition_to('slide')
+			elif self.state == 'slide':
+				if self.tick >= 2:
+					self.tick = 0
+					self._frame_count += 1
+				
+				if vx < movement_threshold:
+					self.transition_to('slide_to_stand')
+			elif self.state == 'slide_to_stand':
+				# NOTE: This animation is a frame short of a full set
+				if self.tick >= 2:
+					self.tick = 0
+					self._frame_count += 1
+					
+				if self._frame_count > 5:
+					self.transition_to('stand')
 			elif self.state == 'jump':
 				if self.tick >= 2:
 					self.tick = 0
 					self._frame_count += 1
 			
-			
-			
-			if self.state == 'jump':
-				if self._frame_count >= self.animations[self.state][2]:
+			if self.is_last_frame():
+				if self.state == 'jump' or self.state == 'slide':
+					# Stick on last frame
 					self._frame_count = self.animations[self.state][2]-1
-			elif self._frame_count >= self.animations[self.state][2]:
-				self._frame_count = 0
+				else:
+					# Loop animation
+					self._frame_count = 0
 			
 			# Prep current frame
 			current_frame_rect = self.frame_rects[self._frame_count]
@@ -119,6 +168,9 @@ class Animation(object):
 	def get_height(self):
 		return self.current_frame.get_rect().height
 	
+	def is_last_frame(self):
+		return self._frame_count >= self.animations[self.state][2]
+	
 	def _load(self, name, frame_size):
 		fullname = os.path.join('sprites', name)
 		image = pygame.image.load(fullname)
@@ -128,15 +180,13 @@ class Animation(object):
 		frame_rects = []
 		
 		frame_count = 0
-		x = 0
+		
 		y = 0
-		#~ print "width: {}   height: {}".format(image.get_width(), image.get_height())
-		#~ print "frame size: {}x{}".format(frame_size[0], frame_size[1])
 		while y < image.get_height():
 			x = 0
 			while x < image.get_width():
 				frame_count += 1
-				#~ print "new frame {}".format(name)
+				
 				# Cut out sprite
 				frame_rects.append(pygame.Rect((x, y), frame_size))
 				
@@ -146,9 +196,11 @@ class Animation(object):
 		return image, frame_rects, frame_count
 	
 	def _transition_to_new_state(self):
+		self._frame_count = 0
+		
 		self.state = self.next_state
 		print "new state: {}".format(self.state)
-		self._frame_count = 0
+		
 		
 		# Transition to spritesheet for new state
 		self.spritesheet = self.animations[self.state][0]

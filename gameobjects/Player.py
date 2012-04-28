@@ -11,7 +11,7 @@ class Player(NonstaticObject):
 		mass = 60
 		moment = pm.inf
 		
-		super(Player, self).__init__(mass, moment, verts=[])
+		super(Player, self).__init__(mass, moment, 28, 89)
 		
 		self.rect = self.image.get_rect()
 		self.rect.topleft = [0,0]
@@ -39,12 +39,17 @@ class Player(NonstaticObject):
 		self.alive = True
 	
 	def update(self, window_width):
-		super(Player, self).update()
+		#~ super(Player, self).update()
 		#~ print "=== Player ==="
-		print self.body.position
+		#~ print self.body.position
 		#~ print "====="
-		image, rect = self._animation.update()
-			
+		
+		
+		
+		self.image, self.rect = (None, None)
+		
+		self.image, self.rect = self._animation.update('walk_loop', self.body.velocity)
+		
 		# Constrain movement of player to screen
 		width = self._animation.get_width()
 		height = self._animation.get_height()
@@ -104,9 +109,9 @@ class Player(NonstaticObject):
 	def is_in_air(self):
 		return self.in_air
 	
-	def rotate(self, angle):
-		image = self._animation.update()[0]
-		self.image = pygame.transform.rotate(image, angle)
+	#~ def rotate(self, angle):
+		#~ image = self._animation.update()[0]
+		#~ self.image = pygame.transform.rotate(image, angle)
 	
 	def get_width(self):
 		return self._animation.get_width()

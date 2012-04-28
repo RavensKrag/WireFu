@@ -10,17 +10,138 @@ class Animation(object):
 		fullname = os.path.join('sprites', name)
 		self._image = pygame.image.load(fullname)
 		self._rect = self._image.get_rect()
+		
+		
+		# Animation sequence
+		# 	Stand
+		# 	Walk start
+		# 	Walk loop
+		# 	Walk to run
+		# 	Run
+		# 	Slide
+		# 	Slide to stand
+		# 	--> back to top
+		self.animations = {
+			'stand' : self._load('player_stand.png', (80, 110)), # SET
+			
+			'walk_start' : self._load('player_walkStart.png', (80, 110)), # SET
+			'walk_loop' : self._load('player_walkLoop.png', (80, 110)), # SET
+			'walk_to_run' : self._load('player_walkToRun.png', (80, 110)), # SET
+			
+			'run' : self._load('player_run.png', (100, 110)), # SET
+			
+			'slide' : self._load('player_slide.png', (100, 110)), # SET
+			'slide_to_stand' : self._load('player_slideToStand.png', (100, 110)), # SET
+			
+			'jump' : self._load('player_jump.png', (80, 110)), # 1-24 jump, 25-27 hit ground
+			
+			'wire_kick' : self._load('player_wireKick.png', (100, 110)) # SET
+		}
+		
+		self.state = 'init'
+		self._frame_count = 0
+		
+		self.direction = 'right'
+		
+		self.tick = 0
+		
 	
-	def update(self):
+	def update(self, state='stand', velocity=None):
 		# Set the image to the next frame, and update the rect as well
-		return self._image, self._rect
+		if state != self.state:
+			#~ print "new state: {}".format(state)
+			self.state = state
+			self._frame_count = 0
+			
+			# Transition to spritesheet for new state
+			self.spritesheet = self.animations[state][0]
+			self.frame_rects = self.animations[state][1]
+			
+			# Create new frame surface
+			current_frame_rect = self.frame_rects[self._frame_count]
+			
+			self.current_frame = pygame.Surface((current_frame_rect[2], current_frame_rect[3]),
+												pygame.SRCALPHA)
+			
+			self.current_frame.blit(self.spritesheet, (0,0), current_frame_rect)
+		else:
+			#~ print "update"
+			#~ self._frame_count += 1
+			
+			if velocity:
+				self.tick += 1
+				
+				if velocity.x > 100:
+					print "high speed walking!!"
+					if self.tick >= 2:
+						self.tick = 0
+						self._frame_count += 1
+				elif velocity.x > 0:
+					print "Low speed"
+					if self.tick >= 4:
+						self.tick = 0
+						self._frame_count += 1
+				else:
+					self.tick = 0
+					self._frame_count = 0
+			#~ else:
+				#~ self._frame_count += 1
+				
+			#~ if self.state == 'walk':
+				#~ max_frame_count = 0
+				#~ 
+				#~ # Do not cycle through all of the walk animations, only the main loop
+				#~ if if self._frame_count >= :
+			
+			if self._frame_count >=49:
+				self._frame_count = 0
+			
+			
+			current_frame_rect = self.frame_rects[self._frame_count]
+			self.current_frame.fill((0,0,0,0)) # ARGB
+			self.current_frame.blit(self.spritesheet, (0,0), current_frame_rect)
+		
+		if velocity:
+			if velocity.x < 0:
+				self.current_frame = pygame.transform.flip(self.current_frame, True, False)
+			else:
+				pass
+		
+		return self.current_frame, self.current_frame.get_rect()
 	
 	def draw(self, surface):
 		pass
 	
 	def get_width(self):
-		return self._rect.width
+		return self.current_frame.get_rect().width
 	
 	def get_height(self):
-		return self._rect.height
+		return self.current_frame.get_rect().height
+	
+	def _load(self, name, frame_size):
+		fullname = os.path.join('sprites', name)
+		image = pygame.image.load(fullname)
+		
+		image.convert_alpha()
+		
+		frame_rects = []
+		
+		x = 0
+		y = 0
+		#~ print "width: {}   height: {}".format(image.get_width(), image.get_height())
+		#~ print "frame size: {}x{}".format(frame_size[0], frame_size[1])
+		while y < image.get_height():
+			#~ print "y cut"
+			x = 0
+			while x < image.get_width():
+				#~ print "x cut"
+				#~ print "new frame {}".format(name)
+				# Cut out sprite
+				frame_rects.append(pygame.Rect((x, y), frame_size))
+				
+				x += frame_size[0]
+			y += frame_size[1]
+		
+		return image, frame_rects
+	
 	

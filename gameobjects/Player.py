@@ -37,6 +37,8 @@ class Player(NonstaticObject):
 		self.normal = Vec2d(0.0, 1.0)
 		
 		self.alive = True
+		
+		self._animation.transition_to('walk_loop')
 	
 	def update(self, window_width):
 		#~ super(Player, self).update()
@@ -48,7 +50,7 @@ class Player(NonstaticObject):
 		
 		self.image, self.rect = (None, None)
 		
-		self.image, self.rect = self._animation.update('walk_loop', self.body.velocity)
+		self.image, self.rect = self._animation.update(self.body.velocity)
 		
 		# Constrain movement of player to screen
 		width = self._animation.get_width()
@@ -85,6 +87,8 @@ class Player(NonstaticObject):
 	
 	def jump(self):
 		if self.jump_count < self.jump_limit:
+			self._animation.transition_to('jump')
+			
 			self.in_air = True
 			self.body.velocity.y = self.jump_velocity
 			self.jump_count += 1
@@ -96,6 +100,8 @@ class Player(NonstaticObject):
 	
 	def ground_collision(self):
 		#~ print "ground"
+		self._animation.transition_to('walk_loop')
+		
 		self.in_air = False
 		
 		self.jump_count = 0

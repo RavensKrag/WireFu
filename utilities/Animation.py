@@ -38,7 +38,8 @@ class Animation(object):
 			'wire_kick' : self._load('player_wireKick.png', (100, 110)) # SET
 		}
 		
-		self.state = 'init'
+		self.state = None
+		self.next_state = 'stand'
 		self._frame_count = 0
 		
 		self.direction = 'right'
@@ -46,16 +47,16 @@ class Animation(object):
 		self.tick = 0
 		
 	
-	def update(self, state='stand', velocity=None):
+	def update(self, velocity=None):
 		# Set the image to the next frame, and update the rect as well
-		if state != self.state:
-			#~ print "new state: {}".format(state)
-			self.state = state
+		if self.next_state != self.state:
+			self.state = self.next_state
+			print "new state: {}".format(self.state)
 			self._frame_count = 0
 			
 			# Transition to spritesheet for new state
-			self.spritesheet = self.animations[state][0]
-			self.frame_rects = self.animations[state][1]
+			self.spritesheet = self.animations[self.state][0]
+			self.frame_rects = self.animations[self.state][1]
 			
 			# Create new frame surface
 			current_frame_rect = self.frame_rects[self._frame_count]
@@ -68,41 +69,52 @@ class Animation(object):
 			#~ print "update"
 			#~ self._frame_count += 1
 			
+			vx = 0
+			
 			if velocity:
-				self.tick += 1
+				vx = velocity.x
+			
+			if vx < 0:
+				vx *= -1
+				self.direction = 'left'
+			else:
+				self.direction = 'right'
 				
-				if velocity.x > 100:
-					print "high speed walking!!"
+			self.tick += 1
+			
+			if self.state == 'walk_loop':
+				if vx > 100:
+					#~ print "high speed walking!!"
 					if self.tick >= 2:
 						self.tick = 0
 						self._frame_count += 1
-				elif velocity.x > 0:
-					print "Low speed"
+				elif vx > 0:
+					#~ print "Low speed"
 					if self.tick >= 4:
 						self.tick = 0
 						self._frame_count += 1
 				else:
 					self.tick = 0
 					self._frame_count = 0
-			#~ else:
-				#~ self._frame_count += 1
-				
-			#~ if self.state == 'walk':
-				#~ max_frame_count = 0
-				#~ 
-				#~ # Do not cycle through all of the walk animations, only the main loop
-				#~ if if self._frame_count >= :
+			elif self.state == 'jump':
+				if self.tick >= 1:
+					self.tick = 0
+					self._frame_count += 1
 			
-			if self._frame_count >=49:
+			
+			
+			if self.state == 'jump':
+				if self._frame_count >= self.animations[self.state][2]:
+					self._frame_count = self.animations[self.state][2]-1
+			elif self._frame_count >= self.animations[self.state][2]:
 				self._frame_count = 0
 			
-			
+			# Prep current frame
 			current_frame_rect = self.frame_rects[self._frame_count]
 			self.current_frame.fill((0,0,0,0)) # ARGB
 			self.current_frame.blit(self.spritesheet, (0,0), current_frame_rect)
-		
-		if velocity:
-			if velocity.x < 0:
+			
+			if self.direction == 'left':
 				self.current_frame = pygame.transform.flip(self.current_frame, True, False)
 			else:
 				pass
@@ -111,6 +123,9 @@ class Animation(object):
 	
 	def draw(self, surface):
 		pass
+	
+	def transition_to(self, state):
+		self.next_state = state
 	
 	def get_width(self):
 		return self.current_frame.get_rect().width
@@ -126,6 +141,7 @@ class Animation(object):
 		
 		frame_rects = []
 		
+		i = 0
 		x = 0
 		y = 0
 		#~ print "width: {}   height: {}".format(image.get_width(), image.get_height())
@@ -134,6 +150,7 @@ class Animation(object):
 			#~ print "y cut"
 			x = 0
 			while x < image.get_width():
+				i += 1
 				#~ print "x cut"
 				#~ print "new frame {}".format(name)
 				# Cut out sprite
@@ -142,6 +159,6 @@ class Animation(object):
 				x += frame_size[0]
 			y += frame_size[1]
 		
-		return image, frame_rects
+		return image, frame_rects, i
 	
 	

@@ -40,12 +40,12 @@ class Camera(object):
 			# Left Edge
 			#print "left"
 			pass
-			#~ Camera.offset_x = 0
+			Camera.offset_x = 0
 		elif self.player.x > right_level_edge:
 			# Right Edge
 			#print "right"
 			pass
-			#~ Camera.offset_x = self.level_width - self.window.width
+			Camera.offset_x = self.level_width - self.window.width
 		elif self.player.x < left_bb_edge:
 			# Scroll Left
 			Camera.offset_x -= Camera.dx
@@ -78,19 +78,22 @@ class Camera(object):
 		if self.player.y < bottom_level_edge:
 			# Left Edge
 			#print "Bottom"
-			pass
-			#~ Camera.offset_y = 0
+			#~ pass
+			Camera.offset_y = 0
 		elif self.player.y > top_level_edge:
 			# Right Edge
 			#print "Top"
-			pass
-			#~ Camera.offset_y = self.level_height - self.window.height
+			#~ pass
+			Camera.offset_y = self.level_height - self.window.height
 		elif self.player.y < bottom_bb_edge:
 			# Scroll Left
 			Camera.offset_y -= Camera.dy
 		elif self.player.y > top_bb_edge:
 			# Scroll Right
 			Camera.offset_y += Camera.dy
+		
+		
+		#~ Camera.offset_y = self.player.y
 		
 		#~ x_min = 0
 		#~ x_max = self.level_width - self.window.width

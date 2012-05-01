@@ -11,7 +11,7 @@ class Player(NonstaticObject):
 		mass = 60
 		moment = pm.inf
 		
-		super(Player, self).__init__(mass, moment, verts=[])
+		super(Player, self).__init__(mass, moment, 28, 89)
 		
 		self.rect = self.image.get_rect()
 		self.rect.topleft = [0,0]
@@ -25,7 +25,7 @@ class Player(NonstaticObject):
 		self.handhold = None # Pointer to a joint used to hold the player somewhere
 		
 		self.jump_count = 0
-		self.jump_limit = 1000000
+		self.jump_limit = 1
 		self.in_air = False
 		
 		self.movement_force = Vec2d(200*150, 0.0)
@@ -37,14 +37,21 @@ class Player(NonstaticObject):
 		self.normal = Vec2d(0.0, 1.0)
 		
 		self.alive = True
+		
+		self._animation.transition_to('walk_loop')
 	
 	def update(self, window_width):
-		super(Player, self).update()
+		#~ super(Player, self).update()
 		#~ print "=== Player ==="
-		print self.body.position
+		#~ print self.body.position
 		#~ print "====="
-		image, rect = self._animation.update()
-			
+		
+		
+		
+		self.image, self.rect = (None, None)
+		
+		self.image, self.rect = self._animation.update(self.body.velocity)
+		
 		# Constrain movement of player to screen
 		width = self._animation.get_width()
 		height = self._animation.get_height()
@@ -80,6 +87,8 @@ class Player(NonstaticObject):
 	
 	def jump(self):
 		if self.jump_count < self.jump_limit:
+			self._animation.transition_to('jump')
+			
 			self.in_air = True
 			self.body.velocity.y = self.jump_velocity
 			self.jump_count += 1
@@ -91,7 +100,11 @@ class Player(NonstaticObject):
 	
 	def ground_collision(self):
 		#~ print "ground"
-		self.in_air = False
+		
+		
+		if self.in_air:
+			self.in_air = False
+			self._animation.transition_to('stand')
 		
 		self.jump_count = 0
 		
@@ -104,9 +117,9 @@ class Player(NonstaticObject):
 	def is_in_air(self):
 		return self.in_air
 	
-	def rotate(self, angle):
-		image = self._animation.update()[0]
-		self.image = pygame.transform.rotate(image, angle)
+	#~ def rotate(self, angle):
+		#~ image = self._animation.update()[0]
+		#~ self.image = pygame.transform.rotate(image, angle)
 	
 	def get_width(self):
 		return self._animation.get_width()

@@ -10,7 +10,7 @@ import Physics
 class NonstaticObject(GameObject):
 	# All moving objects should have some sort of animation.
 	
-	def __init__(self, mass=1, moment=1, verts=[]):
+	def __init__(self, mass=1, moment=1, width=100, height=100):
 		self._animation = Animation()
 		self.image, self.rect = self._animation.update()
 		
@@ -18,10 +18,10 @@ class NonstaticObject(GameObject):
 		# Counterclockwise winding
 		# Start from bottom left
 		# Pos x: right		Pos y: up
-		verts = [(-self._animation.get_width()/2, 0),
-				(self._animation.get_width()/2, 0), 
-				(self._animation.get_width()/2, self._animation.get_height()),
-				(-self._animation.get_width()/2, self._animation.get_height())]
+		verts = [(-width/2, 0),
+				(width/2, 0), 
+				(width/2, height),
+				(-width/2, height)]
 		
 		#~ for i in range(0, len(verts)):
 			#~ print verts[i]

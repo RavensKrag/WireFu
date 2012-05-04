@@ -53,7 +53,7 @@ class GameClock(object):
 		self.seconds = 0
 		self.minutes = 0
 		
-		self.active = True
+		self.active = False
 		
 		self.color = color
 	

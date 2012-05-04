@@ -59,7 +59,8 @@ class EventProcessor(object):
 							#go back to the menu screen when space is pressed
 							self.window.pop_state()						
 					elif isinstance(self.window.states[-1], Level):
-						self.window.gameclock.start()
+						if event.key == self.right_key or event.key == self.left_key or event.key == self.jump_key:
+							self.window.gameclock.start()
 						
 						if event.key == self.pause_key:
 							self.window.gameclock.stop()
@@ -75,12 +76,9 @@ class EventProcessor(object):
 					elif isinstance(self.window.states[-1], PauseScreen):
 						if event.key == self.pause_key:
 							self.window.pop_state()
-							self.window.gameclock.start()
+							#~ self.window.gameclock.start()
 
 
-					#~elif self.window.state == 'pause':
-						#~ pass
-					
 				elif event.type == pygame.KEYUP:
 					self.inputs[event.key] = False
 				elif event.type == pygame.QUIT:

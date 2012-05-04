@@ -114,6 +114,9 @@ class Player(NonstaticObject):
 		#~ self.body.velocity.y = 0
 		#~ self.body.reset_forces
 	
+	def zipline_collision(self):
+		self._animation.transition_to('wire_kick')
+	
 	def is_in_air(self):
 		return self.in_air
 	

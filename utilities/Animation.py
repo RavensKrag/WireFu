@@ -119,11 +119,11 @@ class Animation(object):
 					self.transition_to('stand')
 			elif self.state == 'jump':
 				self._frame_count += self._tick(2)
-			elif self.state == 'jump':
-				self._frame_count += self._tick(2)
+			elif self.state == 'wire_kick':
+				self._frame_count += self._tick(3)
 			
 			if self.is_last_frame():
-				if self.state == 'jump' or self.state == 'slide':
+				if self.state == 'jump' or self.state == 'slide' or self.state == 'wire_kick':
 					# Stick on last frame
 					self._frame_count = self.animations[self.state][2]-1
 				else:

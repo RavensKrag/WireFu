@@ -26,6 +26,8 @@ class PlayerZiplineCollision(object):
 		PlayerZiplineCollision.new_handhold = pm.GrooveJoint(zipline_shape.body, player_shape.body,
 									a, b, (0, 100))
 		
+		player_shape.gameobject.zipline_collision()
+		
 		return True
 	
 	@staticmethod

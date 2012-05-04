@@ -79,9 +79,7 @@ class Animation(object):
 					self.transition_to('walk_start')
 			elif self.state == 'walk_start':
 				# NOTE: This animation is a frame short of a full set
-				if self.tick >= 2:
-					self.tick = 0
-					self._frame_count += 1
+				self._frame_count += self._tick(2)
 				
 				if self._frame_count > 4:
 					self.transition_to('walk_loop')
@@ -90,51 +88,39 @@ class Animation(object):
 					self.transition_to('run')
 				elif vx > 100:
 					#~ print "high speed walking!!"
-					if self.tick >= 2:
-						self.tick = 0
-						self._frame_count += 1
+					self._frame_count += self._tick(2)
 				elif vx > 0:
 					#~ print "Low speed"
-					if self.tick >= 4:
-						self.tick = 0
-						self._frame_count += 1
+					self._frame_count += self._tick(4)
 				else:
 					self.transition_to('stand')
 			elif self.state == 'walk_to_run':
-				if self.tick >= 1:
-					self.tick = 0
-					self._frame_count += 1
+				self._frame_count += self._tick(1)
 				
 				if self.is_last_frame():
 					print "RUN!"
 					self.transition_to('run')
 					
 			elif self.state == 'run':
-				if self.tick >= 3:
-					self.tick = 0
-					self._frame_count += 1
+				self._frame_count += self._tick(3)
 				
 				if vx < run_velocity:
 					self.transition_to('slide')
 			elif self.state == 'slide':
-				if self.tick >= 2:
-					self.tick = 0
-					self._frame_count += 1
+				self._frame_count += self._tick(2)
 				
 				if vx < movement_threshold:
 					self.transition_to('slide_to_stand')
 			elif self.state == 'slide_to_stand':
 				# NOTE: This animation is a frame short of a full set
-				if self.tick >= 2:
-					self.tick = 0
-					self._frame_count += 1
-					
+				self._frame_count += self._tick(2)					
+				
 				if self._frame_count > 5:
 					self.transition_to('stand')
 			elif self.state == 'jump':
-				if self.tick >= 2:
-					self.tick = 0
-					self._frame_count += 1
+				self._frame_count += self._tick(2)
+			elif self.state == 'jump':
+				self._frame_count += self._tick(2)
 			
 			if self.is_last_frame():
 				if self.state == 'jump' or self.state == 'slide':
@@ -170,6 +156,17 @@ class Animation(object):
 	
 	def is_last_frame(self):
 		return self._frame_count >= self.animations[self.state][2]
+	
+	def _tick(self, count):
+		# This method is used to control the amount of update cycles per animation frame
+		# Return 1 if self.tick exceeds the count parameter, and reset self.tick
+		# else, return 0
+		
+		if self.tick >= count:
+			self.tick = 0
+			return 1
+		else:
+			return 0
 	
 	def _load(self, name, frame_size):
 		fullname = os.path.join('sprites', name)

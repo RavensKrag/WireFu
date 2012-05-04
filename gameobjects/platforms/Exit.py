@@ -10,10 +10,9 @@ import collisions
 from gameobjects.platforms import Platform
 
 class Exit(Platform):
-	def __init__(self, position, dimensions, gameclock, input_handler):
+	def __init__(self, position, dimensions, gameclock):
 		# Store a reference to the game clock, so that the exit can pause it
 		self.gameclock = gameclock
-		self.input_handler = input_handler
 		
 		color = pygame.Color("yellow")
 		super(Exit, self).__init__(position, dimensions, color)

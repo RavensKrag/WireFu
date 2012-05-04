@@ -190,7 +190,7 @@ class Level(object):
 				matches = self._findPatterns(r'\d+.\d+', line)
 				pos = [float(matches[0]),float(matches[1])]
 				dimensions = [float(matches[2]),float(matches[3])]
-				platform = Exit(pos,dimensions,self.game_clock,self.input_handler)
+				platform = Exit(pos,dimensions,self.game_clock)
 				self.platforms.add(platform)				
 				line = level_file.readline()
 			elif(section == 5):		# Load Jump powerups

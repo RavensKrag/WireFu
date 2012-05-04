@@ -1,9 +1,20 @@
 ===== How to Play =====
 
 Controls:
-	Move Left:		Left Arrow
-	Move Right:		Right Arrow
-	Jump:			Spacebar
+	Move Left:				Left Arrow
+	Move Right:				Right Arrow
+	Jump:					Spacebar
+	Let go of zipline:		Spacebar
+	
+	Restart:				R
+	
+	Select (menu):			Enter
+	Back (menu):			Spacebar
+	Pause:					P
+	
+	Volume Up:				1
+	Volume Down:			2
+	
 
 Run and jump your way to the the yellow platform.  Jump onto the zipline and 
 your character will automatically grab onto it.  This will will help you cross 

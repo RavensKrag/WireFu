@@ -43,9 +43,10 @@ class GameClock(object):
 		self.active = False
 		self.color = pygame.Color("red")
 	
-	def start(self):
+	def start(self, color=pygame.Color("green")):
 		if self.active == False:
 			self.active = True
+			self.color = color
 	
 	def reset(self, color=pygame.Color("green")):
 		self.milliseconds = 0

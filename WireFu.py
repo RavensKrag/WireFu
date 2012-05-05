@@ -115,6 +115,9 @@ class Window(object):
 		self._add_collision_handler(collisions.PLAYER, collisions.ZIPLINE, 
 									collisions.PlayerZiplineCollision, self.jukebox)
 		
+		self._add_collision_handler(collisions.PLAYER, collisions.POWER_ZIPLINE, 
+									collisions.PowerZiplineCollision, self.jukebox)
+		
 		self._add_collision_handler(collisions.PLAYER, collisions.GROUND,
 									collisions.GroundCollision, self.jukebox)
 		

@@ -34,10 +34,10 @@ class PowerZiplineCollision(object): # Inheritance not working as expected
 		player = player_shape.gameobject
 		
 		zipline = zipline_shape.gameobject
-		force = zipline.wire_force
+		velocity = zipline.wire_velocity
 		
 		
-		player.body.apply_force(force * 700000)
+		player.body.velocity = velocity * 20000
 		
 		return True
 	

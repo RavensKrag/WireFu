@@ -43,7 +43,7 @@ class Ramp(StaticObject):
 		self.shape = pm.Segment(pm.Body(), Vec2d(p1[0], p1[1]), Vec2d(p2[0], p2[1]), width)
 		self.shape.gameobject = self
 		
-		color = pygame.Color("red")
+		self.color = pygame.Color("red")
 		
 		#~ p1[0] -= x_offset
 		#~ p1[1] -= y_offset
@@ -63,8 +63,6 @@ class Ramp(StaticObject):
 		#~ pos = Physics.to_pygame(self.body.position)
 		#~ screen.blit(self.image, (pos[0], pos[1]-self.height)) # Draw at bottom left
 		
-		color = pygame.Color("red")
-		
 		self.v1 = Physics.to_pygame(Vec2d(self.p1[0], self.p1[1]))
 		self.v2 = Physics.to_pygame(Vec2d(self.p2[0], self.p2[1]))
-		pygame.draw.line(screen, color, self.v1, self.v2, 20)
+		pygame.draw.line(screen, self.color, self.v1, self.v2, 20)

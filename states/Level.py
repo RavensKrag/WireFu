@@ -12,7 +12,7 @@ from Camera import Camera
 from gameobjects import Player
 #~ from gameobjects import BackgroundObject
 from gameobjects.platforms import Exit, Platform, Ramp
-from gameobjects.zipline import ZiplineHandle, ZiplineWire
+from gameobjects.zipline import ZiplineHandle, ZiplineWire, PowerZipline
 from gameobjects.powerups import Powerup_Jump_Number
 
 class Level(object):
@@ -199,6 +199,13 @@ class Level(object):
 				dimensions = [float(matches[2]),float(matches[3])]
 				platform = Powerup_Jump_Number(pos,dimensions)
 				self.powerups.add(platform)
+				line = level_file.readline()
+			elif(section == 6):		# Load power ziplines
+				matches = self._findPatterns(r'\d+.\d+', line)
+				endPoint1 = [float(matches[0]),float(matches[1])]
+				endPoint2 = [float(matches[2]),float(matches[3])]
+				platform = PowerZipline(endPoint1,endPoint2)
+				self.platforms.add(platform)			
 				line = level_file.readline()
 			else:
 				print('Format error in ' + filename + '. Program terminated.')

@@ -13,7 +13,8 @@ class PowerZipline(ZiplineWire):
 	# him into a given direction.
 	# The force will move from p1 towards p2
 	def __init__(self, p1, p2):
-		super(PowerZipline).__init__(p1, p2)
+		print('p1, p2', p1, p2)
+		super(PowerZipline, self).__init__(p1, p2)
 		self.shape.collision_type = collisions.POWER_ZIPLINE
 		
 		self.wire_force = pm.Vec2d(p2[0]-p1[0], p2[1]-p1[1])

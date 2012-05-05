@@ -8,7 +8,7 @@ class Camera(object):
 	offset_y = 0
 	
 	dx = 5
-	dy = 1
+	dy = 3
 	
 	def __init__(self, window, level_width, level_height, player):
 		self.window = window
@@ -65,8 +65,8 @@ class Camera(object):
 		bottom_screen_edge = self.offset_y
 		top_screen_edge = self.offset_y + self.window.height
 		
-		bottom_bb_edge = self.offset_x + self.window.height/2 - self.bb_height/2
-		top_bb_edge = self.offset_x + self.window.height/2 + self.bb_height/2
+		bottom_bb_edge = self.offset_y + self.window.height/2 - self.bb_height/2
+		top_bb_edge = self.offset_y + self.window.height/2 + self.bb_height/2
 		
 		# Margin is the area between the bounding box and the screen edge
 		margin_bottom = bottom_bb_edge - bottom_screen_edge

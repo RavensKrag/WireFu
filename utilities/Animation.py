@@ -38,6 +38,8 @@ class Animation(object):
 			'wire_kick' : self._load('player_wireKick.png', (100, 110)) # SET
 		}
 		
+		self.non_looping_states = ['jump', 'slide', 'wire_kick']
+		
 		self.state = None
 		self.next_state = 'stand'
 		self._frame_count = 0
@@ -55,8 +57,6 @@ class Animation(object):
 			movement_threshold = 2
 			run_velocity = 350
 			
-			#~ print "update"
-			#~ self._frame_count += 1
 			
 			vx = 0
 			
@@ -69,7 +69,7 @@ class Animation(object):
 				vx *= -1
 				self.direction = 'left'
 				
-				
+			
 			self.tick += 1
 			
 			
@@ -123,22 +123,14 @@ class Animation(object):
 				self._frame_count += self._tick(3)
 			
 			if self.is_last_frame():
-				if self.state == 'jump' or self.state == 'slide' or self.state == 'wire_kick':
+				if self.state in self.non_looping_states:
 					# Stick on last frame
 					self._frame_count = self.animations[self.state][2]-1
 				else:
 					# Loop animation
 					self._frame_count = 0
 			
-			# Prep current frame
-			current_frame_rect = self.frame_rects[self._frame_count]
-			self.current_frame.fill((0,0,0,0)) # ARGB
-			self.current_frame.blit(self.spritesheet, (0,0), current_frame_rect)
-			
-			if self.direction == 'left':
-				self.current_frame = pygame.transform.flip(self.current_frame, True, False)
-			else:
-				pass
+			self._prep_frame()
 		
 		return self.current_frame, self.current_frame.get_rect()
 	
@@ -167,6 +159,17 @@ class Animation(object):
 			return 1
 		else:
 			return 0
+			
+	def _prep_frame(self):
+		# Prepare the current frame to be drawn
+		current_frame_rect = self.frame_rects[self._frame_count]
+		self.current_frame.fill((0,0,0,0)) # ARGB
+		self.current_frame.blit(self.spritesheet, (0,0), current_frame_rect)
+		
+		if self.direction == 'left':
+			self.current_frame = pygame.transform.flip(self.current_frame, True, False)
+		else:
+			pass
 	
 	def _load(self, name, frame_size):
 		fullname = os.path.join('sprites', name)

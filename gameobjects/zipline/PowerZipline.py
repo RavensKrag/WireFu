@@ -20,7 +20,7 @@ class PowerZipline(ZiplineWire):
 		self.wire_force = pm.Vec2d(p2[0]-p1[0], p2[1]-p1[1])
 		self.wire_force = self.wire_force.normalized()
 		
-		self.color = pygame.color("green")
+		self.color = pygame.Color("green")
 	
 	#~ def update(self):
 		#~ pass

@@ -17,8 +17,8 @@ class PowerZipline(ZiplineWire):
 		super(PowerZipline, self).__init__(p1, p2)
 		self.shape.collision_type = collisions.POWER_ZIPLINE
 		
-		self.wire_force = pm.Vec2d(p2[0]-p1[0], p2[1]-p1[1])
-		self.wire_force = self.wire_force.normalized()
+		self.wire_velocity = pm.Vec2d(p2[0]-p1[0], p2[1]-p1[1])
+		self.wire_velocity = self.wire_velocity.normalized()
 		
 		self.color = pygame.Color("green")
 	
